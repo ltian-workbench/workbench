@@ -1,0 +1,2551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>财税工作台</title>
+<style>
+  :root {
+    --bg: #f1f5f9;
+    --sidebar-bg: #1a2035;
+    --sidebar-width: 264px;
+    --header-height: 68px;
+    --radius: 14px;
+    --radius-sm: 10px;
+    --shadow: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+    --shadow-hover: 0 10px 25px -5px rgba(15,23,42,0.1), 0 8px 10px -6px rgba(15,23,42,0.04);
+    --shadow-card: 0 2px 8px rgba(15,23,42,0.06);
+    --primary: #2563eb;
+    --primary-light: #60a5fa;
+    --primary-dark: #1d4ed8;
+    --primary-bg: #eff6ff;
+    --text: #0f172a;
+    --text-secondary: #64748b;
+    --border: #e2e8f0;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== 侧边栏 ===== */
+  .sidebar {
+    width: var(--sidebar-width);
+    background: #1a2035;
+    border-right: 1px solid #2a324e;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    z-index: 10;
+    color: #cbd5e1;
+  }
+  .brand {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid #2a324e;
+  }
+  .brand-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .brand-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: #fff;
+    box-shadow: 0 4px 6px -1px rgba(37,99,235,0.3);
+  }
+  .brand-title {
+    font-size: 18px; font-weight: 700; letter-spacing: -0.3px;
+    color: #fff;
+  }
+  .brand-sub {
+    font-size: 12px; color: #94a3b8; padding-left: 52px;
+    letter-spacing: 0.5px;
+  }
+  .nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    margin-bottom: 4px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border-left: 3.5px solid transparent;
+    font-size: 14px;
+    color: #94a3b8;
+  }
+  .nav-item:hover {
+    background: #25304a;
+    color: #e2e8f0;
+  }
+  .nav-item.active {
+    background: #2563eb;
+    color: #fff;
+    font-weight: 600;
+    border-left-color: #60a5fa;
+  }
+  .nav-icon { font-size: 20px; width: 24px; text-align: center; flex-shrink: 0; }
+  .nav-text { flex: 1; line-height: 1.3; }
+  .nav-badge {
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #334155;
+    color: #94a3b8;
+  }
+  .nav-item.active .nav-badge { background: rgba(255,255,255,0.2); color: #fff; }
+  .sidebar-foot {
+    padding: 14px 18px;
+    border-top: 1px solid #2a324e;
+    font-size: 11px;
+    color: #64748b;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* ===== 主区域 ===== */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  .header {
+    height: var(--header-height);
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px;
+    flex-shrink: 0;
+  }
+  .header-left {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .header-title {
+    font-size: 20px; font-weight: 700; color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .header-count {
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    background: var(--primary-bg); padding: 4px 10px; border-radius: 999px;
+  }
+  .header-date {
+    font-size: 13px; color: var(--text-secondary);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .search-box {
+    position: relative;
+  }
+  .search-box input {
+    width: 260px;
+    padding: 9px 14px 9px 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  .search-box input:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(139,123,181,0.12);
+  }
+  .search-box::before {
+    content: "🔍";
+    position: absolute;
+    left: 12px; top: 50%; transform: translateY(-50%);
+    font-size: 13px; opacity: 0.5;
+  }
+  .header-actions { display: flex; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 16px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: var(--radius-sm);
+    font-size: 13px; font-weight: 500;
+    color: #5d5370;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .btn:hover { background: #f8f6fa; border-color: #d5cfe0; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff; border: none;
+    box-shadow: 0 4px 6px -1px rgba(109,94,156,0.25);
+  }
+  .btn-primary:hover { opacity: 0.92; transform: translateY(-1px); }
+  .btn-success {
+    background: linear-gradient(135deg, #7bc17e, #5cb85c);
+    color: #fff; border: none;
+    box-shadow: 0 4px 6px -1px rgba(92,184,92,0.25);
+  }
+  .btn-success:hover { opacity: 0.92; transform: translateY(-1px); }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px 40px;
+  }
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .section-label {
+    font-size: 13px; font-weight: 600; color: var(--text-secondary);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  /* ===== 主页 ===== */
+  .home-view {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* 欢迎横幅 */
+  .welcome-banner {
+    background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(37,99,235,0.25);
+  }
+  .welcome-banner::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .welcome-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: 80px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .welcome-title {
+    font-size: 22px; font-weight: 700;
+    margin-bottom: 6px;
+    position: relative; z-index: 1;
+  }
+  .welcome-sub {
+    font-size: 14px; opacity: 0.9;
+    position: relative; z-index: 1;
+  }
+  .network-info {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #0369a1;
+    margin-top: 12px;
+  }
+  .network-info span {
+    font-weight: 600;
+    font-family: monospace;
+    background: #e0f2fe;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 4px;
+  }
+
+  /* 主页网格 */
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 1100px) {
+    .home-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+
+  .panel {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow-card);
+  }
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .panel-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .panel-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* 日历 */
+  .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .calendar-month {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .calendar-nav {
+    display: flex;
+    gap: 6px;
+  }
+  .calendar-nav button {
+    width: 30px; height: 30px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-secondary);
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .calendar-nav button:hover {
+    background: var(--primary-bg);
+    border-color: var(--primary-light);
+    color: var(--primary-dark);
+  }
+  .calendar-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 4px;
+  }
+  .calendar-table th {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 8px 4px;
+    text-align: center;
+  }
+  .calendar-table td {
+    text-align: center;
+    padding: 8px 4px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    height: 44px;
+    vertical-align: middle;
+  }
+  .calendar-table td:hover:not(.empty-day):not(.today) {
+    background: #f5f3f8;
+  }
+  .calendar-table td.today {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(139,123,181,0.3);
+    font-weight: 700;
+  }
+  .calendar-table td.other-month {
+    color: #c4bdd0;
+  }
+  .calendar-table td.empty-day {
+    cursor: default;
+  }
+  .calendar-dot {
+    width: 5px; height: 5px;
+    background: var(--primary-light);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .calendar-table td.today .calendar-dot {
+    background: rgba(255,255,255,0.7);
+  }
+
+  /* 待办事项 */
+  .todo-section {
+    margin-bottom: 16px;
+  }
+  .todo-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    padding-left: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .todo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #faf9fb;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .todo-item:hover {
+    border-color: var(--border);
+    background: #f5f3f8;
+  }
+  .todo-item.done .todo-text {
+    text-decoration: line-through;
+    color: #b0a8bf;
+  }
+  .todo-item.done .todo-checkbox {
+    background: var(--success);
+    border-color: var(--success);
+  }
+  .todo-checkbox {
+    width: 18px; height: 18px;
+    border: 2px solid #d5cfe0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    cursor: pointer;
+    font-size: 11px;
+    color: #fff;
+  }
+  .todo-checkbox:hover {
+    border-color: var(--primary-light);
+  }
+  .todo-text {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text);
+    word-break: break-all;
+  }
+  .todo-delete {
+    opacity: 0;
+    color: #c4bdd0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    padding: 2px 4px;
+  }
+  .todo-item:hover .todo-delete {
+    opacity: 1;
+  }
+  .todo-delete:hover {
+    color: var(--danger);
+  }
+  .todo-empty {
+    text-align: center;
+    padding: 24px;
+    color: #c4bdd0;
+    font-size: 13px;
+  }
+
+  .todo-input-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .todo-input {
+    flex: 1;
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  .todo-input:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(139,123,181,0.1);
+  }
+
+  .todo-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .done-section {
+    margin-top: 8px;
+  }
+  .done-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 6px 4px;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .done-header:hover {
+    background: rgba(139,123,181,0.08);
+  }
+  .done-body {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 4px;
+  }
+  .done-body.open {
+    display: flex;
+  }
+
+  .quick-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .quick-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #faf9fb;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .quick-item:hover {
+    border-color: var(--border);
+    background: #f5f3f8;
+  }
+  .quick-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .quick-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .quick-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .quick-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* 固定事项设置弹窗 */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(45,36,69,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal {
+    background: #fff;
+    border-radius: var(--radius);
+    width: 95%;
+    max-width: 720px;
+    max-height: 98vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(45,36,69,0.25);
+    transform: translateY(16px) scale(0.97);
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .modal-overlay.show .modal {
+    transform: translateY(0) scale(1);
+  }
+  .modal-header {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .modal-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .modal-close {
+    width: 32px; height: 32px;
+    border: none; background: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--text-secondary);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .modal-close:hover {
+    background: #f5f3f8;
+    color: var(--text);
+  }
+  .modal-body {
+    padding: 14px 24px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .modal-footer {
+    padding: 10px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .fixed-todo-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .fixed-todo-item input[type="text"] {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+  }
+  .fixed-todo-item input[type="text"]:focus {
+    border-color: var(--primary-light);
+  }
+  .fixed-todo-item input[type="number"] {
+    width: 64px;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+  }
+  .fixed-todo-item input[type="number"]:focus {
+    border-color: var(--primary-light);
+  }
+  .fixed-todo-item .day-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  .fixed-todo-remove {
+    color: #c4bdd0;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 2px;
+    transition: color 0.15s;
+  }
+  .fixed-todo-remove:hover {
+    color: var(--danger);
+  }
+
+  /* ===== 卡片网格 ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column; gap: 14px;
+    box-shadow: var(--shadow);
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--card-color, var(--primary));
+    opacity: 0.85;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: #d5cfe0;
+  }
+  .card:active { transform: translateY(0); }
+  .card-header {
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .card-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--card-bg, var(--primary-bg));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .card-body { flex: 1; min-width: 0; }
+  .card-name {
+    font-size: 15px; font-weight: 600;
+    line-height: 1.4;
+    color: var(--text);
+    word-break: break-all;
+  }
+  .card-tag {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 11px; font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--card-bg, var(--primary-bg));
+    color: var(--card-color, var(--primary));
+  }
+  .card-desc {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    word-break: break-all;
+  }
+  .card-action {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    font-size: 13px; font-weight: 600;
+    background: var(--card-bg, var(--primary-bg));
+    color: var(--card-color, var(--primary));
+    transition: all 0.2s;
+  }
+  .card:hover .card-action {
+    filter: brightness(0.96);
+  }
+
+  /* ===== 空状态 ===== */
+  .empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-secondary);
+  }
+  .empty-icon { font-size: 56px; margin-bottom: 16px; opacity: 0.6; }
+  .empty-text { font-size: 15px; font-weight: 500; }
+
+  /* ===== Toast ===== */
+  .toast {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    background: #2d2445;
+    color: #fff;
+    padding: 13px 22px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+    transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+    z-index: 9999;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .toast-icon { font-size: 18px; }
+
+  /* ===== 滚动条 ===== */
+  ::-webkit-scrollbar { width: 7px; height: 7px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #d5cfe0; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #b0a8bf; }
+  .nav::-webkit-scrollbar-thumb { background: #d5cfe0; }
+
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-right: 8px;
+    border-radius: var(--radius-sm);
+  }
+  .mobile-menu-btn:hover {
+    background: rgba(139,123,181,0.1);
+  }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 900;
+  }
+
+  /* ========== Checklist 表格 ========== */
+  .checklist-view {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-bottom: 40px;
+  }
+  .checklist-section {
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(45,36,69,0.04);
+  }
+  .checklist-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #1e2740, #2a324e);
+    color: #fff;
+  }
+  .checklist-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checklist-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .checklist-actions .btn {
+    font-size: 12px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .checklist-actions .btn:hover {
+    background: rgba(255,255,255,0.22);
+  }
+  .checklist-actions .btn.danger {
+    background: rgba(239,68,68,0.2);
+    border-color: rgba(239,68,68,0.4);
+  }
+  .checklist-actions .btn.danger:hover {
+    background: rgba(239,68,68,0.35);
+  }
+  .checklist-table-wrap {
+    overflow-x: auto;
+    padding: 16px;
+  }
+  .checklist-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+  }
+  .checklist-table th {
+    background: #f8f7fa;
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border);
+    text-align: left;
+    white-space: normal;
+    word-break: break-all;
+  }
+  .checklist-table th .header-cell {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 13px;
+    padding: 4px 6px;
+    outline: none;
+    font-family: inherit;
+    min-height: 20px;
+    line-height: 1.4;
+    word-break: break-all;
+  }
+  .checklist-table th .header-cell:focus {
+    border-color: var(--primary-light);
+    border-radius: 4px;
+    background: #fff;
+  }
+  .checklist-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0eef5;
+    vertical-align: middle;
+  }
+  .checklist-table tr:hover td {
+    background: #faf9fb;
+  }
+  .checklist-table td:first-child,
+  .checklist-table th:first-child {
+    min-width: 220px;
+    width: 220px;
+  }
+  .checklist-table td:first-child input[type="text"] {
+    width: 100%;
+    min-width: 200px;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.15s;
+  }
+  .checklist-table td:first-child input[type="text"]:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(139,123,181,0.08);
+  }
+  .checklist-table .ck-box {
+    width: 20px; height: 20px;
+    border: 2px solid #d5cfe0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin: 0 auto;
+    font-size: 12px;
+    color: #fff;
+    user-select: none;
+  }
+  .checklist-table .ck-box:hover {
+    border-color: var(--primary-light);
+  }
+  .checklist-table .ck-box.checked {
+    background: var(--success);
+    border-color: var(--success);
+  }
+  .checklist-table .col-remove {
+    opacity: 0;
+    color: #c4bdd0;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 4px;
+    transition: opacity 0.15s;
+  }
+  .checklist-table th:hover .col-remove {
+    opacity: 1;
+  }
+  .checklist-table .row-remove {
+    opacity: 0;
+    color: #c4bdd0;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 2px 6px;
+    transition: opacity 0.15s;
+  }
+  .checklist-table tr:hover .row-remove {
+    opacity: 1;
+  }
+  .checklist-table .row-remove:hover {
+    color: var(--danger);
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 900px) {
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      z-index: 1000;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      display: flex !important;
+    }
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    .sidebar-overlay.show {
+      display: block;
+    }
+    .mobile-menu-btn {
+      display: inline-block;
+    }
+    .search-box input { width: 140px; }
+    .home-grid { grid-template-columns: 1fr !important; }
+    .header-actions .btn {
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+    .checklist-table td:first-child,
+    .checklist-table th:first-child {
+      min-width: 140px;
+      width: 140px;
+    }
+    .checklist-table td:first-child input[type="text"] {
+      min-width: 120px;
+      font-size: 12px;
+      padding: 5px 6px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- 侧边栏 -->
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-top">
+      <div class="brand-icon">💼</div>
+      <div class="brand-title">财税工作台</div>
+    </div>
+    <div class="brand-sub">Finance · Tax · Workbench</div>
+  </div>
+  <nav class="nav" id="nav"></nav>
+  <div class="sidebar-foot">
+    工作目录<br>D:\tools\ExcelVBA工具箱
+  </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileMenu()"></div>
+
+<!-- 主区域 -->
+<main class="main">
+  <header class="header">
+    <div class="header-left">
+      <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">☰</button>
+      <div class="header-title">
+        <span id="catIcon">🏠</span>
+        <span id="catName">主页</span>
+      </div>
+      <span class="header-count" id="catCount"></span>
+    </div>
+    <div class="header-left" id="headerDate" style="margin-left:auto;">
+      <span class="header-date" id="currentDate"></span>
+    </div>
+    <div class="header-actions" id="headerActions">
+      <div class="search-box" id="searchBox">
+        <input type="text" id="searchInput" placeholder="搜索技能..." autocomplete="off">
+      </div>
+      <button class="btn" onclick="openWorkDir()">📁 工作目录</button>
+      <button class="btn btn-primary" onclick="reloadPage()">🔄 刷新</button>
+    </div>
+  </header>
+
+  <div class="content" id="contentArea">
+    <div class="home-view" id="homeView">
+      <!-- 欢迎横幅 -->
+      <div class="welcome-banner">
+        <div class="welcome-title" id="welcomeTitle">欢迎来到你的工作台</div>
+        <div class="welcome-sub">把普通日子过成有记录的成长史</div>
+      </div>
+
+      <div class="network-info" id="networkInfo" style="display:none;">
+        📱 手机访问：<span id="lanIp"></span>
+      </div>
+
+      <div class="home-grid">
+        <!-- 日历 -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">📅 当月日历</div>
+            <div class="panel-sub" id="calendarYear"></div>
+          </div>
+          <div class="calendar-header">
+            <div class="calendar-month" id="calendarMonth"></div>
+            <div class="calendar-nav">
+              <button onclick="changeMonth(-1)">◀</button>
+              <button onclick="goToday()">今</button>
+              <button onclick="changeMonth(1)">▶</button>
+            </div>
+          </div>
+          <table class="calendar-table">
+            <thead>
+              <tr>
+                <th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th>
+              </tr>
+            </thead>
+            <tbody id="calendarBody"></tbody>
+          </table>
+        </div>
+
+        <!-- 待办事项 -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">✅ 待办事项</div>
+            <div class="panel-sub" id="todoMonth"></div>
+          </div>
+
+          <div class="todo-section">
+            <div class="todo-section-title">📌 每月固定事项</div>
+            <div class="todo-list" id="fixedTodoList"></div>
+            <div class="done-section" id="fixedDoneSection" style="display:none;">
+              <div class="done-header" onclick="toggleDoneSection('fixed')">
+                <span id="fixedDoneIcon">▶</span>
+                <span>已完成 (<span id="fixedDoneCount">0</span>)</span>
+              </div>
+              <div class="done-body" id="fixedDoneBody">
+                <div class="todo-list" id="fixedDoneList"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="todo-section">
+            <div class="todo-section-title">📝 当月新增事项</div>
+            <div class="todo-list" id="monthlyTodoList"></div>
+            <div class="done-section" id="monthlyDoneSection" style="display:none;">
+              <div class="done-header" onclick="toggleDoneSection('monthly')">
+                <span id="monthlyDoneIcon">▶</span>
+                <span>已完成 (<span id="monthlyDoneCount">0</span>)</span>
+              </div>
+              <div class="done-body" id="monthlyDoneBody">
+                <div class="todo-list" id="monthlyDoneList"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="todo-input-row">
+            <input type="text" class="todo-input" id="newTodoInput" placeholder="输入新待办事项，按回车添加..." onkeydown="if(event.key==='Enter')addTodo()">
+            <button class="btn btn-primary" onclick="addTodo()">➕ 添加</button>
+          </div>
+
+          <div class="todo-actions">
+            <button class="btn" onclick="openFixedTodoModal()">⚙️ 设置固定事项</button>
+            <button class="btn" onclick="clearDoneTodos()">🧹 清除已完成</button>
+          </div>
+        </div>
+
+        <!-- 常用快捷 -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">⚡ 常用快捷</div>
+          </div>
+          <div class="quick-links">
+            <div class="quick-item" onclick="window.open('https://trip.larkenterprise.com/sheets/Xu5vsP0fdhfXjatHRUrcW8Dbnnf','_blank')">
+              <div class="quick-icon">📄</div>
+              <div class="quick-info">
+                <div class="quick-name">公司税号</div>
+                <div class="quick-desc">飞书表格</div>
+              </div>
+            </div>
+            <div class="quick-item" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\注意：华南地区分公司名录-每月检查无公司代码是否有代码.xlsx')">
+              <div class="quick-icon">📊</div>
+              <div class="quick-info">
+                <div class="quick-name">华南公司名录检查</div>
+                <div class="quick-desc">每月检查无公司代码是否有代码</div>
+              </div>
+            </div>
+            <div class="quick-item" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\申报公司清单.xlsx')">
+              <div class="quick-icon">📋</div>
+              <div class="quick-info">
+                <div class="quick-name">华南申报公司清单</div>
+                <div class="quick-desc">申报公司清单.xlsx</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="checklistView" class="checklist-view" style="display:none;">
+      <!-- 申报税务 -->
+      <div class="checklist-section">
+        <div class="checklist-header">
+          <h2>📋 申报税务</h2>
+          <div class="checklist-actions">
+            <button class="btn" onclick="addChecklistRow('tax')">➕ 添加公司</button>
+            <button class="btn" onclick="addChecklistCol('tax')">➕ 添加税种</button>
+            <button class="btn danger" onclick="resetChecklist('tax')">🔄 批量取消勾选</button>
+          </div>
+        </div>
+        <div class="checklist-table-wrap">
+          <table class="checklist-table" id="taxTable"></table>
+        </div>
+      </div>
+
+      <!-- 申报工商年检 -->
+      <div class="checklist-section">
+        <div class="checklist-header">
+          <h2>🏢 申报工商年检</h2>
+          <div class="checklist-actions">
+            <button class="btn" onclick="addChecklistRow('license')">➕ 添加公司</button>
+            <button class="btn" onclick="addChecklistCol('license')">➕ 添加年检项</button>
+            <button class="btn danger" onclick="resetChecklist('license')">🔄 批量取消勾选</button>
+          </div>
+        </div>
+        <div class="checklist-table-wrap">
+          <table class="checklist-table" id="licenseTable"></table>
+        </div>
+      </div>
+    </div>
+
+    <div id="toolView" style="display:none;">
+      <div class="section-head">
+        <div class="section-label" id="sectionLabel">技能陈列</div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </div>
+</main>
+
+<!-- 固定事项设置弹窗 -->
+<div class="modal-overlay" id="fixedModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">⚙️ 设置每月固定事项</div>
+      <button class="modal-close" onclick="closeFixedModal()">✕</button>
+    </div>
+    <div class="modal-body" id="fixedModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn" onclick="addFixedRow()">➕ 添加1行</button>
+      <button class="btn" onclick="addFixedRows(10)">➕ 添加10行</button>
+      <button class="btn btn-primary" onclick="saveFixedTodos()">💾 保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span class="toast-icon">✅</span><span id="toastText"></span></div>
+
+</script>
+<script>
+(function() {
+  // ==================== 云端配置（外网访问必填） ====================
+  // 1. 访问 https://supabase.com，用 GitHub 账号一键登录
+  // 2. 点「New Project」创建项目（免费版足够）
+  // 3. 等项目创建完，进入「Project Settings」→「API」，复制下面两项：
+  var SB_URL = 'https://cdzxkfasudxqfrxugmcc.supabase.co';
+  var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkenhrZmFzdWR4cWZyeHVnbWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc5NTg5MzEsImV4cCI6MjEwMzUzNDkzMX0.5mN0qAcaPpPNU6ZJOJsR5zNULVfD59M40ZhwH4S1jEA';
+  // 4. 进入「Table Editor」→「New Table」创建表：
+  //    表名：workbench_config
+  //    列1：key (text) → 设为 Primary Key
+  //    列2：value (jsonb) → 默认值 {}，取消勾选 "Is Nullable"
+  // ================================================================
+
+  var SB_ENABLED = !!(SB_URL && SB_KEY);
+  var SB_HEADERS = SB_ENABLED ? { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' } : {};
+
+  // Supabase 统一读写（通过 REST API，无需 SDK）
+  function sbSave(key, data) {
+    if (!SB_ENABLED) return Promise.resolve();
+    return fetch(SB_URL + '/rest/v1/workbench_config', {
+      method: 'POST',
+      headers: Object.assign({}, SB_HEADERS, { 'Prefer': 'resolution=merge-duplicates' }),
+      body: JSON.stringify({ key: key, value: data })
+    }).then(function(r) { if (!r.ok) throw new Error('save failed'); });
+  }
+  function sbLoad(key) {
+    if (!SB_ENABLED) return Promise.resolve(null);
+    return fetch(SB_URL + '/rest/v1/workbench_config?key=eq.' + encodeURIComponent(key), {
+      headers: SB_HEADERS
+    }).then(function(r) { return r.json(); }).then(function(rows) {
+      return (rows && rows[0] && rows[0].value) ? rows[0].value : null;
+    });
+  }
+
+  var IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+
+  const basePath = 'D:\\tools\\ExcelVBA工具箱\\';
+
+  const categories = [
+    {
+      name: 'EBS导入工具',
+      icon: '📥',
+      color: '#3b82f6',
+      bg: '#eff6ff',
+      files: [
+        'EBS导入模型-899调整-年会费用（年度）.xlsm',
+        'EBS导入模型-899调整-文具自助柜费用（半年度）.xlsm',
+        'EBS导入模型-899调整-运动会费用（年度）.xlsm',
+        'EBS导入模型-899调整-折旧水电物管保洁（每月）.xlsm',
+        'EBS导入模型-广州越程.xlsm',
+        { name: 'EBS导入模型-珠海携程抵扣以前暂估进项', path: 'D:\\tools\\ExcelVBA工具箱\\EBS导入模型-珠海携程-抵扣以前暂估进项税.xlsm' },
+        { name: 'EBS导入模型-成都广州抵扣以前暂估进项', path: 'D:\\tools\\ExcelVBA工具箱\\EBS导入模型-成都广州-抵扣以前暂估进项税.xlsm' }
+      ]
+    },
+    {
+      name: 'TA Review检查工具',
+      icon: '🔍',
+      color: '#8b5cf6',
+      bg: '#f5f3ff',
+      files: [
+        'TA Review检查工具v4.0-review.xlsm',
+        'TA Review检查工具v4.0-TA.xlsm',
+        { name: 'VBA批量小工具', path: 'D:\\tools\\ExcelVBA工具箱\\VBA批量小工具.xlsm' }
+      ]
+    },
+    {
+      name: '清理全量报表工具',
+      icon: '🧹',
+      color: '#22c55e',
+      bg: '#f0fdf4',
+      files: [
+        '按公司清理资产负债表小工具.xlsm',
+        '按公司清理利润表小工具.xlsm',
+        '按公司清理科目余额表小工具.xlsm',
+        { name: 'Gross全量利润表整理工具', path: 'D:\\Users\\ltian\\Desktop\\全量报表清理小工具\\3、利润表和资产负债表整理模板\\Gross利润表整理模板.xlsx' },
+        { name: 'Net全量利润表整理工具', path: 'D:\\Users\\ltian\\Desktop\\全量报表清理小工具\\3、利润表和资产负债表整理模板\\Net利润表整理模板.xlsx' },
+        { name: '全量资产负债表整理工具', path: 'D:\\Users\\ltian\\Desktop\\全量报表清理小工具\\3、利润表和资产负债表整理模板\\资产负债表整理模板.xlsx' }
+      ]
+    },
+    {
+      name: '华南管报整理工具',
+      icon: '📊',
+      color: '#f59e0b',
+      bg: '#fffbeb',
+      files: [
+        { name: '华南四地利润表汇总公式版', path: 'D:\\tools\\ExcelVBA工具箱\\华南四地利润表汇总-公式 - 最新.xlsx' },
+        { name: '华南四地利润表-Gross模式全年底稿', path: 'D:\\tools\\ExcelVBA工具箱\\报表：利润表-Gross模式_全年底稿.xlsx' },
+        { name: '华南四地利润表-Net模式全年底稿', path: 'D:\\tools\\ExcelVBA工具箱\\报表：利润表-Net模式_全年底稿.xlsx' },
+        '华南管理费用科目余额表转换工具.xlsm',
+        '华南利润表转换工具.xlsm',
+        '华南资产负债表转换工具.xlsm',
+        '华南税金汇总表转换工具.xlsm',
+        { name: '飞书表格-华南税金整理工具', path: 'D:\\tools\\ExcelVBA工具箱\\飞书表格-华南税金整理工具.xlsx' },
+        { name: '飞书表格-增值税整理工具', path: 'D:\\tools\\ExcelVBA工具箱\\飞书表格-广州公司增值税统计.xlsx' },
+        { name: '华南国旅度假月报汇总分析', path: 'D:\\Users\\ltian\\Desktop\\B-季度税金-上海\\广州国旅度假月报汇总分析.xlsx' },
+        { name: '华南税金汇总表', path: 'D:\\Users\\ltian\\Desktop\\B-季度税金-上海\\华南税金汇总表.xlsx' },
+        { name: '华南统计表', path: 'D:\\Users\\ltian\\Desktop\\B-季度税金-上海\\华南统计表.xlsx' },
+        { name: '广州国旅测算', path: 'D:\\Users\\ltian\\Desktop\\B-季度税金-上海\\广州国旅测算.xlsx' },
+        { name: '华南附件3', path: 'D:\\tools\\ExcelVBA工具箱\\附件3.xlsx' },
+        { name: '天津海豚华南管理', url: 'https://trip.larkenterprise.com/sheets/MYVAsndUKhahIut4mRVclKTUnac' }
+      ]
+    },
+    {
+      name: '度假/金服报表整理工具',
+      icon: '🏖️',
+      color: '#f97316',
+      bg: '#fff7ed',
+      files: [
+        '全订单表（替代FD1070）数据清理小工具.xlsm',
+        { name: '全订单表（替代FD1070）透视表工具', path: 'D:\\tools\\ExcelVBA工具箱\\全订单表（替代FD1070）-地方财务提供版本透视表模板.xlsx' },
+        { name: '度假主营业务收入整理工具', path: 'D:\\tools\\ExcelVBA工具箱\\主营业务收入-本期发生-本位币.xlsx' },
+        { name: '华南金服售汇整理工具', path: 'D:\\Users\\ltian\\Desktop\\D-华南金服草稿\\1、华南金服售汇模板.xlsx' },
+        { name: '华南金服结汇整理工具', path: 'D:\\Users\\ltian\\Desktop\\D-华南金服草稿\\2、华南金服结汇模板.xlsx' }
+      ]
+    },
+    {
+      name: '进项税/印花税/完税证明整理工具',
+      icon: '🧾',
+      color: '#ef4444',
+      bg: '#fef2f2',
+      files: [
+        '商旅通进项税抵扣.xlsm',
+        '完税证明取数小工具.xlsm',
+        { name: '进项税分配标准凭证模型-成都广州', path: 'D:\\tools\\ExcelVBA工具箱\\A-进项税分配标准凭证模型-成都广州.xlsm' },
+        { name: '进项税分配标准凭证模型-宏睿广州', path: 'D:\\tools\\ExcelVBA工具箱\\A-进项税分配标准凭证模型-宏睿广州.xlsm' },
+        { name: '进项税分配标准凭证模型-越程', path: 'D:\\tools\\ExcelVBA工具箱\\A-进项税分配标准凭证模型-越程.xlsm' },
+        { name: '进项税分配标准凭证模型-珠海携程', path: 'D:\\tools\\ExcelVBA工具箱\\A-进项税分配标准凭证模型-珠海携程.xlsm' },
+        { name: '资产租赁合同印花税计算器', path: 'D:\\tools\\ExcelVBA工具箱\\喜翠铺资产租赁合同印花税计算器.xlsx' }
+      ]
+    },
+    {
+      name: '增值税申报数据填列工具',
+      icon: '📑',
+      color: '#06b6d4',
+      bg: '#ecfeff',
+      files: [
+        { name: '增值税申报数据填列-成都广州', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-珠海携程.xlsx' },
+        { name: '增值税申报数据填列-宏睿广州', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-广州越程.xlsx' },
+        { name: '增值税申报数据填列-越程', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-宏睿广州.xlsx' },
+        { name: '增值税申报数据填列-珠海携程', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-成都广州.xlsx' },
+        { name: '增值税申报数据填列-天津海豚广州', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-天津海豚广州.xlsx' },
+        { name: '增值税申报数据填列-天津海豚南昌', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-天津海豚南昌.xlsx' },
+        { name: '增值税申报数据填列-广州国旅', path: 'D:\\Users\\ltian\\Desktop\\B-审核增值税申报表\\增值税申报数据填列模板-广州国旅.xlsx' },
+        { name: '增值税申报数据填列-三亚国旅', path: 'D:\\Users\\ltian\\Desktop\\B-审核增值税申报表\\增值税申报数据填列模板-三亚国旅.xlsx' },
+        { name: '增值税申报数据填列-成都郑州', path: 'D:\\Users\\ltian\\Desktop\\B-审核增值税申报表\\增值税申报数据填列模板-成都郑州.xlsx' },
+        { name: '增值税申报数据填列-成都长沙', path: 'D:\\Users\\ltian\\Desktop\\B-审核增值税申报表\\增值税申报数据填列模板-成都长沙.xlsx' },
+        { name: '增值税申报数据填列-成都海口', path: 'D:\\Users\\ltian\\Desktop\\B-审核增值税申报表\\增值税申报数据填列模板-成都海口.xlsx' },
+        { name: '增值税申报数据填列-金服广州', path: 'D:\\Users\\ltian\\Desktop\\B-审核增值税申报表\\增值税申报数据填列模板-金服广州.xlsx' },
+        { name: '增值税申报数据填列-金服横琴', path: 'D:\\Users\\ltian\\Desktop\\B-审核增值税申报表\\增值税申报数据填列模板-金服横琴.xlsx' },
+        { name: '增值税申报数据填列-海豚季度小规模', path: 'D:\\Users\\ltian\\Desktop\\B-审核增值税申报表\\A-海豚季度小规模申报计算表.xlsx' },
+        { name: '增值税申报数据填列-金服季度小规模', path: 'D:\\Users\\ltian\\Desktop\\B-审核增值税申报表\\A-金服季度小规模申报计算表.xlsx' }
+      ]
+    },
+    {
+      name: '珠海报表整理工具',
+      icon: '🏢',
+      color: '#14b8a6',
+      bg: '#f0fdfa',
+      files: [
+        '珠海支付新加坡明细清理小工具.xlsm',
+        '珠海携程外采内销入账报表清理小工具.xlsm',
+        { name: '珠海携程数据2024至今', url: 'https://trip.larkenterprise.com/sheets/Jjh3spPvIhvrYFtZE5McELmDnEh?sheet=0OsQsa' },
+        { name: '珠海携程收入成本汇总', path: 'D:\\tools\\ExcelVBA工具箱\\1-珠海携程收入成本汇总.xlsx' },
+        { name: '珠海携程销售对账单', path: 'D:\\tools\\ExcelVBA工具箱\\2-销售对账单.xlsx' },
+        { name: '珠海携程结算对账单-新加坡', path: 'D:\\tools\\ExcelVBA工具箱\\3-结算对账单-新加坡.xlsx' },
+        { name: '珠海携程结算对账单-赫程', path: 'D:\\tools\\ExcelVBA工具箱\\3-结算对账单-赫程.xlsx' },
+        { name: '珠海携程开具发票明细', url: 'https://trip.larkenterprise.com/sheets/KAyyshWzxhW6dgtiGRZc8i1jnnf?sheet=2gLTVj' },
+        { name: '珠海携程收付款明细', url: 'https://trip.larkenterprise.com/sheets/Ez81sNSBMhFX6ytqYFRcxXXKnVg?sheet=2dwmEH' },
+        { name: '珠海携程财务数据表', path: 'D:\\tools\\ExcelVBA工具箱\\珠海财务数据.xlsx' },
+        { name: '珠海携程SBC计提', url: 'https://trip.larkenterprise.com/sheets/Di3qswyd4hDu7qtMrmOc1dydnk5?sheet=1oyobI' },
+        { name: '珠海人员监控', url: 'https://trip.larkenterprise.com/sheets/QE6Ysyivvh9wDMtw3jGcfu3Cn5d' }
+      ]
+    },
+    {
+      name: '越程报表整理工具',
+      icon: '📁',
+      color: '#f59e0b',
+      bg: '#fffbeb',
+      files: [
+        { name: '越程EBS凭证工具', path: 'D:\\tools\\ExcelVBA工具箱\\越程凭证模板.xlsx' },
+        { name: '越程VAT计提工具', path: 'D:\\tools\\ExcelVBA工具箱\\越程增值税税金计提表.xlsx' },
+        { name: '越程附加税计提工具', path: 'D:\\tools\\ExcelVBA工具箱\\越程附加税税金计提表.xlsx' },
+        { name: '越程房产税计提工具', path: 'D:\\Users\\ltian\\Desktop\\C-锦如交接工作\\房产税+城镇土地使用税\\房产税\\越程2021至今房产税计算表.xlsx' },
+        { name: '越程收租管理表', path: 'D:\\Users\\ltian\\Desktop\\C-锦如交接工作\\房产税+城镇土地使用税\\收租管理表.xlsx' },
+        { name: '越程停车费核对', path: 'D:\\tools\\ExcelVBA工具箱\\A-越程停车费核对表.xlsx' }
+      ]
+    },
+    {
+      name: '季度财报申报工具',
+      icon: '📋',
+      color: '#0ea5e9',
+      bg: '#f0f9ff',
+      files: [
+        { name: '季度财报申报工具-成都广州', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-成都广州.xlsx' },
+        { name: '季度财报申报工具-宏睿广州', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-宏睿广州.xlsx' },
+        { name: '季度财报申报工具-广州越程', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-广州越程.xlsx' },
+        { name: '季度财报申报工具-计算机广州', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-计算机广州.xlsx' },
+        { name: '季度财报申报工具-珠海携程', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-珠海携程.xlsx' },
+        { name: '季度财报申报工具-赫程南昌', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-赫程南昌.xlsx' },
+        { name: '财报信息采集链接-成都广州', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-成都广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-成都广州.xls' },
+        { name: '财报信息采集链接-宏睿广州', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-宏睿广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州宏睿.xls' },
+        { name: '财报信息采集链接-广州越程', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-广州越程\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州越程.xls' },
+        { name: '财报信息采集链接-计算机广州', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-计算机广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州计算机.xls' },
+        { name: '财报信息采集链接-珠海携程', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-珠海携程\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-珠海携程.xls' },
+        { name: '财报信息采集链接-赫程南昌', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-赫程南昌\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-赫程南昌.xls' },
+        { name: '华南海豚现金流量表工具', path: 'D:\\tools\\ExcelVBA工具箱\\华南海豚现金流量表.xlsx' }
+      ]
+    },
+    {
+      name: '统计局报表数据填列工具',
+      icon: '📈',
+      color: '#6366f1',
+      bg: '#eef2ff',
+      files: [
+        { name: '珠海携程统计局报表工具', path: 'D:\\tools\\ExcelVBA工具箱\\珠海携程统计局填报.xlsx' },
+        { name: '广州越程统计局报表工具', path: 'D:\\tools\\ExcelVBA工具箱\\广州越程统计局填报.xlsx' },
+        { name: '珠海携程财务状况月报工具', path: 'D:\\tools\\ExcelVBA工具箱\\F203_财务状况-月报-珠海携程.xlsx' },
+        { name: '珠海资产负债表工具', path: 'D:\\tools\\ExcelVBA工具箱\\1-珠海携程-资产负债表.xlsx' },
+        { name: '珠海利润表工具', path: 'D:\\tools\\ExcelVBA工具箱\\2-珠海携程_损益表.xlsx' },
+        { name: '广州越程财务状况月报工具', path: 'D:\\tools\\ExcelVBA工具箱\\F203_财务状况-月报-越程.xlsx' }
+      ]
+    },
+    {
+      name: 'FinToolsArk工具',
+      icon: '🌐',
+      color: '#8b5cf6',
+      bg: '#f5f3ff',
+      files: [
+        { name: 'Excel XML 提取发票信息', url: 'https://fintoolsark.edp.ctripcorp.com/tools/excel-xml-extractor/run' },
+        { name: '资产负债表按公司拆分工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/balance-sheet-splitter/run' },
+        { name: '利润表按公司拆分工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/profit-splitter/run' },
+        { name: '科目余额表按公司拆分工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/subject-balance-sheet-splitter/run' },
+        { name: 'OA表单明细列表清理工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/oa-cleanup/run' },
+        { name: 'VAT专票抵扣勾选导入模板生成器', url: 'https://fintoolsark.edp.ctripcorp.com/tools/vat-generator-tool/run' },
+        { name: 'VAT一般纳税人计算表自动生成器', url: 'https://fintoolsark.edp.ctripcorp.com/tools/vat-calculation-table-generator/run' },
+        { name: '现金流量表自动填写工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/cash-flow-automation/run' },
+        { name: 'Excel 表格合并工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/merge-excel/run' },
+        { name: 'PDF完税证明提取数据工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/tax-fixed0811/run' },
+        { name: 'Excel批量处理小工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/excel-batch-processing-tool/run', desc: '删除添加行列、删除添加复制sheet、修改单元格、重命名文件' }
+      ]
+    },
+    {
+      name: '飞书多维表格',
+      icon: '📋',
+      color: '#3370ff',
+      bg: '#e8f0fe',
+      files: [
+        { name: '华南利润表汇总', url: 'https://trip.larkenterprise.com/base/VKOKb6NRHat6opspN3jcoeFSnjb?table=blk12SFiWcpJLJPR' },
+        { name: '华南金融外币兑换业务分析', url: 'https://trip.larkenterprise.com/base/WuxfbMgEXaIAfjsrT0ycCFSynMb?table=blk03FBM0XUTuT7a' },
+        { name: '广州国旅度假汇总分析', url: 'https://trip.larkenterprise.com/base/EwevbazKGalAyIsCLD1c3Zxynfc?table=blkhGE0SRiCAVEgh' },
+        { name: '华南净营收及纳税情况分析', url: 'https://trip.larkenterprise.com/base/MV4Nbq3tvapGI2s8IescEo8Ynmh?table=tblE15RRwPmnHJzu&view=vewOxeahuv' },
+        { name: '华南税金汇总表（入库口径）', url: 'https://trip.larkenterprise.com/base/JPGxbv77Fa8ufxsdungcs3qpnIh?table=blkkCdl67ChuKNHO' },
+        { name: '广州/番禺/广州国旅净营收及纳税情况汇总', url: 'https://trip.larkenterprise.com/base/SzTjbT5raaIteSsw4j5cMmGrnkd?table=blkPDJVSY5nZen3G' },
+        { name: '珠海携程净营收及入库税金分析', url: 'https://trip.larkenterprise.com/base/BpQPbAHvNaHGtfs0xAzcdG0rnkX?table=blkUPLrg7oMQrdaw' },
+        { name: '珠海携程补贴政策相关信息', url: 'https://trip.larkenterprise.com/base/A5UTbvJKraYn13sPJb8c0PDSn3g?table=blkqVT8YQPZdOqKQ' },
+        { name: '广州国旅收入多维度预测模型', url: 'https://trip.larkenterprise.com/base/DeZjbMDTma7fxfsB4eGcdUvrnCh?table=blkjwZN3X6pjodUs' },
+        { name: '华南资产负债表汇总', url: 'https://trip.larkenterprise.com/base/Z9OCbEd5xaTFcRsUToEcQYE9nwb?table=tblmWlfmrtYkrPiF&view=vew2TTdcNZ' },
+        { name: '珠海携程个税申报数据明细表', url: 'https://trip.larkenterprise.com/wiki/PUqzw4oJFiAhtzkhqK9c8laWnLd?table=tblFlJljvWww7W66&view=vewyaLVbLT' }
+      ]
+    },
+    {
+      name: '智能体',
+      icon: '🤖',
+      color: '#a855f7',
+      bg: '#faf5ff',
+      files: [
+        { name: '广州国旅度假分析智能助手', url: 'https://trip.larkenterprise.com/base/agent/7660399665082354656' },
+        { name: '华南营收纳税分析智能助手', url: 'https://trip.larkenterprise.com/base/agent/7660375828072565732' },
+        { name: '珠海携程营收税收及补贴政策分析智能助手', url: 'https://trip.larkenterprise.com/base/agent/7660405763009088450' },
+        { name: '华南金融外币兑换业务智能助手', url: 'https://trip.larkenterprise.com/base/agent/7660401605124148190' },
+        { name: '广州国旅收入预测智能助手', url: 'https://trip.larkenterprise.com/base/agent/7666752757042253040' }
+      ]
+    },
+    {
+      name: 'Python小工具桌面版',
+      icon: '🐍',
+      color: '#10b981',
+      bg: '#ecfdf5',
+      files: [
+        { name: '开曼CBCR-XML转换工具', path: 'D:\\cc\\code\\工具\\cayman cbcr converter工具.py' },
+        { name: '开曼XML比对工具', path: 'D:\\cc\\code\\工具\\比较cbcr xml工具.py' },
+        { name: '开曼CBCR-XML数据更新同步工具', path: 'D:\\cc\\code\\工具\\cbcs xml 更新工具.py' },
+        { name: 'XML-Excel转换小工具', path: 'D:\\cc\\code\\工具\\xml_to_excel\\xml_to_excel_gui.py' },
+        { name: 'Excel批量处理文件小工具', path: 'D:\\cc\\code\\工具\\Excel批量处理文件小工具.py' },
+        { name: 'Excel批量转换格式/添加VBA/图片工具', path: 'D:\\cc\\code\\工具\\Excel转换导入宏插入图片指定宏\\Excel转换导入宏插入图片指定宏.py' },
+        { name: 'Excel批量取数小工具', path: 'D:\\cc\\code\\工具\\Excel批量取数小工具.py' },
+        { name: 'Excel批量多条件筛选汇总小工具', path: 'D:\\cc\\code\\工具\\批量多条件筛选汇总工具.py' },
+        { name: '合并Excel工具', path: 'D:\\cc\\code\\工具\\合并excel工具.py' },
+        { name: '现金流量表自动填写工具', path: 'D:\\cc\\code\\工具\\现金流量表工具\\main.py' },
+        { name: 'OA表单明细列表清理工具', path: 'D:\\cc\\code\\工具\\OA表单清理工具.py' },
+        { name: 'VAT专票抵扣勾选导入模板生成小工具', path: 'D:\\cc\\code\\工具\\VAT专票抵扣勾选工具\\vat_generator.py' },
+        { name: '科目余额表按公司拆分工具', path: 'D:\\cc\\code\\工具\\科目余额表拆分工具.py' },
+        { name: '资产负债表按公司拆分工具', path: 'D:\\cc\\code\\工具\\资产负债表拆分工具.py' },
+        { name: 'Gross利润表按公司拆分工具', path: 'D:\\cc\\code\\工具\\利润表拆分工具-Gross.py' },
+        { name: 'Net利润表按公司拆分工具', path: 'D:\\cc\\code\\工具\\利润表拆分工具-Net.py' },
+        { name: '利润表按公司拆分工具', path: 'D:\\cc\\code\\工具\\利润表拆分工具.py' }
+      ]
+    }
+  ];
+
+  // 状态
+  let currentIndex = -1; // -1 = 主页
+  let searchText = '';
+  let calendarDate = new Date();
+
+  // localStorage keys
+  const LS_FIXED = 'workbench_fixedTodos';
+  const LS_MONTHLY = 'workbench_monthlyTodos';
+  const LS_CHECKLIST = 'workbench_checklist';
+
+  const API_BASE = 'http://localhost:8765';
+
+  // 协议检测：如果通过 file:// 直接打开，给出醒目提示
+  if (window.location.protocol === 'file:') {
+    document.addEventListener('DOMContentLoaded', () => {
+      const banner = document.createElement('div');
+      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:10000;background:#ef4444;color:#fff;padding:12px 20px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);';
+      banner.innerHTML = '⚠️ 你正在通过本地文件直接打开工作台，请点击「启动工作台.bat」运行服务，然后通过浏览器访问 <a href="http://localhost:8765" style="color:#fff;text-decoration:underline;">http://localhost:8765</a>';
+      document.body.appendChild(banner);
+      document.body.style.paddingTop = '44px';
+    });
+  }
+
+  function $(id) { return document.getElementById(id); }
+
+  /* ========== Toast ========== */
+  function showToast(msg, icon) {
+    const t = $('toast');
+    $('toastText').textContent = msg;
+    t.querySelector('.toast-icon').textContent = icon || '✅';
+    t.classList.add('show');
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  /* ========== 日期显示 ========== */
+  function updateHeaderDate() {
+    const now = new Date();
+    const weekdays = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+    const y = now.getFullYear();
+    const m = now.getMonth() + 1;
+    const d = now.getDate();
+    $('currentDate').textContent = `${y}年${m}月${d}日 · ${weekdays[now.getDay()]}`;
+  }
+
+  /* ========== 导航渲染 ========== */
+  function renderNav() {
+    const nav = $('nav');
+    let html = '';
+
+    // 主页项
+    const homeCls = currentIndex === -1 ? 'nav-item active' : 'nav-item';
+    html += `<div class="${homeCls}" data-idx="-1">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-text">主页</span>
+      <span class="nav-badge">Today</span>
+    </div>`;
+
+    // Check申报税务/工商
+    const checkCls = currentIndex === -2 ? 'nav-item active' : 'nav-item';
+    html += `<div class="${checkCls}" data-idx="-2">
+      <span class="nav-icon">✅</span>
+      <span class="nav-text">Check申报税务/工商</span>
+      <span class="nav-badge">Check</span>
+    </div>`;
+
+    categories.forEach((cat, i) => {
+      const cls = i === currentIndex ? 'nav-item active' : 'nav-item';
+      html += `<div class="${cls}" data-idx="${i}">
+        <span class="nav-icon">${cat.icon}</span>
+        <span class="nav-text">${escapeHtml(cat.name)}</span>
+        <span class="nav-badge">${cat.files.length}</span>
+      </div>`;
+    });
+
+    nav.innerHTML = html;
+    nav.querySelectorAll('.nav-item').forEach(el => {
+      el.addEventListener('click', () => {
+        currentIndex = +el.dataset.idx;
+        searchText = '';
+        $('searchInput').value = '';
+        renderNav();
+        switchView();
+        // 移动端点击菜单项后自动关闭侧边栏
+        $('sidebar').classList.remove('open');
+        $('sidebarOverlay').classList.remove('show');
+      });
+    });
+  }
+
+  /* ========== 视图切换 ========== */
+  function switchView() {
+    const isHome = currentIndex === -1;
+    const isCheck = currentIndex === -2;
+    $('homeView').style.display = isHome ? 'flex' : 'none';
+    $('toolView').style.display = (isHome || isCheck) ? 'none' : 'block';
+    $('checklistView').style.display = isCheck ? 'flex' : 'none';
+    $('searchBox').style.display = (isHome || isCheck) ? 'none' : 'block';
+
+    if (isHome) {
+      $('catIcon').textContent = '🏠';
+      $('catName').textContent = '主页';
+      $('catCount').textContent = '';
+      $('headerDate').style.display = 'flex';
+      renderCalendar();
+      renderTodos();
+    } else if (isCheck) {
+      $('catIcon').textContent = '✅';
+      $('catName').textContent = 'Check申报税务/工商';
+      $('catCount').textContent = '';
+      $('headerDate').style.display = 'none';
+      loadChecklist(); // 重新加载服务器最新数据，支持跨设备同步
+    } else {
+      const cat = categories[currentIndex];
+      $('catIcon').textContent = cat.icon;
+      $('catName').textContent = cat.name;
+      $('headerDate').style.display = 'none';
+      renderGrid();
+    }
+  }
+
+  /* ========== 日历 ========== */
+  function renderCalendar() {
+    const y = calendarDate.getFullYear();
+    const m = calendarDate.getMonth();
+    const today = new Date();
+
+    $('calendarYear').textContent = `${y}年`;
+    $('calendarMonth').textContent = `${m + 1}月`;
+    $('todoMonth').textContent = `${y}年${m + 1}月`;
+
+    // 欢迎语
+    const hour = today.getHours();
+    let greeting = '欢迎来到你的工作台';
+    if (hour < 12) greeting = '早上好，开启元气满满的一天';
+    else if (hour < 14) greeting = '中午好，记得休息一下';
+    else if (hour < 19) greeting = '下午好，保持专注';
+    else greeting = '晚上好，今天辛苦了';
+    $('welcomeTitle').textContent = greeting;
+
+    const firstDay = new Date(y, m, 1);
+    const lastDay = new Date(y, m + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    let startWeekday = firstDay.getDay(); // 0=Sun
+    if (startWeekday === 0) startWeekday = 7;
+
+    // 上月天数
+    const prevLastDay = new Date(y, m, 0).getDate();
+
+    let html = '<tr>';
+    let cellCount = 0;
+
+    // 上月补全
+    for (let i = startWeekday - 1; i > 0; i--) {
+      const d = prevLastDay - i + 1;
+      html += `<td class="other-month">${d}</td>`;
+      cellCount++;
+    }
+
+    // 当月
+    const todoData = getTodoData();
+    const monthKey = `${y}-${String(m+1).padStart(2,'0')}`;
+    const hasFixed = todoData.fixed && todoData.fixed.length > 0;
+    const hasMonthly = todoData.monthly[monthKey] && todoData.monthly[monthKey].length > 0;
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const isToday = y === today.getFullYear() && m === today.getMonth() && d === today.getDate();
+      const cls = isToday ? 'today' : '';
+
+      // 检查当天是否有固定事项（按日期匹配）
+      let hasTodo = false;
+      if (hasFixed) {
+        hasTodo = todoData.fixed.some(f => f.day == d);
+      }
+      if (!hasTodo && hasMonthly) {
+        // 简单标记：当月任意日期只要有待办就标记（更精确可以按具体日期存）
+        hasTodo = true;
+      }
+
+      const dot = hasTodo ? '<div class="calendar-dot"></div>' : '';
+      html += `<td class="${cls}" onclick="selectCalendarDay(${d})">${d}${dot}</td>`;
+      cellCount++;
+
+      if (cellCount % 7 === 0 && d < daysInMonth) {
+        html += '</tr><tr>';
+      }
+    }
+
+    // 下月补全
+    const remaining = (7 - (cellCount % 7)) % 7;
+    for (let d = 1; d <= remaining; d++) {
+      html += `<td class="other-month">${d}</td>`;
+    }
+
+    html += '</tr>';
+    $('calendarBody').innerHTML = html;
+  }
+
+  window.changeMonth = function(delta) {
+    calendarDate.setMonth(calendarDate.getMonth() + delta);
+    renderCalendar();
+  };
+  window.goToday = function() {
+    calendarDate = new Date();
+    renderCalendar();
+  };
+  window.selectCalendarDay = function(day) {
+    // 可以扩展：点击日期筛选当天的待办
+    showToast(`已选择 ${calendarDate.getFullYear()}年${calendarDate.getMonth()+1}月${day}日`, '📅');
+  };
+
+  /* ========== Checklist 申报税务/工商 ========== */
+  var checklistData = {
+    tax: { headers: ['公司名称','增值税','附加税','文化事业建设费','印花税','房产税','土地使用税','企业所得税','工会经费','财务报表','申报表','完税证明'], rows: [] },
+    license: { headers: ['公司名称','工商年检'], rows: [] }
+  };
+
+  function loadChecklist() {
+    // 先读本地缓存兜底
+    var localTime = 0;
+    try {
+      var cached = JSON.parse(localStorage.getItem(LS_CHECKLIST) || '{}');
+      if (cached.tax) checklistData.tax = cached.tax;
+      if (cached.license) checklistData.license = cached.license;
+      localTime = cached.updatedAt || 0;
+    } catch (e) {}
+
+    fetch('/api/checklist')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var serverTime = data.updatedAt || 0;
+        // 服务器数据更新才覆盖本地，防止本地已更新但服务器未同步时被覆盖
+        if (data.tax && data.license && serverTime >= localTime) {
+          checklistData.tax = data.tax;
+          checklistData.license = data.license;
+          checklistData.updatedAt = serverTime;
+          localStorage.setItem(LS_CHECKLIST, JSON.stringify(checklistData));
+        }
+        if (currentIndex === -2) renderChecklist();
+      })
+      .catch(function() {
+        // 服务器失败时本地缓存已兜底
+        if (currentIndex === -2) renderChecklist();
+      });
+  }
+
+  var checklistSaveTimer = null;
+  function saveChecklist() {
+    // 本地缓存始终先写，防止刷新丢失
+    checklistData.updatedAt = Date.now();
+    localStorage.setItem(LS_CHECKLIST, JSON.stringify(checklistData));
+    // 防抖：500ms 内多次变更只发一次请求
+    if (checklistSaveTimer) clearTimeout(checklistSaveTimer);
+    checklistSaveTimer = setTimeout(function() {
+      // 本地服务器
+      fetch('/api/checklist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(checklistData)
+      }).catch(function() {});
+      // Supabase
+      if (SB_ENABLED) {
+        sbSave('checklist', checklistData).catch(function() {});
+      }
+    }, 500);
+  }
+
+  function renderChecklist() {
+    renderChecklistTable('tax', 'taxTable');
+    renderChecklistTable('license', 'licenseTable');
+  }
+
+  function renderChecklistTable(type, tableId) {
+    var table = $(tableId);
+    var data = checklistData[type];
+    var html = '<thead><tr>';
+
+    data.headers.forEach(function(h, idx) {
+      html += '<th>';
+      html += '<div class="header-cell" contenteditable="true" onblur="updateChecklistHeader(\'' + type + '\',' + idx + ',this.innerText)">' + escapeHtml(h) + '</div>';
+      if (idx > 0) {
+        html += '<span class="col-remove" onclick="removeChecklistCol(\'' + type + '\',' + idx + ')" title="删除列">✕</span>';
+      }
+      html += '</th>';
+    });
+    html += '<th></th></tr></thead><tbody>';
+
+    data.rows.forEach(function(row, rIdx) {
+      html += '<tr>';
+      data.headers.forEach(function(h, cIdx) {
+        if (cIdx === 0) {
+          var val = row[h] || '';
+          html += '<td><input type="text" value="' + escapeHtml(val) + '" onchange="updateChecklistCell(\'' + type + '\',' + rIdx + ',\'' + h + '\',this.value)" oninput="updateChecklistCell(\'' + type + '\',' + rIdx + ',\'' + h + '\',this.value)"></td>';
+        } else {
+          var checked = row[h] ? 'checked' : '';
+          var mark = row[h] ? '✓' : '';
+          html += '<td><div class="ck-box ' + checked + '" onclick="toggleChecklistCell(\'' + type + '\',' + rIdx + ',\'' + h + '\')">' + mark + '</div></td>';
+        }
+      });
+      html += '<td><span class="row-remove" onclick="removeChecklistRow(\'' + type + '\',' + rIdx + ')" title="删除行">🗑️</span></td>';
+      html += '</tr>';
+    });
+
+    html += '</tbody>';
+    table.innerHTML = html;
+  }
+
+  window.updateChecklistHeader = function(type, idx, value) {
+    var oldName = checklistData[type].headers[idx];
+    var newName = (value || '').trim();
+    if (oldName === newName || newName === '') return;
+    checklistData[type].headers[idx] = newName;
+    // 同步更新所有行中的键名
+    checklistData[type].rows.forEach(function(row) {
+      if (row.hasOwnProperty(oldName)) {
+        row[newName] = row[oldName];
+        delete row[oldName];
+      }
+    });
+    saveChecklist();
+  };
+
+  window.updateChecklistCell = function(type, rowIdx, colName, value) {
+    if (!checklistData[type].rows[rowIdx]) return;
+    checklistData[type].rows[rowIdx][colName] = value;
+    saveChecklist();
+  };
+
+  window.toggleChecklistCell = function(type, rowIdx, colName) {
+    if (!checklistData[type].rows[rowIdx]) return;
+    checklistData[type].rows[rowIdx][colName] = !checklistData[type].rows[rowIdx][colName];
+    saveChecklist();
+    renderChecklistTable(type, type + 'Table');
+  };
+
+  window.addChecklistRow = function(type) {
+    var newRow = {};
+    checklistData[type].headers.forEach(function(h) {
+      newRow[h] = (h === '公司名称') ? '' : false;
+    });
+    checklistData[type].rows.push(newRow);
+    saveChecklist();
+    renderChecklistTable(type, type + 'Table');
+  };
+
+  window.addChecklistCol = function(type) {
+    var colNum = checklistData[type].headers.length;
+    var newHeader = '新列' + colNum;
+    checklistData[type].headers.push(newHeader);
+    checklistData[type].rows.forEach(function(row) {
+      row[newHeader] = false;
+    });
+    saveChecklist();
+    renderChecklistTable(type, type + 'Table');
+  };
+
+  window.removeChecklistRow = function(type, rowIdx) {
+    checklistData[type].rows.splice(rowIdx, 1);
+    saveChecklist();
+    renderChecklistTable(type, type + 'Table');
+  };
+
+  window.removeChecklistCol = function(type, colIdx) {
+    if (colIdx === 0) { showToast('公司名称列不能删除', '⚠️'); return; }
+    var header = checklistData[type].headers[colIdx];
+    checklistData[type].headers.splice(colIdx, 1);
+    checklistData[type].rows.forEach(function(row) {
+      delete row[header];
+    });
+    saveChecklist();
+    renderChecklistTable(type, type + 'Table');
+  };
+
+  window.resetChecklist = function(type) {
+    var label = type === 'tax' ? '申报税务' : '申报工商年检';
+    if (!confirm('确定要批量取消「' + label + '」的所有勾选吗？')) return;
+    checklistData[type].rows.forEach(function(row) {
+      checklistData[type].headers.forEach(function(h, idx) {
+        if (idx > 0) row[h] = false;
+      });
+    });
+    saveChecklist();
+    renderChecklistTable(type, type + 'Table');
+    showToast(label + ' 已批量重置', '🔄');
+  };
+
+  /* ========== 待办事项数据 ========== */
+  function getTodoData() {
+    try {
+      const fixed = JSON.parse(localStorage.getItem(LS_FIXED) || '[]');
+      const monthly = JSON.parse(localStorage.getItem(LS_MONTHLY) || '{}');
+      return { fixed, monthly };
+    } catch (e) {
+      return { fixed: [], monthly: {} };
+    }
+  }
+
+  function saveTodoData(data) {
+    data.updatedAt = Date.now();
+    localStorage.setItem(LS_FIXED, JSON.stringify(data.fixed || []));
+    localStorage.setItem(LS_MONTHLY, JSON.stringify(data.monthly || {}));
+    localStorage.setItem('workbench_todos_meta', JSON.stringify({ updatedAt: data.updatedAt }));
+    // 同步到本地服务器
+    fetch('/api/todos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).catch(function() {});
+    // 同步到 LeanCloud
+    if (SB_ENABLED) {
+      sbSave('todos', data).catch(function() {});
+    }
+  }
+
+  /* ========== 待办渲染 ========== */
+  function renderTodos() {
+    const data = getTodoData();
+    const now = new Date();
+    const monthKey = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+
+    // 固定事项：分离未完成 / 已完成
+    const fixedList = $('fixedTodoList');
+    const fixedDoneSection = $('fixedDoneSection');
+    const fixedDoneBody = $('fixedDoneBody');
+    const fixedDoneList = $('fixedDoneList');
+
+    if (!data.fixed || data.fixed.length === 0) {
+      fixedList.innerHTML = '<div class="todo-empty">暂无固定事项，点击「设置固定事项」添加</div>';
+      fixedDoneSection.style.display = 'none';
+    } else {
+      const fixedUndone = [];
+      const fixedDone = [];
+      data.fixed.forEach((f, idx) => {
+        const done = f.doneMonths && f.doneMonths.includes(monthKey);
+        if (done) fixedDone.push({ f, idx }); else fixedUndone.push({ f, idx });
+      });
+
+      if (fixedUndone.length === 0) {
+        fixedList.innerHTML = '<div class="todo-empty">本月固定事项已全部完成 🎉</div>';
+      } else {
+        fixedUndone.sort(function(a, b) { return (a.f.day || 0) - (b.f.day || 0); });
+        fixedList.innerHTML = fixedUndone.map(function(_ref) {
+          var f = _ref.f, idx = _ref.idx;
+          return '<div class="todo-item" onclick="toggleFixedTodo(' + idx + ')">\n            <div class="todo-checkbox"></div>\n            <div class="todo-text">' + escapeHtml(f.text) + ' <span style="color:#b0a8bf;font-size:12px;">(' + f.day + '日)</span></div>\n          </div>';
+        }).join('');
+      }
+
+      if (fixedDone.length > 0) {
+        fixedDone.sort(function(a, b) { return (a.f.day || 0) - (b.f.day || 0); });
+        fixedDoneSection.style.display = 'block';
+        $('fixedDoneCount').textContent = fixedDone.length;
+        fixedDoneList.innerHTML = fixedDone.map(function(_ref2) {
+          var f = _ref2.f, idx = _ref2.idx;
+          return '<div class="todo-item done" onclick="toggleFixedTodo(' + idx + ')">\n            <div class="todo-checkbox">✓</div>\n            <div class="todo-text">' + escapeHtml(f.text) + ' <span style="color:#b0a8bf;font-size:12px;">(' + f.day + '日)</span></div>\n          </div>';
+        }).join('');
+      } else {
+        fixedDoneSection.style.display = 'none';
+        fixedDoneBody.classList.remove('open');
+        $('fixedDoneIcon').textContent = '▶';
+      }
+    }
+
+    // 当月新增：分离未完成 / 已完成
+    const monthlyList = $('monthlyTodoList');
+    const monthlyDoneSection = $('monthlyDoneSection');
+    const monthlyDoneBody = $('monthlyDoneBody');
+    const monthlyDoneList = $('monthlyDoneList');
+    const monthItems = data.monthly[monthKey] || [];
+
+    if (monthItems.length === 0) {
+      monthlyList.innerHTML = '<div class="todo-empty">本月暂无新增事项</div>';
+      monthlyDoneSection.style.display = 'none';
+    } else {
+      const monthlyUndone = [];
+      const monthlyDone = [];
+      monthItems.forEach((item, idx) => {
+        if (item.done) monthlyDone.push({ item, idx }); else monthlyUndone.push({ item, idx });
+      });
+
+      if (monthlyUndone.length === 0) {
+        monthlyList.innerHTML = '<div class="todo-empty">本月新增事项已全部完成 🎉</div>';
+      } else {
+        monthlyList.innerHTML = monthlyUndone.map(({item, idx}) =>
+          `<div class="todo-item">
+            <div class="todo-checkbox" onclick="toggleMonthlyTodo(${idx})"></div>
+            <div class="todo-text" onclick="toggleMonthlyTodo(${idx})">${escapeHtml(item.text)}</div>
+            <span class="todo-delete" onclick="deleteMonthlyTodo(${idx}, event)">✕</span>
+          </div>`
+        ).join('');
+      }
+
+      if (monthlyDone.length > 0) {
+        monthlyDoneSection.style.display = 'block';
+        $('monthlyDoneCount').textContent = monthlyDone.length;
+        monthlyDoneList.innerHTML = monthlyDone.map(({item, idx}) =>
+          `<div class="todo-item done">
+            <div class="todo-checkbox" onclick="toggleMonthlyTodo(${idx})">✓</div>
+            <div class="todo-text" onclick="toggleMonthlyTodo(${idx})">${escapeHtml(item.text)}</div>
+            <span class="todo-delete" onclick="deleteMonthlyTodo(${idx}, event)">✕</span>
+          </div>`
+        ).join('');
+      } else {
+        monthlyDoneSection.style.display = 'none';
+        monthlyDoneBody.classList.remove('open');
+        $('monthlyDoneIcon').textContent = '▶';
+      }
+    }
+  }
+
+  window.toggleDoneSection = function(type) {
+    const body = $(type + 'DoneBody');
+    const icon = $(type + 'DoneIcon');
+    const isOpen = body.classList.contains('open');
+    if (isOpen) {
+      body.classList.remove('open');
+      icon.textContent = '▶';
+    } else {
+      body.classList.add('open');
+      icon.textContent = '▼';
+    }
+  };
+
+  window.toggleFixedTodo = function(idx) {
+    const data = getTodoData();
+    const now = new Date();
+    const monthKey = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+    if (!data.fixed[idx]) return;
+
+    if (!data.fixed[idx].doneMonths) data.fixed[idx].doneMonths = [];
+    const pos = data.fixed[idx].doneMonths.indexOf(monthKey);
+    if (pos >= 0) {
+      data.fixed[idx].doneMonths.splice(pos, 1);
+    } else {
+      data.fixed[idx].doneMonths.push(monthKey);
+    }
+    saveTodoData(data);
+    renderTodos();
+    renderCalendar();
+  };
+
+  window.toggleMonthlyTodo = function(idx) {
+    const data = getTodoData();
+    const now = new Date();
+    const monthKey = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+    if (!data.monthly[monthKey] || !data.monthly[monthKey][idx]) return;
+
+    data.monthly[monthKey][idx].done = !data.monthly[monthKey][idx].done;
+    saveTodoData(data);
+    renderTodos();
+  };
+
+  window.deleteMonthlyTodo = function(idx, event) {
+    event.stopPropagation();
+    const data = getTodoData();
+    const now = new Date();
+    const monthKey = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+    if (data.monthly[monthKey]) {
+      data.monthly[monthKey].splice(idx, 1);
+      if (data.monthly[monthKey].length === 0) delete data.monthly[monthKey];
+      saveTodoData(data);
+      renderTodos();
+      showToast('已删除', '🗑️');
+    }
+  };
+
+  window.addTodo = function() {
+    const input = $('newTodoInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const data = getTodoData();
+    const now = new Date();
+    const monthKey = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+    if (!data.monthly[monthKey]) data.monthly[monthKey] = [];
+    data.monthly[monthKey].push({ text, done: false, created: Date.now() });
+    saveTodoData(data);
+    input.value = '';
+    renderTodos();
+    renderCalendar();
+    showToast('已添加待办事项', '✅');
+  };
+
+  window.clearDoneTodos = function() {
+    const data = getTodoData();
+    const now = new Date();
+    const monthKey = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+
+    let resetCount = 0;
+
+    // 重置固定事项
+    if (data.fixed) {
+      data.fixed.forEach(f => {
+        if (f.doneMonths && f.doneMonths.includes(monthKey)) {
+          const pos = f.doneMonths.indexOf(monthKey);
+          if (pos >= 0) { f.doneMonths.splice(pos, 1); resetCount++; }
+        }
+      });
+    }
+
+    // 重置当月新增事项
+    if (data.monthly[monthKey]) {
+      data.monthly[monthKey].forEach(t => {
+        if (t.done) { t.done = false; resetCount++; }
+      });
+    }
+
+    if (resetCount > 0) {
+      saveTodoData(data);
+      renderTodos();
+      renderCalendar();
+      showToast(`已重置 ${resetCount} 项已完成事项`, '🔄');
+    } else {
+      showToast('没有已完成事项', 'ℹ️');
+    }
+  };
+
+  /* ========== 固定事项设置弹窗 ========== */
+  let fixedModalRows = [];
+
+  window.openFixedTodoModal = function() {
+    const data = getTodoData();
+    fixedModalRows = data.fixed.map(f => ({ ...f }));
+    // 默认至少提供 10 行空输入框，方便批量录入
+    const MIN_ROWS = 10;
+    while (fixedModalRows.length < MIN_ROWS) {
+      fixedModalRows.push({ text: '', day: 1 });
+    }
+    renderFixedModalRows();
+    $('fixedModal').classList.add('show');
+  };
+
+  window.closeFixedModal = function() {
+    $('fixedModal').classList.remove('show');
+  };
+
+  function renderFixedModalRows() {
+    const body = $('fixedModalBody');
+    body.innerHTML = fixedModalRows.map((row, idx) => `
+      <div class="fixed-todo-item">
+        <input type="text" placeholder="事项内容" value="${escapeHtml(row.text)}" onchange="updateFixedRow(${idx}, 'text', this.value)">
+        <span class="day-label">每月</span>
+        <input type="number" min="1" max="31" value="${row.day}" onchange="updateFixedRow(${idx}, 'day', this.value)">
+        <span class="day-label">日</span>
+        <span class="fixed-todo-remove" onclick="removeFixedRow(${idx})">✕</span>
+      </div>
+    `).join('');
+  }
+
+  window.updateFixedRow = function(idx, field, value) {
+    if (field === 'day') value = parseInt(value) || 1;
+    fixedModalRows[idx][field] = value;
+  };
+
+  window.removeFixedRow = function(idx) {
+    fixedModalRows.splice(idx, 1);
+    renderFixedModalRows();
+  };
+
+  window.addFixedRow = function() {
+    fixedModalRows.push({ text: '', day: 1 });
+    renderFixedModalRows();
+  };
+
+  window.addFixedRows = function(n) {
+    for (let i = 0; i < n; i++) {
+      fixedModalRows.push({ text: '', day: 1 });
+    }
+    renderFixedModalRows();
+  };
+
+  window.saveFixedTodos = function() {
+    const validRows = fixedModalRows
+      .filter(r => r.text.trim())
+      .map(r => ({
+        text: r.text.trim(),
+        day: Math.max(1, Math.min(31, parseInt(r.day) || 1)),
+        doneMonths: r.doneMonths || []
+      }));
+    const data = getTodoData();
+    data.fixed = validRows;
+    saveTodoData(data);
+    closeFixedModal();
+    renderTodos();
+    renderCalendar();
+    showToast('固定事项已保存', '💾');
+  };
+
+  // 点击弹窗外部关闭
+  $('fixedModal').addEventListener('click', function(e) {
+    if (e.target === this) closeFixedModal();
+  });
+
+  /* ========== 工具视图 ========== */
+  function normalizeFile(f) {
+    if (typeof f === 'string') return { name: f, url: null, path: null };
+    return { path: null, ...f };
+  }
+
+  function getFilteredFiles() {
+    const cat = categories[currentIndex];
+    if (!searchText.trim()) return cat.files.map(f => ({ ...normalizeFile(f), cat }));
+    const kw = searchText.toLowerCase();
+    const results = [];
+    categories.forEach(c => {
+      c.files.forEach(f => {
+        const nf = normalizeFile(f);
+        if (nf.name.toLowerCase().includes(kw)) {
+          results.push({ ...nf, cat: c });
+        }
+      });
+    });
+    return results;
+  }
+
+  function renderGrid() {
+    const items = getFilteredFiles();
+    const cat = categories[currentIndex];
+    $('catIcon').textContent = searchText ? '🔎' : cat.icon;
+    $('catName').textContent = searchText ? `搜索：${searchText}` : cat.name;
+    $('catCount').textContent = `${items.length} 个技能`;
+    $('sectionLabel').textContent = searchText ? '搜索结果' : cat.name + ' — 技能陈列';
+
+    const grid = $('grid');
+    if (items.length === 0) {
+      grid.innerHTML = `<div class="empty" style="grid-column:1/-1;">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">未找到匹配的技能</div>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = items.map(item => {
+      const c = item.cat;
+      const isWeb = !!item.url;
+      const isPath = !!item.path;
+      var ext = '';
+      if (item.path) {
+        var lastDot = item.path.lastIndexOf('.');
+        if (lastDot >= 0) ext = item.path.slice(lastDot + 1).toLowerCase();
+      } else if (item.name) {
+        var lastDot2 = item.name.lastIndexOf('.');
+        if (lastDot2 >= 0) ext = item.name.slice(lastDot2 + 1).toLowerCase();
+      }
+
+      var tagText, actionText;
+      if (isWeb) {
+        tagText = '网页工具';
+        actionText = '打开网页';
+      } else if (ext === 'py') {
+        tagText = 'Python 脚本';
+        actionText = '运行脚本';
+      } else if (ext === 'txt') {
+        tagText = '文本文件';
+        actionText = '打开文件';
+      } else if (['xlsx', 'xls', 'xlsm'].indexOf(ext) >= 0) {
+        tagText = 'Excel 工作簿';
+        actionText = '运行工具';
+      } else {
+        tagText = '本地文件';
+        actionText = '打开文件';
+      }
+
+      let clickAttr;
+      if (isWeb) {
+        clickAttr = `onclick="window.open('${escapeJs(item.url)}', '_blank')"`;
+      } else if (isPath) {
+        clickAttr = `onclick="openSkillByPath('${escapeJs(item.path)}')"`;
+      } else {
+        clickAttr = `onclick="openSkill('${escapeJs(item.name)}')"`;
+      }
+      return `<div class="card" style="--card-color:${c.color};--card-bg:${c.bg}" ${clickAttr}>
+        <div class="card-header">
+          <div class="card-icon">${c.icon}</div>
+          <div class="card-body">
+            <div class="card-name">${escapeHtml(item.name)}</div>
+            ${item.desc ? `<div class="card-desc">${escapeHtml(item.desc)}</div>` : ''}
+            <span class="card-tag">${tagText}</span>
+          </div>
+        </div>
+        <div class="card-action">
+          <span>▶</span> <span>${actionText}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  window.openSkill = async function(filename) {
+    try {
+      const res = await fetch(API_BASE + '/api/open', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ file: filename })
+      });
+      if (res.ok) {
+        showToast('正在启动：' + filename, '🚀');
+      } else {
+        const data = await res.json().catch(() => ({}));
+        showToast('启动失败：' + (data.error || '未知错误'), '❌');
+      }
+    } catch (e) {
+      showToast('无法连接到 localhost:8765，请确认已运行「启动工作台.bat」', '⚠️');
+    }
+  };
+
+  window.openSkillByPath = async function(filepath) {
+    try {
+      const res = await fetch(API_BASE + '/api/open', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path: filepath })
+      });
+      if (res.ok) {
+        const fname = filepath.replace(/\\/g, '/').split('/').pop();
+        showToast('正在启动：' + fname, '🚀');
+      } else {
+        const data = await res.json().catch(() => ({}));
+        showToast('启动失败：' + (data.error || '未知错误'), '❌');
+      }
+    } catch (e) {
+      showToast('无法连接到 localhost:8765，请确认已运行「启动工作台.bat」', '⚠️');
+    }
+  };
+
+  window.openWorkDir = async function() {
+    try {
+      const res = await fetch(API_BASE + '/api/open-folder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (res.ok) {
+        showToast('已打开工作目录', '📁');
+      } else {
+        showToast('打开目录失败', '❌');
+      }
+    } catch (e) {
+      showToast('无法连接到本地服务', '⚠️');
+    }
+  };
+
+  window.reloadPage = function() {
+    searchText = '';
+    $('searchInput').value = '';
+    renderNav();
+    switchView();
+    showToast('已刷新', '🔄');
+  };
+
+  window.toggleMobileMenu = function() {
+    $('sidebar').classList.toggle('open');
+    $('sidebarOverlay').classList.toggle('show');
+  };
+
+  $('searchInput').addEventListener('input', (e) => {
+    searchText = e.target.value;
+    renderGrid();
+  });
+
+  function escapeHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function escapeJs(s) {
+    return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n');
+  }
+
+  /* ========== 初始化 ========== */
+  updateHeaderDate();
+  renderNav();
+  switchView();
+  loadChecklist();
+
+  // 页面刷新/关闭前强制保存 checklist，避免 debounce Pending 丢失
+  window.addEventListener('beforeunload', function() {
+    if (checklistSaveTimer) {
+      clearTimeout(checklistSaveTimer);
+      checklistSaveTimer = null;
+    }
+    // 同步写本地缓存
+    checklistData.updatedAt = Date.now();
+    localStorage.setItem(LS_CHECKLIST, JSON.stringify(checklistData));
+    // 尝试同步发送到服务器（sendBeacon 比 fetch 在卸载时更可靠）
+    if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+      navigator.sendBeacon('/api/checklist', JSON.stringify(checklistData));
+    }
+  });
+
+  // 页面从后台切回前台时自动同步 checklist（手机端特别有用）
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden && currentIndex === -2) {
+      loadChecklist();
+    }
+  });
+
+  // 从服务器同步待办数据（支持跨设备）
+  fetch('/api/todos')
+    .then(function(r) { return r.json(); })
+    .then(function(serverData) {
+      var localData = getTodoData();
+      var serverHasData = (serverData.fixed && serverData.fixed.length > 0) ||
+        (serverData.monthly && Object.keys(serverData.monthly).length > 0);
+      var localHasData = (localData.fixed && localData.fixed.length > 0) ||
+        (localData.monthly && Object.keys(localData.monthly).length > 0);
+
+      if (serverHasData) {
+        // 服务器有数据，覆盖本地
+        localStorage.setItem(LS_FIXED, JSON.stringify(serverData.fixed || []));
+        localStorage.setItem(LS_MONTHLY, JSON.stringify(serverData.monthly || {}));
+        renderTodos();
+        renderCalendar();
+      } else if (localHasData) {
+        // 服务器为空但本地有数据，上传到服务器
+        saveTodoData(localData);
+      }
+    })
+    .catch(function() {});
+
+  // 从 Supabase 同步待办数据（外网访问）
+  if (SB_ENABLED) {
+    sbLoad('todos').then(function(cloudData) {
+      if (cloudData) {
+        var localData = getTodoData();
+        var cloudTime = cloudData.updatedAt || 0;
+        var localTime = 0;
+        try {
+          var meta = JSON.parse(localStorage.getItem('workbench_todos_meta') || '{}');
+          localTime = meta.updatedAt || 0;
+        } catch(e) {}
+        // 云端数据较新才覆盖
+        if (cloudTime >= localTime) {
+          localStorage.setItem(LS_FIXED, JSON.stringify(cloudData.fixed || []));
+          localStorage.setItem(LS_MONTHLY, JSON.stringify(cloudData.monthly || {}));
+          renderTodos();
+          renderCalendar();
+        } else if ((localData.fixed && localData.fixed.length > 0) ||
+                   (localData.monthly && Object.keys(localData.monthly).length > 0)) {
+          // 本地较新，上传到云端
+          saveTodoData(localData);
+        }
+      } else {
+        // 云端为空，上传本地数据
+        var localData = getTodoData();
+        if ((localData.fixed && localData.fixed.length > 0) ||
+            (localData.monthly && Object.keys(localData.monthly).length > 0)) {
+          saveTodoData(localData);
+        }
+      }
+    }).catch(function() {});
+
+    sbLoad('checklist').then(function(cloudData) {
+      if (cloudData) {
+        var localTime = 0;
+        try {
+          var cached = JSON.parse(localStorage.getItem(LS_CHECKLIST) || '{}');
+          localTime = cached.updatedAt || 0;
+        } catch(e) {}
+        var cloudTime = cloudData.updatedAt || 0;
+        if (cloudTime >= localTime) {
+          checklistData.tax = cloudData.tax || checklistData.tax;
+          checklistData.license = cloudData.license || checklistData.license;
+          checklistData.updatedAt = cloudTime;
+          localStorage.setItem(LS_CHECKLIST, JSON.stringify(checklistData));
+          if (currentIndex === -2) renderChecklist();
+        } else {
+          saveChecklist();
+        }
+      } else {
+        saveChecklist();
+      }
+    }).catch(function() {});
+  }
+
+  // 获取局域网 IP，方便手机访问
+  fetch('/api/info')
+    .then(function(r) { return r.json(); })
+    .then(function(info) {
+      if (info.lanIP) {
+        var el = $('networkInfo');
+        var ipEl = $('lanIp');
+        if (el && ipEl) {
+          ipEl.textContent = 'http://' + info.lanIP + ':' + info.port;
+          el.style.display = 'block';
+        }
+      }
+    })
+    .catch(function() {});
+
+  // 每分钟更新日期
+  setInterval(updateHeaderDate, 60000);
+})();
+</script>
+
+</body>
+</html>
