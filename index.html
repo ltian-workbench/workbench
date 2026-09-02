@@ -257,21 +257,56 @@
     font-size: 14px; opacity: 0.9;
     position: relative; z-index: 1;
   }
-  .network-info {
-    background: #f0f9ff;
-    border: 1px solid #bae6fd;
-    border-radius: var(--radius-sm);
-    padding: 10px 16px;
-    font-size: 13px;
-    color: #0369a1;
-    margin-top: 12px;
+  /* 待办进度条 */
+  .progress-card {
+    background: linear-gradient(135deg, #f8fafc, #ffffff);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-top: 16px;
+    box-shadow: 0 4px 12px rgba(37,99,235,0.08);
+    border: 1px solid #e2e8f0;
   }
-  .network-info span {
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .progress-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .progress-stats {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .progress-stats strong {
+    color: var(--success);
+    font-size: 24px;
+    margin-right: 2px;
+  }
+  .progress-bar-wrap {
+    height: 22px;
+    background: #e2e8f0;
+    border-radius: 11px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #22c55e);
+    border-radius: 11px;
+    transition: width 0.5s ease;
+    min-width: 0;
+    box-shadow: 0 2px 6px rgba(34,197,94,0.3);
+  }
+  .progress-footer {
+    margin-top: 10px;
+    font-size: 14px;
     font-weight: 600;
-    font-family: monospace;
-    background: #e0f2fe;
-    padding: 2px 8px;
-    border-radius: 4px;
+    color: #3b82f6;
+    text-align: right;
     margin-left: 4px;
   }
 
@@ -279,6 +314,11 @@
   .home-grid {
     display: grid;
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .home-col {
+    display: flex;
+    flex-direction: column;
     gap: 20px;
   }
   @media (min-width: 1100px) {
@@ -1089,114 +1129,126 @@
         <div class="welcome-sub">把普通日子过成有记录的成长史</div>
       </div>
 
-      <div class="network-info" id="networkInfo" style="display:none;">
-        📱 手机访问：<span id="lanIp"></span>
+      <div class="progress-card" id="progressCard">
+        <div class="progress-header">
+          <div class="progress-title">📊 本月待办进度</div>
+          <div class="progress-stats">已完成 <strong id="progressDone">0</strong> / <span id="progressTotal">0</span> 项</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+        </div>
+        <div class="progress-footer" id="progressPercent">0% 完成</div>
       </div>
 
       <div class="home-grid">
-        <!-- 日历 -->
-        <div class="panel">
-          <div class="panel-header">
-            <div class="panel-title">📅 当月日历</div>
-            <div class="panel-sub" id="calendarYear"></div>
-          </div>
-          <div class="calendar-header">
-            <div class="calendar-month" id="calendarMonth"></div>
-            <div class="calendar-nav">
-              <button onclick="changeMonth(-1)">◀</button>
-              <button onclick="goToday()">今</button>
-              <button onclick="changeMonth(1)">▶</button>
+        <!-- 左列：常用快捷 + 日历 -->
+        <div class="home-col">
+          <!-- 常用快捷 -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">⚡ 常用快捷</div>
             </div>
-          </div>
-          <table class="calendar-table">
-            <thead>
-              <tr>
-                <th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th>
-              </tr>
-            </thead>
-            <tbody id="calendarBody"></tbody>
-          </table>
-        </div>
-
-        <!-- 待办事项 -->
-        <div class="panel">
-          <div class="panel-header">
-            <div class="panel-title">✅ 待办事项</div>
-            <div class="panel-sub" id="todoMonth"></div>
-          </div>
-
-          <div class="todo-section">
-            <div class="todo-section-title">📌 每月固定事项</div>
-            <div class="todo-list" id="fixedTodoList"></div>
-            <div class="done-section" id="fixedDoneSection" style="display:none;">
-              <div class="done-header" onclick="toggleDoneSection('fixed')">
-                <span id="fixedDoneIcon">▶</span>
-                <span>已完成 (<span id="fixedDoneCount">0</span>)</span>
+            <div class="quick-links">
+              <div class="quick-item" onclick="window.open('https://www.qcc.com/web/user/follow/new','_blank')">
+                <div class="quick-icon">🔍</div>
+                <div class="quick-info">
+                  <div class="quick-name">企查查</div>
+                  <div class="quick-desc">企业信息查询</div>
+                </div>
               </div>
-              <div class="done-body" id="fixedDoneBody">
-                <div class="todo-list" id="fixedDoneList"></div>
+              <div class="quick-item" onclick="window.open('https://trip.larkenterprise.com/sheets/Xu5vsP0fdhfXjatHRUrcW8Dbnnf','_blank')">
+                <div class="quick-icon">📄</div>
+                <div class="quick-info">
+                  <div class="quick-name">公司税号</div>
+                  <div class="quick-desc">飞书表格</div>
+                </div>
+              </div>
+              <div class="quick-item" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\注意：华南地区分公司名录-每月检查无公司代码是否有代码.xlsx')">
+                <div class="quick-icon">📊</div>
+                <div class="quick-info">
+                  <div class="quick-name">华南公司名录检查</div>
+                  <div class="quick-desc">每月检查无公司代码是否有代码</div>
+                </div>
+              </div>
+              <div class="quick-item" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\申报公司清单.xlsx')">
+                <div class="quick-icon">📋</div>
+                <div class="quick-info">
+                  <div class="quick-name">华南申报公司清单</div>
+                  <div class="quick-desc">申报公司清单.xlsx</div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="todo-section">
-            <div class="todo-section-title">📝 当月新增事项</div>
-            <div class="todo-list" id="monthlyTodoList"></div>
-            <div class="done-section" id="monthlyDoneSection" style="display:none;">
-              <div class="done-header" onclick="toggleDoneSection('monthly')">
-                <span id="monthlyDoneIcon">▶</span>
-                <span>已完成 (<span id="monthlyDoneCount">0</span>)</span>
-              </div>
-              <div class="done-body" id="monthlyDoneBody">
-                <div class="todo-list" id="monthlyDoneList"></div>
+          <!-- 日历 -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">📅 当月日历</div>
+              <div class="panel-sub" id="calendarYear"></div>
+            </div>
+            <div class="calendar-header">
+              <div class="calendar-month" id="calendarMonth"></div>
+              <div class="calendar-nav">
+                <button onclick="changeMonth(-1)">◀</button>
+                <button onclick="goToday()">今</button>
+                <button onclick="changeMonth(1)">▶</button>
               </div>
             </div>
-          </div>
-
-          <div class="todo-input-row">
-            <input type="text" class="todo-input" id="newTodoInput" placeholder="输入新待办事项，按回车添加..." onkeydown="if(event.key==='Enter')addTodo()">
-            <button class="btn btn-primary" onclick="addTodo()">➕ 添加</button>
-          </div>
-
-          <div class="todo-actions">
-            <button class="btn" onclick="openFixedTodoModal()">⚙️ 设置固定事项</button>
-            <button class="btn" onclick="clearDoneTodos()">🧹 清除已完成</button>
+            <table class="calendar-table">
+              <thead>
+                <tr>
+                  <th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th>
+                </tr>
+              </thead>
+              <tbody id="calendarBody"></tbody>
+            </table>
           </div>
         </div>
 
-        <!-- 常用快捷 -->
-        <div class="panel">
-          <div class="panel-header">
-            <div class="panel-title">⚡ 常用快捷</div>
-          </div>
-          <div class="quick-links">
-            <div class="quick-item" onclick="window.open('https://www.qcc.com/web/user/follow/new','_blank')">
-              <div class="quick-icon">🔍</div>
-              <div class="quick-info">
-                <div class="quick-name">企查查</div>
-                <div class="quick-desc">企业信息查询</div>
+        <!-- 右列：待办事项 -->
+        <div class="home-col">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">✅ 待办事项</div>
+              <div class="panel-sub" id="todoMonth"></div>
+            </div>
+
+            <div class="todo-section">
+              <div class="todo-section-title">📌 每月固定事项</div>
+              <div class="todo-list" id="fixedTodoList"></div>
+              <div class="done-section" id="fixedDoneSection" style="display:none;">
+                <div class="done-header" onclick="toggleDoneSection('fixed')">
+                  <span id="fixedDoneIcon">▶</span>
+                  <span>已完成 (<span id="fixedDoneCount">0</span>)</span>
+                </div>
+                <div class="done-body" id="fixedDoneBody">
+                  <div class="todo-list" id="fixedDoneList"></div>
+                </div>
               </div>
             </div>
-            <div class="quick-item" onclick="window.open('https://trip.larkenterprise.com/sheets/Xu5vsP0fdhfXjatHRUrcW8Dbnnf','_blank')">
-              <div class="quick-icon">📄</div>
-              <div class="quick-info">
-                <div class="quick-name">公司税号</div>
-                <div class="quick-desc">飞书表格</div>
+
+            <div class="todo-section">
+              <div class="todo-section-title">📝 当月新增事项</div>
+              <div class="todo-list" id="monthlyTodoList"></div>
+              <div class="done-section" id="monthlyDoneSection" style="display:none;">
+                <div class="done-header" onclick="toggleDoneSection('monthly')">
+                  <span id="monthlyDoneIcon">▶</span>
+                  <span>已完成 (<span id="monthlyDoneCount">0</span>)</span>
+                </div>
+                <div class="done-body" id="monthlyDoneBody">
+                  <div class="todo-list" id="monthlyDoneList"></div>
+                </div>
               </div>
             </div>
-            <div class="quick-item" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\注意：华南地区分公司名录-每月检查无公司代码是否有代码.xlsx')">
-              <div class="quick-icon">📊</div>
-              <div class="quick-info">
-                <div class="quick-name">华南公司名录检查</div>
-                <div class="quick-desc">每月检查无公司代码是否有代码</div>
-              </div>
+
+            <div class="todo-input-row">
+              <input type="text" class="todo-input" id="newTodoInput" placeholder="输入新待办事项，按回车添加..." onkeydown="if(event.key==='Enter')addTodo()">
+              <button class="btn btn-primary" onclick="addTodo()">➕ 添加</button>
             </div>
-            <div class="quick-item" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\申报公司清单.xlsx')">
-              <div class="quick-icon">📋</div>
-              <div class="quick-info">
-                <div class="quick-name">华南申报公司清单</div>
-                <div class="quick-desc">申报公司清单.xlsx</div>
-              </div>
+
+            <div class="todo-actions">
+              <button class="btn" onclick="openFixedTodoModal()">⚙️ 设置固定事项</button>
+              <button class="btn" onclick="clearDoneTodos()">🧹 清除已完成</button>
             </div>
           </div>
         </div>
@@ -1523,7 +1575,7 @@
         { name: '华南利润表汇总', url: 'https://trip.larkenterprise.com/base/VKOKb6NRHat6opspN3jcoeFSnjb?table=blk12SFiWcpJLJPR' },
         { name: '华南金融外币兑换业务分析', url: 'https://trip.larkenterprise.com/base/WuxfbMgEXaIAfjsrT0ycCFSynMb?table=blk03FBM0XUTuT7a' },
         { name: '广州国旅度假汇总分析', url: 'https://trip.larkenterprise.com/base/EwevbazKGalAyIsCLD1c3Zxynfc?table=blkhGE0SRiCAVEgh' },
-        { name: '华南净营收及纳税情况分析', url: 'https://trip.larkenterprise.com/base/MV4Nbq3tvapGI2s8IescEo8Ynmh?table=tblE15RRwPmnHJzu&view=vewOxeahuv' },
+        { name: '华南净营收及纳税情况分析', url: 'https://trip.larkenterprise.com/base/MV4Nbq3tvapGI2s8IescEo8Ynmh?table=blkOeHSDpZbYUyRz' },
         { name: '华南税金汇总表（入库口径）', url: 'https://trip.larkenterprise.com/base/JPGxbv77Fa8ufxsdungcs3qpnIh?table=blkkCdl67ChuKNHO' },
         { name: '广州/番禺/广州国旅净营收及纳税情况汇总', url: 'https://trip.larkenterprise.com/base/SzTjbT5raaIteSsw4j5cMmGrnkd?table=blkPDJVSY5nZen3G' },
         { name: '珠海携程净营收及入库税金分析', url: 'https://trip.larkenterprise.com/base/BpQPbAHvNaHGtfs0xAzcdG0rnkX?table=blkUPLrg7oMQrdaw' },
@@ -2080,6 +2132,27 @@
         $('monthlyDoneIcon').textContent = '▶';
       }
     }
+
+    // 更新进度条统计
+    var totalFixed = data.fixed ? data.fixed.length : 0;
+    var doneFixed = 0;
+    if (data.fixed) {
+      data.fixed.forEach(function(f) {
+        if (f.doneMonths && f.doneMonths.indexOf(monthKey) !== -1) doneFixed++;
+      });
+    }
+    var totalMonthly = monthItems.length;
+    var doneMonthly = 0;
+    monthItems.forEach(function(item) {
+      if (item.done) doneMonthly++;
+    });
+    var total = totalFixed + totalMonthly;
+    var done = doneFixed + doneMonthly;
+    var percent = total > 0 ? Math.round(done / total * 100) : 0;
+    $('progressDone').textContent = done;
+    $('progressTotal').textContent = total;
+    $('progressBar').style.width = percent + '%';
+    $('progressPercent').textContent = percent + '% 完成';
   }
 
   window.toggleDoneSection = function(type) {
@@ -2542,21 +2615,6 @@
       }
     }).catch(function() {});
   }
-
-  // 获取局域网 IP，方便手机访问
-  fetch('/api/info')
-    .then(function(r) { return r.json(); })
-    .then(function(info) {
-      if (info.lanIP) {
-        var el = $('networkInfo');
-        var ipEl = $('lanIp');
-        if (el && ipEl) {
-          ipEl.textContent = 'http://' + info.lanIP + ':' + info.port;
-          el.style.display = 'block';
-        }
-      }
-    })
-    .catch(function() {});
 
   // 每分钟更新日期
   setInterval(updateHeaderDate, 60000);
