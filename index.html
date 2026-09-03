@@ -579,44 +579,6 @@
     display: flex;
   }
 
-  .quick-links {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .quick-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    background: #faf9fb;
-    border-radius: var(--radius-sm);
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .quick-item:hover {
-    border-color: var(--border);
-    background: #f5f3f8;
-  }
-  .quick-icon {
-    font-size: 22px;
-    flex-shrink: 0;
-  }
-  .quick-info {
-    flex: 1;
-    min-width: 0;
-  }
-  .quick-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-  }
-  .quick-desc {
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin-top: 2px;
-  }
 
   /* 固定事项设置弹窗 */
   .modal-overlay {
@@ -1042,6 +1004,146 @@
     color: var(--danger);
   }
 
+  /* 数据看板 iframe */
+  .dashboard-iframe-wrap {
+    width: 100%;
+    height: calc(100vh - 80px);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+  .dashboard-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* 可折叠子菜单 */
+  .nav-group {
+    margin: 2px 0;
+  }
+  .nav-group-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    gap: 10px;
+    user-select: none;
+  }
+  .nav-group-header:hover {
+    background: rgba(255,255,255,0.08);
+  }
+  .nav-group-header.active {
+    background: rgba(255,255,255,0.12);
+  }
+  .nav-group-header .nav-arrow {
+    margin-left: auto;
+    font-size: 11px;
+    transition: transform 0.2s;
+    opacity: 0.7;
+  }
+  .nav-group-header.open .nav-arrow {
+    transform: rotate(90deg);
+  }
+  .nav-children {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+    padding-left: 8px;
+  }
+  .nav-children.open {
+    max-height: 600px;
+  }
+  .nav-child-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px 8px 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    transition: all 0.2s;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-child-item:hover {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+  }
+  .nav-child-item.active {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+  }
+  .nav-child-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    flex-shrink: 0;
+  }
+  .nav-child-item.active .nav-child-dot {
+    background: var(--success);
+  }
+
+  /* 常用快捷横向彩色方块 */
+  .quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .quick-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(25% - 6px);
+    min-width: 80px;
+    min-height: 92px;
+    padding: 10px 6px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    gap: 4px;
+    text-align: center;
+    border: 1px solid transparent;
+  }
+  .quick-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  }
+  .quick-card-icon {
+    font-size: 22px;
+    line-height: 1;
+  }
+  .quick-card-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.95);
+    line-height: 1.2;
+  }
+  .quick-card-desc {
+    font-size: 9px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.2;
+  }
+  @media (max-width: 600px) {
+    .quick-card {
+      width: calc(25% - 6px);
+      min-width: 0;
+      min-height: 76px;
+      padding: 8px 4px;
+    }
+    .quick-card-icon { font-size: 18px; }
+    .quick-card-name { font-size: 9px; }
+    .quick-card-desc { font-size: 8px; }
+  }
+
   /* ===== 响应式 ===== */
   @media (max-width: 900px) {
     .sidebar {
@@ -1086,7 +1188,7 @@
 <aside class="sidebar" id="sidebar">
   <div class="brand">
     <div class="brand-top">
-      <div class="brand-icon">💼</div>
+      <div class="brand-icon">💎</div>
       <div class="brand-title">财税工作台</div>
     </div>
     <div class="brand-sub">Finance · Tax · Workbench</div>
@@ -1149,33 +1251,25 @@
               <div class="panel-title">⚡ 常用快捷</div>
             </div>
             <div class="quick-links">
-              <div class="quick-item" onclick="window.open('https://www.qcc.com/web/user/follow/new','_blank')">
-                <div class="quick-icon">🔍</div>
-                <div class="quick-info">
-                  <div class="quick-name">企查查</div>
-                  <div class="quick-desc">企业信息查询</div>
-                </div>
+              <div class="quick-card" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);" onclick="window.open('https://www.qcc.com/web/user/follow/new','_blank')">
+                <div class="quick-card-name">企查查</div>
+                <div class="quick-card-icon">🔍</div>
+                <div class="quick-card-desc">企业信息查询</div>
               </div>
-              <div class="quick-item" onclick="window.open('https://trip.larkenterprise.com/sheets/Xu5vsP0fdhfXjatHRUrcW8Dbnnf','_blank')">
-                <div class="quick-icon">📄</div>
-                <div class="quick-info">
-                  <div class="quick-name">公司税号</div>
-                  <div class="quick-desc">飞书表格</div>
-                </div>
+              <div class="quick-card" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);" onclick="window.open('https://trip.larkenterprise.com/sheets/Xu5vsP0fdhfXjatHRUrcW8Dbnnf','_blank')">
+                <div class="quick-card-name">公司税号</div>
+                <div class="quick-card-icon">📄</div>
+                <div class="quick-card-desc">飞书表格</div>
               </div>
-              <div class="quick-item" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\注意：华南地区分公司名录-每月检查无公司代码是否有代码.xlsx')">
-                <div class="quick-icon">📊</div>
-                <div class="quick-info">
-                  <div class="quick-name">华南公司名录检查</div>
-                  <div class="quick-desc">每月检查无公司代码是否有代码</div>
-                </div>
+              <div class="quick-card" style="background: linear-gradient(135deg, #f59e0b, #f97316);" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\注意：华南地区分公司名录-每月检查无公司代码是否有代码.xlsx')">
+                <div class="quick-card-name">公司名录</div>
+                <div class="quick-card-icon">📊</div>
+                <div class="quick-card-desc">每月检查</div>
               </div>
-              <div class="quick-item" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\申报公司清单.xlsx')">
-                <div class="quick-icon">📋</div>
-                <div class="quick-info">
-                  <div class="quick-name">华南申报公司清单</div>
-                  <div class="quick-desc">申报公司清单.xlsx</div>
-                </div>
+              <div class="quick-card" style="background: linear-gradient(135deg, #10b981, #22c55e);" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\申报公司清单.xlsx')">
+                <div class="quick-card-name">申报清单</div>
+                <div class="quick-card-icon">📋</div>
+                <div class="quick-card-desc">华南公司</div>
               </div>
             </div>
           </div>
@@ -1287,6 +1381,12 @@
       </div>
     </div>
 
+    <div id="dashboardView" style="display:none;">
+      <div class="dashboard-iframe-wrap" id="dashboardIframeWrap">
+        <iframe id="dashboardIframe" class="dashboard-iframe" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+
     <div id="toolView" style="display:none;">
       <div class="section-head">
         <div class="section-label" id="sectionLabel">技能陈列</div>
@@ -1353,6 +1453,21 @@
   var IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
 
   const basePath = 'D:\\tools\\ExcelVBA工具箱\\';
+
+  // 财务税务数据看板子标签
+  const dashboardItems = [
+    { name: '华南净营收/纳税总览', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnbFShKgTXO3lyljLEhtVkxg' },
+    { name: '番禺区净营收/纳税看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnt1dPi5C4G0LjWra9aEnGPh' },
+    { name: '广州市净营收/纳税看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn5iLLEjJBs1fOxyhT4dfNoC' },
+    { name: '广州国旅净营收/纳税看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnlTuLiCq2wlppVbt13TWphX' },
+    { name: '珠海携程净营收/纳税看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnfKxtrpmRyz3Nxti1WfPkVg' },
+    { name: '广州国旅度假产品净营收分析', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn2mKZvJPOkoPeWaKA2AiJNe' },
+    { name: '广州国旅度假产品产量分析', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn2x25HkdiKbDaWqxwAqLMGz' },
+    { name: '华南金融外币兑换业务总览', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn0yExl7190dg8MSJTnyYZee' },
+    { name: '华南金融外币兑换业务网点分析', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn9pFFYqAeqK3pDveoBAuxsc' },
+    { name: '华南税金搜索看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnuhkg3ZqCFzKnk1oKYsFEMb' },
+    { name: '华南利润表搜索看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn79FZxh3QYQFzOa1oQ1iPhe' }
+  ];
 
   const categories = [
     {
@@ -1694,6 +1809,27 @@
       <span class="nav-badge">Check</span>
     </div>`;
 
+    // 财务税务数据看板（可折叠子菜单）
+    const isDashOpen = window.__dashOpen || false;
+    const isAnyDashActive = currentIndex >= 1000 && currentIndex < 1000 + dashboardItems.length;
+    const dashHeaderCls = isAnyDashActive ? 'nav-group-header active' : 'nav-group-header';
+    html += `<div class="nav-group">
+      <div class="${dashHeaderCls} ${isDashOpen ? 'open' : ''}" onclick="toggleDashboardMenu(event)">
+        <span class="nav-icon">📊</span>
+        <span class="nav-text">财务税务数据看板</span>
+        <span class="nav-arrow">▶</span>
+      </div>
+      <div class="nav-children ${isDashOpen ? 'open' : ''}">`;
+    dashboardItems.forEach((item, idx) => {
+      const realIdx = 1000 + idx;
+      const childCls = currentIndex === realIdx ? 'nav-child-item active' : 'nav-child-item';
+      html += `<div class="${childCls}" data-idx="${realIdx}" onclick="switchViewToDashboard(${idx}, event)">
+        <span class="nav-child-dot"></span>
+        <span class="nav-child-text">${escapeHtml(item.name)}</span>
+      </div>`;
+    });
+    html += `</div></div>`;
+
     categories.forEach((cat, i) => {
       const cls = i === currentIndex ? 'nav-item active' : 'nav-item';
       html += `<div class="${cls}" data-idx="${i}">
@@ -1718,14 +1854,34 @@
     });
   }
 
+  /* ========== 数据看板 ========== */
+  window.toggleDashboardMenu = function(event) {
+    event.stopPropagation();
+    window.__dashOpen = !window.__dashOpen;
+    renderNav();
+  };
+  window.switchViewToDashboard = function(idx, event) {
+    event.stopPropagation();
+    currentIndex = 1000 + idx;
+    searchText = '';
+    $('searchInput').value = '';
+    renderNav();
+    switchView();
+    $('sidebar').classList.remove('open');
+    $('sidebarOverlay').classList.remove('show');
+  };
+
   /* ========== 视图切换 ========== */
   function switchView() {
     const isHome = currentIndex === -1;
     const isCheck = currentIndex === -2;
+    const isDashboard = currentIndex >= 1000 && currentIndex < 1000 + dashboardItems.length;
+    const dashIdx = isDashboard ? currentIndex - 1000 : -1;
     $('homeView').style.display = isHome ? 'flex' : 'none';
-    $('toolView').style.display = (isHome || isCheck) ? 'none' : 'block';
+    $('toolView').style.display = (isHome || isCheck || isDashboard) ? 'none' : 'block';
     $('checklistView').style.display = isCheck ? 'flex' : 'none';
-    $('searchBox').style.display = (isHome || isCheck) ? 'none' : 'block';
+    $('dashboardView').style.display = isDashboard ? 'block' : 'none';
+    $('searchBox').style.display = (isHome || isCheck || isDashboard) ? 'none' : 'block';
 
     if (isHome) {
       $('catIcon').textContent = '🏠';
@@ -1739,7 +1895,14 @@
       $('catName').textContent = 'Check申报税务/工商';
       $('catCount').textContent = '';
       $('headerDate').style.display = 'none';
-      loadChecklist(); // 重新加载服务器最新数据，支持跨设备同步
+      loadChecklist();
+    } else if (isDashboard) {
+      const item = dashboardItems[dashIdx];
+      $('catIcon').textContent = '📊';
+      $('catName').textContent = item.name;
+      $('catCount').textContent = '';
+      $('headerDate').style.display = 'none';
+      $('dashboardIframe').src = item.url;
     } else {
       const cat = categories[currentIndex];
       $('catIcon').textContent = cat.icon;
@@ -2575,8 +2738,10 @@
           var meta = JSON.parse(localStorage.getItem('workbench_todos_meta') || '{}');
           localTime = meta.updatedAt || 0;
         } catch(e) {}
-        // 云端数据较新才覆盖
-        if (cloudTime >= localTime) {
+        // 云端数据较新且非空才覆盖
+        var cloudHasRealData = (cloudData.fixed && cloudData.fixed.length > 0) ||
+                               (cloudData.monthly && Object.keys(cloudData.monthly).length > 0);
+        if (cloudTime >= localTime && cloudHasRealData) {
           localStorage.setItem(LS_FIXED, JSON.stringify(cloudData.fixed || []));
           localStorage.setItem(LS_MONTHLY, JSON.stringify(cloudData.monthly || {}));
           renderTodos();
@@ -2604,7 +2769,9 @@
           localTime = cached.updatedAt || 0;
         } catch(e) {}
         var cloudTime = cloudData.updatedAt || 0;
-        if (cloudTime >= localTime) {
+        var checklistHasRealData = (cloudData.tax && cloudData.tax.rows && cloudData.tax.rows.length > 0) ||
+                                   (cloudData.license && cloudData.license.rows && cloudData.license.rows.length > 0);
+        if (cloudTime >= localTime && checklistHasRealData) {
           checklistData.tax = cloudData.tax || checklistData.tax;
           checklistData.license = cloudData.license || checklistData.license;
           checklistData.updatedAt = cloudTime;
