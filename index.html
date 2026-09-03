@@ -1013,11 +1013,13 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     border: 1px solid var(--border);
     background: #fff;
+    position: relative;
   }
   .dashboard-iframe {
     width: 100%;
     height: 100%;
     border: none;
+    transform-origin: top left;
   }
 
   /* 可折叠子菜单 */
@@ -1854,7 +1856,35 @@
     });
   }
 
-  /* ========== 数据看板 ========== */
+  /* ========== 数据看板缩放（手机端显示电脑全貌） ========== */
+  function resizeDashboardIframe() {
+    var wrap = $('dashboardIframeWrap');
+    var iframe = $('dashboardIframe');
+    if (!wrap || !iframe) return;
+
+    // 仅在看板可见且屏幕较窄时缩放
+    if ($('dashboardView').style.display === 'none' || window.innerWidth > 900) {
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.transform = 'none';
+      iframe.style.position = 'static';
+      return;
+    }
+
+    var targetWidth = 1440; // 模拟桌面宽度，让飞书按桌面版渲染
+    var actualWidth = wrap.clientWidth;
+    var scale = actualWidth / targetWidth;
+    var baseHeight = wrap.clientHeight;
+
+    iframe.style.position = 'absolute';
+    iframe.style.left = '0';
+    iframe.style.top = '0';
+    iframe.style.width = targetWidth + 'px';
+    iframe.style.height = (baseHeight / scale) + 'px';
+    iframe.style.transform = 'scale(' + scale + ')';
+  }
+
+  window.addEventListener('resize', resizeDashboardIframe);
   window.toggleDashboardMenu = function(event) {
     event.stopPropagation();
     window.__dashOpen = !window.__dashOpen;
@@ -1903,6 +1933,7 @@
       $('catCount').textContent = '';
       $('headerDate').style.display = 'none';
       $('dashboardIframe').src = item.url;
+      setTimeout(resizeDashboardIframe, 100);
     } else {
       const cat = categories[currentIndex];
       $('catIcon').textContent = cat.icon;
@@ -2681,6 +2712,10 @@
   renderNav();
   switchView();
   loadChecklist();
+
+  // 看板 iframe 加载完成后重新计算缩放
+  $('dashboardIframe').addEventListener('load', resizeDashboardIframe);
+  setTimeout(resizeDashboardIframe, 500);
 
   // 页面刷新/关闭前强制保存 checklist，避免 debounce Pending 丢失
   window.addEventListener('beforeunload', function() {
