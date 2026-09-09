@@ -480,6 +480,75 @@
     background: rgba(255,255,255,0.7);
   }
 
+  /* 常用网站快捷入口 */
+  .site-links {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+  }
+  .site-card {
+    aspect-ratio: 1 / 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px 6px;
+    background: transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border: none;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(15,23,42,0.08);
+    gap: 6px;
+  }
+  .site-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--site-gradient);
+    opacity: 0.7;
+    border-radius: inherit;
+    z-index: 0;
+    transition: opacity 0.18s ease;
+  }
+  .site-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+  }
+  .site-card:hover::before {
+    opacity: 0.85;
+  }
+  .site-card-icon {
+    position: relative;
+    z-index: 1;
+    font-size: 24px;
+    line-height: 1;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+  }
+  .site-card-name {
+    position: relative;
+    z-index: 1;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: rgba(255,255,255,0.95);
+    word-break: break-all;
+  }
+  @media (max-width: 1100px) {
+    .site-links { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .site-card-icon { font-size: 22px; }
+    .site-card-name { font-size: 11px; }
+  }
+  @media (max-width: 600px) {
+    .site-links { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .site-card-icon { font-size: 20px; }
+    .site-card-name { font-size: 10px; }
+  }
+
   /* 待办事项 */
   .todo-section {
     margin-bottom: 16px;
@@ -1340,6 +1409,63 @@
               </thead>
               <tbody id="calendarBody"></tbody>
             </table>
+          </div>
+
+          <!-- 常用网站快捷入口 -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">🌐 常用网站快捷入口</div>
+            </div>
+            <div class="site-links">
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);" onclick="window.open('http://iam.basebiz.ctripcorp.com/bbzoffline/home?lk_jump_to_browser=true','_blank')">
+                <div class="site-card-icon">🏠</div>
+                <div class="site-card-name">Offline首页</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #3b82f6, #2563eb);" onclick="window.open('http://ebs.cn1.global.ctrip.com/OA_HTML/AppsLocalLogin.jsp','_blank')">
+                <div class="site-card-icon">🔐</div>
+                <div class="site-card-name">EBS Login</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #4f46e5, #3730a3);" onclick="window.open('http://accounting.ctripcorp.com/home','_blank')">
+                <div class="site-card-icon">📊</div>
+                <div class="site-card-name">EBS结账平台</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #10b981, #059669);" onclick="window.open('http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html','_blank')">
+                <div class="site-card-icon">📋</div>
+                <div class="site-card-name">OA系统</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #f97316, #ea580c);" onclick="window.open('http://tax.ard.ctripcorp.com/taxMain/','_blank')">
+                <div class="site-card-icon">💰</div>
+                <div class="site-card-name">携程税务系统</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #06b6d4, #0891b2);" onclick="window.open('https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin','_blank')">
+                <div class="site-card-icon">📈</div>
+                <div class="site-card-name">统计云互联网</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #ef4444, #dc2626);" onclick="window.open('https://etax.guangdong.chinatax.gov.cn:8443/','_blank')">
+                <div class="site-card-icon">🏛️</div>
+                <div class="site-card-name">广东省电子税务局</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #dc2626, #991b1b);" onclick="window.open('https://etax.jiangxi.chinatax.gov.cn:8443/loginb/','_blank')">
+                <div class="site-card-icon">🏛️</div>
+                <div class="site-card-name">江西省电子税务局</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #f59e0b, #d97706);" onclick="window.open('http://digitaleinvoiceissue.ard.ctripcorp.com/userCenterAlone-ui/addTaxLogin','_blank')">
+                <div class="site-card-icon">🧾</div>
+                <div class="site-card-name">百旺云发票平台</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #3b82f6, #06b6d4);" onclick="window.open('https://trip.larkenterprise.com/share/base/form/shrcnuI8kRm4WkDyln3mb7bJ3Tg','_blank')">
+                <div class="site-card-icon">📝</div>
+                <div class="site-card-name">数据需求收集表</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #14b8a6, #0d9488);" onclick="window.open('https://trip.larkenterprise.com/base/XfsDbnrqyaMDRrsQ4F5cb2iWnEg?table=tblNYGzzUKlarzPq&view=vew3CnmX2b','_blank')">
+                <div class="site-card-icon">📊</div>
+                <div class="site-card-name">数据需求多维表格</div>
+              </div>
+              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);" onclick="window.open('https://ycfz.hengqin.gov.cn/#/home','_blank')">
+                <div class="site-card-icon">🏛️</div>
+                <div class="site-card-name">横琴惠企利民服务平台</div>
+              </div>
+            </div>
           </div>
         </div>
 
