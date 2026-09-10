@@ -504,6 +504,7 @@
     color: #fff;
     box-shadow: 0 2px 6px rgba(15,23,42,0.08);
     gap: 6px;
+    transform: scale(0.8);
   }
   .site-card::before {
     content: '';
@@ -516,7 +517,7 @@
     transition: opacity 0.18s ease;
   }
   .site-card:hover {
-    transform: translateY(-2px);
+    transform: scale(0.8) translateY(-2px);
     box-shadow: 0 6px 16px rgba(0,0,0,0.18);
   }
   .site-card:hover::before {
@@ -525,14 +526,14 @@
   .site-card-icon {
     position: relative;
     z-index: 1;
-    font-size: 24px;
+    font-size: 26px;
     line-height: 1;
     filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
   }
   .site-card-name {
     position: relative;
     z-index: 1;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 1.25;
     color: rgba(255,255,255,0.95);
@@ -540,13 +541,13 @@
   }
   @media (max-width: 1100px) {
     .site-links { grid-template-columns: repeat(4, 1fr); gap: 10px; }
-    .site-card-icon { font-size: 22px; }
-    .site-card-name { font-size: 11px; }
+    .site-card-icon { font-size: 24px; }
+    .site-card-name { font-size: 15px; }
   }
   @media (max-width: 600px) {
     .site-links { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .site-card-icon { font-size: 20px; }
-    .site-card-name { font-size: 10px; }
+    .site-card-icon { font-size: 22px; }
+    .site-card-name { font-size: 14px; }
   }
 
   /* 待办事项 */
@@ -1231,17 +1232,17 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.12);
   }
   .quick-card-icon {
-    font-size: 22px;
+    font-size: 24px;
     line-height: 1;
   }
   .quick-card-name {
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 600;
     color: rgba(255,255,255,0.95);
     line-height: 1.2;
   }
   .quick-card-desc {
-    font-size: 9px;
+    font-size: 10px;
     color: rgba(255,255,255,0.8);
     line-height: 1.2;
   }
@@ -1252,9 +1253,9 @@
       min-height: 76px;
       padding: 8px 4px;
     }
-    .quick-card-icon { font-size: 18px; }
-    .quick-card-name { font-size: 9px; }
-    .quick-card-desc { font-size: 8px; }
+    .quick-card-icon { font-size: 20px; }
+    .quick-card-name { font-size: 12px; }
+    .quick-card-desc { font-size: 9px; }
   }
 
   /* ===== 响应式 ===== */
@@ -1631,12 +1632,18 @@
     { name: '广州市净营收/纳税看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn5iLLEjJBs1fOxyhT4dfNoC' },
     { name: '广州国旅净营收/纳税看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnlTuLiCq2wlppVbt13TWphX' },
     { name: '珠海携程净营收/纳税看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnfKxtrpmRyz3Nxti1WfPkVg' },
+    { name: '华南税金搜索看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnuhkg3ZqCFzKnk1oKYsFEMb' },
+    { name: '华南利润表搜索看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn79FZxh3QYQFzOa1oQ1iPhe' },
+    { name: '华南管财费用搜索看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnlgcsHYJfQRq2ZEg3eVtu5f' },
+    { name: '华南资产负债表搜索看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnIaGTvVWcQsuExaU5rzB5Sb' },
+    { name: '珠海携程补贴信息看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcngCCxmmJARv6BRv7x1tJaSU' },
     { name: '广州国旅度假产品净营收分析', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn2mKZvJPOkoPeWaKA2AiJNe' },
     { name: '广州国旅度假产品产量分析', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn2x25HkdiKbDaWqxwAqLMGz' },
+    { name: '广州国旅度假产品目的地看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnOWooCZYre69CKGxilFnIkf' },
+    { name: '广州国旅度假产品分类产量A看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnNNkXqMj451jA2Kdy6F61xd' },
+    { name: '广州国旅度假产品分类产量B看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnatkEetBKBgH73b0bzNZMUd' },
     { name: '华南金融外币兑换业务总览', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn0yExl7190dg8MSJTnyYZee' },
-    { name: '华南金融外币兑换业务网点分析', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn9pFFYqAeqK3pDveoBAuxsc' },
-    { name: '华南税金搜索看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcnuhkg3ZqCFzKnk1oKYsFEMb' },
-    { name: '华南利润表搜索看板', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn79FZxh3QYQFzOa1oQ1iPhe' }
+    { name: '华南金融外币兑换业务网点分析', url: 'https://trip.larkenterprise.com/share/base/dashboard/shrcn9pFFYqAeqK3pDveoBAuxsc' }
   ];
 
   const categories = [
