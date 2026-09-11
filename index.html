@@ -6,26 +6,26 @@
 <title>Camille的财税工作台</title>
 <style>
   :root {
-    --bg: #f1f5f9;
-    --sidebar-bg: #1a2035;
+    --bg: #f5f5f7;
+    --sidebar-bg: #eaeaed;
     --sidebar-width: 264px;
-    --header-height: 68px;
-    --radius: 14px;
-    --radius-sm: 10px;
-    --shadow: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
-    --shadow-hover: 0 10px 25px -5px rgba(15,23,42,0.1), 0 8px 10px -6px rgba(15,23,42,0.04);
-    --shadow-card: 0 2px 8px rgba(15,23,42,0.06);
-    --primary: #2563eb;
-    --primary-light: #60a5fa;
-    --primary-dark: #1d4ed8;
-    --primary-bg: #eff6ff;
-    --text: #0f172a;
-    --text-secondary: #64748b;
-    --border: #e2e8f0;
-    --success: #22c55e;
-    --warning: #f59e0b;
-    --danger: #ef4444;
-    --info: #3b82f6;
+    --header-height: 64px;
+    --radius: 16px;
+    --radius-sm: 12px;
+    --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
+    --shadow-hover: 0 12px 28px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    --primary: #0071e3;
+    --primary-light: #5e9cf0;
+    --primary-dark: #005bb5;
+    --primary-bg: #f0f7ff;
+    --text: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --border: #d2d2d7;
+    --success: #34c759;
+    --warning: #ff9500;
+    --danger: #ff3b30;
+    --info: #0071e3;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,17 +43,17 @@
   /* ===== 侧边栏 ===== */
   .sidebar {
     width: var(--sidebar-width);
-    background: #1a2035;
-    border-right: 1px solid #2a324e;
+    background: #1c1c1e;
+    border-right: 1px solid rgba(255,255,255,0.08);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
     z-index: 10;
-    color: #cbd5e1;
+    color: #a1a1aa;
   }
   .brand {
     padding: 24px 20px 20px;
-    border-bottom: 1px solid #2a324e;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
   .brand-top {
     display: flex;
@@ -63,17 +63,17 @@
   }
   .brand-icon {
     width: 40px; height: 40px;
-    border-radius: 10px;
+    border-radius: 11px;
     object-fit: cover;
-    box-shadow: 0 4px 6px -1px rgba(37,99,235,0.3);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
   }
   .brand-title {
-    font-size: 18px; font-weight: 700; letter-spacing: -0.3px;
-    color: #fff;
+    font-size: 17px; font-weight: 700; letter-spacing: -0.4px;
+    color: #f2f2f7;
   }
   .brand-sub {
-    font-size: 12px; color: #94a3b8; padding-left: 52px;
-    letter-spacing: 0.5px;
+    font-size: 11px; color: #8e8e93; padding-left: 52px;
+    letter-spacing: 0.3px;
   }
   .nav {
     flex: 1;
@@ -82,40 +82,39 @@
   }
   .nav-item {
     display: flex; align-items: center; gap: 10px;
-    padding: 11px 14px;
-    margin-bottom: 4px;
+    padding: 10px 14px;
+    margin-bottom: 3px;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: all 0.18s ease;
-    border-left: 3.5px solid transparent;
+    transition: all 0.16s ease;
     font-size: 14px;
-    color: #94a3b8;
+    color: #a1a1aa;
   }
   .nav-item:hover {
-    background: #25304a;
-    color: #e2e8f0;
+    background: #2c2c2e;
+    color: #f2f2f7;
   }
   .nav-item.active {
-    background: #2563eb;
-    color: #fff;
+    background: #fff;
+    color: #1d1d1f;
     font-weight: 600;
-    border-left-color: #60a5fa;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
   }
-  .nav-icon { font-size: 20px; width: 24px; text-align: center; flex-shrink: 0; }
+  .nav-icon { font-size: 19px; width: 24px; text-align: center; flex-shrink: 0; }
   .nav-text { flex: 1; line-height: 1.3; }
   .nav-badge {
     font-size: 11px; font-weight: 600;
     padding: 2px 8px;
     border-radius: 999px;
-    background: #334155;
-    color: #94a3b8;
+    background: rgba(255,255,255,0.12);
+    color: #a1a1aa;
   }
-  .nav-item.active .nav-badge { background: rgba(255,255,255,0.2); color: #fff; }
+  .nav-item.active .nav-badge { background: var(--primary-bg); color: var(--primary); }
   .sidebar-foot {
     padding: 14px 18px;
-    border-top: 1px solid #2a324e;
+    border-top: 1px solid rgba(255,255,255,0.08);
     font-size: 11px;
-    color: #64748b;
+    color: #8e8e93;
     text-align: center;
     line-height: 1.5;
   }
@@ -125,8 +124,10 @@
 
   .header {
     height: var(--header-height);
-    background: #fff;
-    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 28px;
     flex-shrink: 0;
@@ -135,11 +136,12 @@
     display: flex; align-items: center; gap: 14px;
   }
   .header-title {
-    font-size: 20px; font-weight: 700; color: var(--text);
+    font-size: 19px; font-weight: 700; color: var(--text);
     display: flex; align-items: center; gap: 10px;
+    letter-spacing: -0.4px;
   }
   .header-count {
-    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    font-size: 13px; font-weight: 600; color: var(--primary);
     background: var(--primary-bg); padding: 4px 10px; border-radius: 999px;
   }
   .header-date {
@@ -151,51 +153,50 @@
   }
   .search-box input {
     width: 260px;
-    padding: 9px 14px 9px 36px;
-    border: 1px solid var(--border);
+    padding: 8px 14px 8px 34px;
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: var(--radius-sm);
     font-size: 13px;
     font-family: inherit;
     outline: none;
     transition: all 0.2s;
-    background: #fff;
+    background: rgba(0,0,0,0.03);
   }
   .search-box input:focus {
     border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(139,123,181,0.12);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
   }
   .search-box::before {
     content: "🔍";
     position: absolute;
-    left: 12px; top: 50%; transform: translateY(-50%);
-    font-size: 13px; opacity: 0.5;
+    left: 11px; top: 50%; transform: translateY(-50%);
+    font-size: 13px; opacity: 0.45;
   }
   .header-actions { display: flex; gap: 10px; }
   .btn {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 9px 16px;
-    border: 1px solid var(--border);
+    padding: 8px 15px;
+    border: 1px solid rgba(0,0,0,0.08);
     background: #fff;
     border-radius: var(--radius-sm);
     font-size: 13px; font-weight: 500;
-    color: #5d5370;
+    color: var(--text);
     cursor: pointer;
     transition: all 0.15s;
     font-family: inherit;
   }
-  .btn:hover { background: #f8f6fa; border-color: #d5cfe0; }
+  .btn:hover { background: #f5f5f7; border-color: rgba(0,0,0,0.12); }
   .btn-primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    background: var(--primary);
     color: #fff; border: none;
-    box-shadow: 0 4px 6px -1px rgba(109,94,156,0.25);
   }
-  .btn-primary:hover { opacity: 0.92; transform: translateY(-1px); }
+  .btn-primary:hover { background: var(--primary-dark); }
   .btn-success {
-    background: linear-gradient(135deg, #7bc17e, #5cb85c);
+    background: var(--success);
     color: #fff; border: none;
-    box-shadow: 0 4px 6px -1px rgba(92,184,92,0.25);
   }
-  .btn-success:hover { opacity: 0.92; transform: translateY(-1px); }
+  .btn-success:hover { background: #2da84a; }
 
   .content {
     flex: 1;
@@ -222,47 +223,41 @@
 
   /* 欢迎横幅 */
   .welcome-banner {
-    background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8);
+    background: linear-gradient(135deg, #e8e8ed 0%, #f2f2f7 100%);
     border-radius: var(--radius);
     padding: 28px 32px;
-    color: #fff;
+    color: var(--text);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(37,99,235,0.25);
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(0,0,0,0.05);
   }
   .welcome-banner::before {
     content: '';
     position: absolute;
-    top: -40px; right: -40px;
-    width: 180px; height: 180px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 50%;
-  }
-  .welcome-banner::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; right: 80px;
-    width: 120px; height: 120px;
-    background: rgba(255,255,255,0.05);
+    top: -60px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0,113,227,0.1) 0%, transparent 70%);
     border-radius: 50%;
   }
   .welcome-title {
     font-size: 22px; font-weight: 700;
     margin-bottom: 6px;
     position: relative; z-index: 1;
+    letter-spacing: -0.5px;
   }
   .welcome-sub {
-    font-size: 14px; opacity: 0.9;
+    font-size: 14px; color: var(--text-secondary);
     position: relative; z-index: 1;
   }
   /* 待办进度条 */
   .progress-card {
-    background: linear-gradient(135deg, #f8fafc, #ffffff);
+    background: #fff;
     border-radius: var(--radius);
     padding: 24px 28px;
     margin-top: 16px;
-    box-shadow: 0 4px 12px rgba(37,99,235,0.08);
-    border: 1px solid #e2e8f0;
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(0,0,0,0.05);
   }
   .progress-header {
     display: flex;
@@ -273,7 +268,7 @@
   .progress-title {
     font-size: 16px;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--text);
   }
   .progress-stats {
     font-size: 14px;
@@ -286,24 +281,24 @@
   }
   .progress-bar-wrap {
     height: 22px;
-    background: #e2e8f0;
+    background: #e5e5ea;
     border-radius: 11px;
     overflow: hidden;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
   }
   .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #3b82f6, #22c55e);
+    background: linear-gradient(90deg, #0071e3, #5ac8fa, #34c759);
     border-radius: 11px;
     transition: width 0.5s ease;
     min-width: 0;
-    box-shadow: 0 2px 6px rgba(34,197,94,0.3);
+    box-shadow: 0 2px 6px rgba(0,113,227,0.2);
   }
   .progress-footer {
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    color: #3b82f6;
+    color: var(--text-secondary);
     text-align: right;
     margin-left: 4px;
   }
@@ -327,7 +322,7 @@
 
   .panel {
     background: #fff;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0,0,0,0.05);
     border-radius: var(--radius);
     padding: 22px;
     box-shadow: var(--shadow-card);
@@ -345,10 +340,15 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    letter-spacing: -0.3px;
   }
   .panel-sub {
     font-size: 12px;
     color: var(--text-secondary);
+  }
+  .panel-muted {
+    background: #f2f2f7;
+    border: 1px solid rgba(0,0,0,0.04);
   }
 
   /* 日历 */
@@ -369,7 +369,7 @@
   }
   .calendar-nav button {
     width: 30px; height: 30px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0,0,0,0.08);
     background: #fff;
     border-radius: 8px;
     cursor: pointer;
@@ -424,11 +424,11 @@
     color: rgba(255,255,255,0.9);
   }
   .calendar-holiday {
-    color: #ef4444 !important;
+    color: var(--danger) !important;
     font-weight: 700;
   }
   .calendar-workday {
-    color: #3b82f6 !important;
+    color: var(--primary) !important;
     font-weight: 700;
   }
   .calendar-table td.today .calendar-holiday,
@@ -443,8 +443,8 @@
     font-size: 9px;
     padding: 1px 3px;
     border-radius: 4px;
-    background: rgba(239,68,68,0.1);
-    color: #ef4444;
+    background: rgba(255,59,48,0.1);
+    color: var(--danger);
     line-height: 1;
     transform: scale(0.85);
   }
@@ -453,16 +453,16 @@
     color: #fff;
   }
   .calendar-table td:hover:not(.empty-day):not(.today) {
-    background: #f5f3f8;
+    background: rgba(0,0,0,0.03);
   }
   .calendar-table td.today {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    background: var(--primary);
     color: #fff;
-    box-shadow: 0 4px 10px rgba(139,123,181,0.3);
+    box-shadow: 0 2px 8px rgba(0,113,227,0.25);
     font-weight: 700;
   }
   .calendar-table td.other-month {
-    color: #c4bdd0;
+    color: #c7c7cc;
   }
   .calendar-table td.empty-day {
     cursor: default;
@@ -502,9 +502,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 12px;
     background: transparent;
-    box-shadow: 0 3px 8px rgba(15,23,42,0.1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     transition: all 0.18s ease;
   }
   .site-icon-box::before {
@@ -519,7 +519,7 @@
   }
   .site-item:hover .site-icon-box {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(15,23,42,0.15);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   }
   .site-item:hover .site-icon-box::before {
     opacity: 0.95;
@@ -574,19 +574,20 @@
     align-items: center;
     gap: 10px;
     padding: 10px 12px;
-    background: #faf9fb;
+    background: rgba(0,0,0,0.02);
     border-radius: var(--radius-sm);
     border: 1px solid transparent;
     transition: all 0.15s;
     cursor: pointer;
   }
   .todo-item:hover {
-    border-color: var(--border);
-    background: #f5f3f8;
+    border-color: rgba(0,0,0,0.06);
+    background: rgba(0,0,0,0.04);
   }
   .todo-item.done .todo-text {
     text-decoration: line-through;
-    color: #b0a8bf;
+    color: var(--text-secondary);
+    opacity: 0.7;
   }
   .todo-item.done .todo-checkbox {
     background: var(--success);
@@ -594,7 +595,7 @@
   }
   .todo-checkbox {
     width: 18px; height: 18px;
-    border: 2px solid #d5cfe0;
+    border: 2px solid #c7c7cc;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -606,7 +607,7 @@
     color: #fff;
   }
   .todo-checkbox:hover {
-    border-color: var(--primary-light);
+    border-color: var(--primary);
   }
   .todo-text {
     flex: 1;
@@ -616,7 +617,7 @@
   }
   .todo-delete {
     opacity: 0;
-    color: #c4bdd0;
+    color: #c7c7cc;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.15s;
@@ -631,7 +632,7 @@
   .todo-empty {
     text-align: center;
     padding: 24px;
-    color: #c4bdd0;
+    color: var(--text-secondary);
     font-size: 13px;
   }
 
@@ -643,17 +644,18 @@
   .todo-input {
     flex: 1;
     padding: 9px 14px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: var(--radius-sm);
     font-size: 14px;
     font-family: inherit;
     outline: none;
     transition: all 0.2s;
-    background: #fff;
+    background: rgba(0,0,0,0.02);
   }
   .todo-input:focus {
     border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(139,123,181,0.1);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0,113,227,0.1);
   }
 
   .todo-actions {
@@ -679,7 +681,7 @@
     user-select: none;
   }
   .done-header:hover {
-    background: rgba(139,123,181,0.08);
+    background: rgba(0,0,0,0.04);
   }
   .done-body {
     display: none;
@@ -696,7 +698,7 @@
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(45,36,69,0.45);
+    background: rgba(0,0,0,0.35);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -717,7 +719,7 @@
     max-height: 98vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 20px 50px rgba(45,36,69,0.25);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.18);
     transform: translateY(16px) scale(0.97);
     transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
   }
@@ -726,7 +728,7 @@
   }
   .modal-header {
     padding: 14px 24px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -748,7 +750,7 @@
     transition: all 0.15s;
   }
   .modal-close:hover {
-    background: #f5f3f8;
+    background: rgba(0,0,0,0.04);
     color: var(--text);
   }
   .modal-body {
@@ -758,7 +760,7 @@
   }
   .modal-footer {
     padding: 10px 24px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(0,0,0,0.06);
     display: flex;
     justify-content: flex-end;
     gap: 10px;
@@ -774,7 +776,7 @@
   .fixed-todo-item input[type="text"] {
     flex: 1;
     padding: 6px 10px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: 8px;
     font-size: 14px;
     font-family: inherit;
@@ -786,7 +788,7 @@
   .fixed-todo-item input[type="number"] {
     width: 64px;
     padding: 6px 8px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: 8px;
     font-size: 14px;
     font-family: inherit;
@@ -801,7 +803,7 @@
     white-space: nowrap;
   }
   .fixed-todo-remove {
-    color: #c4bdd0;
+    color: #c7c7cc;
     cursor: pointer;
     font-size: 18px;
     padding: 2px;
@@ -819,7 +821,7 @@
   }
   .card {
     background: #fff;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0,0,0,0.05);
     border-radius: var(--radius);
     padding: 22px;
     cursor: pointer;
@@ -829,17 +831,10 @@
     display: flex; flex-direction: column; gap: 14px;
     box-shadow: var(--shadow);
   }
-  .card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 4px;
-    background: var(--card-color, var(--primary));
-    opacity: 0.85;
-  }
   .card:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-hover);
-    border-color: #d5cfe0;
+    border-color: rgba(0,0,0,0.08);
   }
   .card:active { transform: translateY(0); }
   .card-header {
@@ -902,19 +897,21 @@
   .toast {
     position: fixed;
     bottom: 28px; right: 28px;
-    background: #2d2445;
+    background: rgba(29,29,31,0.92);
     color: #fff;
     padding: 13px 22px;
-    border-radius: 12px;
+    border-radius: 14px;
     font-size: 13px;
     font-weight: 500;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
     opacity: 0;
     transform: translateY(12px) scale(0.96);
     transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
     pointer-events: none;
     z-index: 9999;
     display: flex; align-items: center; gap: 10px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
   .toast.show {
     opacity: 1;
@@ -925,9 +922,10 @@
   /* ===== 滚动条 ===== */
   ::-webkit-scrollbar { width: 7px; height: 7px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #d5cfe0; border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: #b0a8bf; }
-  .nav::-webkit-scrollbar-thumb { background: #d5cfe0; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.28); }
+  .nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); }
+  .nav::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
 
   .mobile-menu-btn {
     display: none;
@@ -941,7 +939,7 @@
     border-radius: var(--radius-sm);
   }
   .mobile-menu-btn:hover {
-    background: rgba(139,123,181,0.1);
+    background: rgba(0,0,0,0.05);
   }
   .sidebar-overlay {
     display: none;
@@ -961,21 +959,22 @@
   .checklist-section {
     background: #fff;
     border-radius: var(--radius);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0,0,0,0.05);
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(45,36,69,0.04);
+    box-shadow: var(--shadow-card);
   }
   .checklist-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 16px 20px;
-    background: linear-gradient(135deg, #1e2740, #2a324e);
-    color: #fff;
+    background: #f5f5f7;
+    color: var(--text);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
   }
   .checklist-header h2 {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     margin: 0;
     display: flex;
     align-items: center;
@@ -989,19 +988,20 @@
   .checklist-actions .btn {
     font-size: 12px;
     padding: 6px 12px;
-    background: rgba(255,255,255,0.12);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,0.2);
+    background: #fff;
+    color: var(--text);
+    border: 1px solid rgba(0,0,0,0.08);
   }
   .checklist-actions .btn:hover {
-    background: rgba(255,255,255,0.22);
+    background: #f5f5f7;
   }
   .checklist-actions .btn.danger {
-    background: rgba(239,68,68,0.2);
-    border-color: rgba(239,68,68,0.4);
+    background: rgba(255,59,48,0.08);
+    border-color: rgba(255,59,48,0.2);
+    color: var(--danger);
   }
   .checklist-actions .btn.danger:hover {
-    background: rgba(239,68,68,0.35);
+    background: rgba(255,59,48,0.14);
   }
   .checklist-table-wrap {
     overflow-x: auto;
@@ -1014,11 +1014,11 @@
     font-size: 13px;
   }
   .checklist-table th {
-    background: #f8f7fa;
+    background: #f5f5f7;
     color: var(--text-secondary);
     font-weight: 600;
     padding: 10px 12px;
-    border-bottom: 2px solid var(--border);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
     text-align: left;
     white-space: normal;
     word-break: break-all;
@@ -1043,11 +1043,11 @@
   }
   .checklist-table td {
     padding: 8px 12px;
-    border-bottom: 1px solid #f0eef5;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
     vertical-align: middle;
   }
   .checklist-table tr:hover td {
-    background: #faf9fb;
+    background: rgba(0,0,0,0.02);
   }
   .checklist-table td:first-child,
   .checklist-table th:first-child {
@@ -1067,11 +1067,11 @@
   }
   .checklist-table td:first-child input[type="text"]:focus {
     border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(139,123,181,0.08);
+    box-shadow: 0 0 0 3px rgba(0,113,227,0.08);
   }
   .checklist-table .ck-box {
     width: 20px; height: 20px;
-    border: 2px solid #d5cfe0;
+    border: 2px solid #c7c7cc;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -1084,7 +1084,7 @@
     user-select: none;
   }
   .checklist-table .ck-box:hover {
-    border-color: var(--primary-light);
+    border-color: var(--primary);
   }
   .checklist-table .ck-box.checked {
     background: var(--success);
@@ -1092,7 +1092,7 @@
   }
   .checklist-table .col-remove {
     opacity: 0;
-    color: #c4bdd0;
+    color: #c7c7cc;
     font-size: 14px;
     cursor: pointer;
     margin-left: 4px;
@@ -1103,7 +1103,7 @@
   }
   .checklist-table .row-remove {
     opacity: 0;
-    color: #c4bdd0;
+    color: #c7c7cc;
     font-size: 14px;
     cursor: pointer;
     padding: 2px 6px;
@@ -1147,18 +1147,22 @@
     transition: all 0.2s;
     gap: 10px;
     user-select: none;
+    color: #a1a1aa;
   }
   .nav-group-header:hover {
-    background: rgba(255,255,255,0.08);
+    background: #2c2c2e;
+    color: #f2f2f7;
   }
   .nav-group-header.active {
-    background: rgba(255,255,255,0.12);
+    background: #fff;
+    color: #1d1d1f;
+    font-weight: 600;
   }
   .nav-group-header .nav-arrow {
     margin-left: auto;
     font-size: 11px;
     transition: transform 0.2s;
-    opacity: 0.7;
+    opacity: 0.5;
   }
   .nav-group-header.open .nav-arrow {
     transform: rotate(90deg);
@@ -1179,7 +1183,7 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: 13px;
-    color: rgba(255,255,255,0.75);
+    color: #a1a1aa;
     transition: all 0.2s;
     gap: 8px;
     white-space: nowrap;
@@ -1187,18 +1191,20 @@
     text-overflow: ellipsis;
   }
   .nav-child-item:hover {
-    background: rgba(255,255,255,0.08);
-    color: #fff;
+    background: #2c2c2e;
+    color: #f2f2f7;
   }
   .nav-child-item.active {
-    background: rgba(255,255,255,0.12);
+    background: #3a3a3c;
     color: #fff;
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
   }
   .nav-child-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.4);
+    background: #636366;
     flex-shrink: 0;
   }
   .nav-child-item.active .nav-child-dot {
@@ -1218,17 +1224,17 @@
     width: calc(25% - 9px);
     min-height: 76px;
     padding: 14px 14px 14px 16px;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    background: #f2f2f7;
+    border: 1px solid rgba(0,0,0,0.04);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: all 0.18s ease;
-    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+    box-shadow: none;
   }
   .quick-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(15,23,42,0.08);
-    border-color: var(--primary-light);
+    background: #eaeaed;
+    border-color: rgba(0,0,0,0.08);
   }
   .quick-card-icon {
     width: 44px;
@@ -1236,7 +1242,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 11px;
     font-size: 24px;
     line-height: 1;
     flex-shrink: 0;
@@ -1256,12 +1262,12 @@
   }
   .quick-card-desc {
     font-size: 12px;
-    color: #64748b;
+    color: var(--text-secondary);
     line-height: 1.3;
   }
   .quick-card-arrow {
     font-size: 20px;
-    color: #94a3b8;
+    color: #c7c7cc;
     font-weight: 300;
     flex-shrink: 0;
     margin-left: 4px;
@@ -1332,7 +1338,7 @@
   </div>
   <nav class="nav" id="nav"></nav>
   <div class="sidebar-foot">
-    工作目录<br>D:\tools\ExcelVBA工具箱
+    工作目录<br>D:\tools\我的工作台
   </div>
 </aside>
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileMenu()"></div>
@@ -1389,7 +1395,7 @@
             </div>
             <div class="quick-links">
               <div class="quick-card" onclick="window.open('https://www.qcc.com/web/user/follow/new','_blank')">
-                <div class="quick-card-icon" style="color:#4338ca;background:rgba(67,56,202,0.22);">🔍</div>
+                <div class="quick-card-icon" style="color:#5856d6;background:rgba(88,86,214,0.15);">🔍</div>
                 <div class="quick-card-content">
                   <div class="quick-card-name">企查查</div>
                   <div class="quick-card-desc">企业信息查询</div>
@@ -1397,23 +1403,23 @@
                 <div class="quick-card-arrow">›</div>
               </div>
               <div class="quick-card" onclick="window.open('https://trip.larkenterprise.com/sheets/Xu5vsP0fdhfXjatHRUrcW8Dbnnf','_blank')">
-                <div class="quick-card-icon" style="color:#1d4ed8;background:rgba(29,78,216,0.2);">📄</div>
+                <div class="quick-card-icon" style="color:#0071e3;background:rgba(0,113,227,0.15);">📄</div>
                 <div class="quick-card-content">
                   <div class="quick-card-name">公司税号</div>
                   <div class="quick-card-desc">飞书表格</div>
                 </div>
                 <div class="quick-card-arrow">›</div>
               </div>
-              <div class="quick-card" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\注意：华南地区分公司名录-每月检查无公司代码是否有代码.xlsx')">
-                <div class="quick-card-icon" style="color:#b45309;background:rgba(180,83,9,0.2);">📊</div>
+              <div class="quick-card" onclick="openSkillByPath('D:\\tools\\我的工作台\\注意：华南地区分公司名录-每月检查无公司代码是否有代码.xlsx')">
+                <div class="quick-card-icon" style="color:#ff9500;background:rgba(255,149,0,0.15);">📊</div>
                 <div class="quick-card-content">
                   <div class="quick-card-name">公司名录</div>
                   <div class="quick-card-desc">每月检查</div>
                 </div>
                 <div class="quick-card-arrow">›</div>
               </div>
-              <div class="quick-card" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\申报公司清单.xlsx')">
-                <div class="quick-card-icon" style="color:#047857;background:rgba(4,120,87,0.2);">📋</div>
+              <div class="quick-card" onclick="openSkillByPath('D:\\tools\\我的工作台\\申报公司清单.xlsx')">
+                <div class="quick-card-icon" style="color:#34c759;background:rgba(52,199,89,0.15);">📋</div>
                 <div class="quick-card-content">
                   <div class="quick-card-name">申报清单</div>
                   <div class="quick-card-desc">华南公司</div>
@@ -1448,79 +1454,79 @@
           </div>
 
           <!-- 常用网站快捷入口 -->
-          <div class="panel">
+          <div class="panel panel-muted">
             <div class="panel-header">
               <div class="panel-title">🌐 常用网站快捷入口</div>
             </div>
             <div class="site-links">
               <div class="site-item" onclick="window.open('http://iam.basebiz.ctripcorp.com/bbzoffline/home?lk_jump_to_browser=true','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #5856d6, #af52de);">
                   <div class="site-icon">🏠</div>
                 </div>
                 <div class="site-name">Offline首页</div>
               </div>
               <div class="site-item" onclick="window.open('http://ebs.cn1.global.ctrip.com/OA_HTML/AppsLocalLogin.jsp','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #3b82f6, #2563eb);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #0071e3, #005bb5);">
                   <div class="site-icon">🔐</div>
                 </div>
                 <div class="site-name">EBS Login</div>
               </div>
               <div class="site-item" onclick="window.open('http://accounting.ctripcorp.com/home','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #4f46e5, #3730a3);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #5856d6, #af52de);">
                   <div class="site-icon">📊</div>
                 </div>
                 <div class="site-name">EBS结账平台</div>
               </div>
               <div class="site-item" onclick="window.open('http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #10b981, #059669);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #34c759, #28a745);">
                   <div class="site-icon">📋</div>
                 </div>
                 <div class="site-name">OA系统</div>
               </div>
               <div class="site-item" onclick="window.open('http://tax.ard.ctripcorp.com/taxMain/','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #f97316, #ea580c);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #ff9500, #e68300);">
                   <div class="site-icon">💰</div>
                 </div>
                 <div class="site-name">携程税务系统</div>
               </div>
               <div class="site-item" onclick="window.open('https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #06b6d4, #0891b2);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #5ac8fa, #0071e3);">
                   <div class="site-icon">📈</div>
                 </div>
                 <div class="site-name">统计云互联网</div>
               </div>
               <div class="site-item" onclick="window.open('https://etax.guangdong.chinatax.gov.cn:8443/','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #ef4444, #dc2626);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #ff3b30, #d32f2f);">
                   <div class="site-icon">🏛️</div>
                 </div>
                 <div class="site-name">广东省电子税务局</div>
               </div>
               <div class="site-item" onclick="window.open('https://etax.jiangxi.chinatax.gov.cn:8443/loginb/','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #dc2626, #991b1b);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #ff3b30, #c62828);">
                   <div class="site-icon">🏛️</div>
                 </div>
                 <div class="site-name">江西省电子税务局</div>
               </div>
               <div class="site-item" onclick="window.open('http://digitaleinvoiceissue.ard.ctripcorp.com/userCenterAlone-ui/addTaxLogin','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #f59e0b, #d97706);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #ff9500, #e68300);">
                   <div class="site-icon">🧾</div>
                 </div>
                 <div class="site-name">百旺云发票平台</div>
               </div>
               <div class="site-item" onclick="window.open('https://trip.larkenterprise.com/share/base/form/shrcnuI8kRm4WkDyln3mb7bJ3Tg','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #3b82f6, #06b6d4);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #0071e3, #5ac8fa);">
                   <div class="site-icon">📝</div>
                 </div>
                 <div class="site-name">数据需求收集表</div>
               </div>
               <div class="site-item" onclick="window.open('https://trip.larkenterprise.com/base/XfsDbnrqyaMDRrsQ4F5cb2iWnEg?table=tblNYGzzUKlarzPq&view=vew3CnmX2b','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #14b8a6, #0d9488);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #5ac8fa, #34c759);">
                   <div class="site-icon">📊</div>
                 </div>
                 <div class="site-name">数据需求多维表格</div>
               </div>
               <div class="site-item" onclick="window.open('https://ycfz.hengqin.gov.cn/#/home','_blank')">
-                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #0071e3, #af52de);">
                   <div class="site-icon">🏛️</div>
                 </div>
                 <div class="site-name">横琴惠企利民服务平台</div>
@@ -1682,7 +1688,7 @@
 
   var IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
 
-  const basePath = 'D:\\tools\\ExcelVBA工具箱\\';
+  const basePath = 'D:\\tools\\我的工作台\\';
 
   // 财务税务数据看板子标签
   const dashboardItems = [
@@ -1709,16 +1715,16 @@
     {
       name: 'EBS导入工具',
       icon: '📥',
-      color: '#3b82f6',
-      bg: '#eff6ff',
+      color: '#0071e3',
+      bg: '#f0f7ff',
       files: [
         'EBS导入模型-899调整-年会费用（年度）.xlsm',
         'EBS导入模型-899调整-文具自助柜费用（半年度）.xlsm',
         'EBS导入模型-899调整-运动会费用（年度）.xlsm',
         'EBS导入模型-899调整-折旧水电物管保洁（每月）.xlsm',
         'EBS导入模型-广州越程.xlsm',
-        { name: 'EBS导入模型-珠海携程抵扣以前暂估进项', path: 'D:\\tools\\ExcelVBA工具箱\\EBS导入模型-珠海携程-抵扣以前暂估进项税.xlsm' },
-        { name: 'EBS导入模型-成都广州抵扣以前暂估进项', path: 'D:\\tools\\ExcelVBA工具箱\\EBS导入模型-成都广州-抵扣以前暂估进项税.xlsm' },
+        { name: 'EBS导入模型-珠海携程抵扣以前暂估进项', path: 'D:\\tools\\我的工作台\\EBS导入模型-珠海携程-抵扣以前暂估进项税.xlsm' },
+        { name: 'EBS导入模型-成都广州抵扣以前暂估进项', path: 'D:\\tools\\我的工作台\\EBS导入模型-成都广州-抵扣以前暂估进项税.xlsm' },
         { name: '下载中铁租金物管OA明细', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=13376' },
         { name: '下载中铁保洁费OA明细', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=16878' }
       ]
@@ -1726,19 +1732,19 @@
     {
       name: 'TA Review检查工具',
       icon: '🔍',
-      color: '#8b5cf6',
-      bg: '#f5f3ff',
+      color: '#af52de',
+      bg: '#faf5ff',
       files: [
         'TA Review检查工具v4.0-review.xlsm',
         'TA Review检查工具v4.0-TA.xlsm',
-        { name: 'VBA批量小工具', path: 'D:\\tools\\ExcelVBA工具箱\\VBA批量小工具.xlsm' }
+        { name: 'VBA批量小工具', path: 'D:\\tools\\我的工作台\\VBA批量小工具.xlsm' }
       ]
     },
     {
       name: '清理全量报表工具',
       icon: '🧹',
-      color: '#22c55e',
-      bg: '#f0fdf4',
+      color: '#34c759',
+      bg: '#f0faf3',
       files: [
         '按公司清理资产负债表小工具.xlsm',
         '按公司清理利润表小工具.xlsm',
@@ -1751,23 +1757,23 @@
     {
       name: '华南管报整理工具',
       icon: '📊',
-      color: '#f59e0b',
-      bg: '#fffbeb',
+      color: '#ff9500',
+      bg: '#fff8f0',
       files: [
-        { name: '华南四地利润表汇总公式版', path: 'D:\\tools\\ExcelVBA工具箱\\华南四地利润表汇总-公式 - 最新.xlsx' },
-        { name: '华南四地利润表-Gross模式全年底稿', path: 'D:\\tools\\ExcelVBA工具箱\\报表：利润表-Gross模式_全年底稿.xlsx' },
-        { name: '华南四地利润表-Net模式全年底稿', path: 'D:\\tools\\ExcelVBA工具箱\\报表：利润表-Net模式_全年底稿.xlsx' },
+        { name: '华南四地利润表汇总公式版', path: 'D:\\tools\\我的工作台\\华南四地利润表汇总-公式 - 最新.xlsx' },
+        { name: '华南四地利润表-Gross模式全年底稿', path: 'D:\\tools\\我的工作台\\报表：利润表-Gross模式_全年底稿.xlsx' },
+        { name: '华南四地利润表-Net模式全年底稿', path: 'D:\\tools\\我的工作台\\报表：利润表-Net模式_全年底稿.xlsx' },
         '华南管理费用科目余额表转换工具.xlsm',
         '华南利润表转换工具.xlsm',
         '华南资产负债表转换工具.xlsm',
         '华南税金汇总表转换工具.xlsm',
-        { name: '飞书表格-华南税金整理工具', path: 'D:\\tools\\ExcelVBA工具箱\\飞书表格-华南税金整理工具.xlsx' },
-        { name: '飞书表格-增值税整理工具', path: 'D:\\tools\\ExcelVBA工具箱\\飞书表格-广州公司增值税统计.xlsx' },
+        { name: '飞书表格-华南税金整理工具', path: 'D:\\tools\\我的工作台\\飞书表格-华南税金整理工具.xlsx' },
+        { name: '飞书表格-增值税整理工具', path: 'D:\\tools\\我的工作台\\飞书表格-广州公司增值税统计.xlsx' },
         { name: '广州国旅度假月报汇总分析', path: 'C:\\smile\'s work\\B-季度税金-上海\\广州国旅度假月报汇总分析.xlsx' },
         { name: '华南税金汇总表', path: 'C:\\smile\'s work\\B-季度税金-上海\\华南税金汇总表.xlsx' },
         { name: '华南统计表', path: 'C:\\smile\'s work\\B-季度税金-上海\\华南统计表.xlsx' },
         { name: '广州国旅测算', path: 'C:\\smile\'s work\\B-季度税金-上海\\广州国旅测算.xlsx' },
-        { name: '华南附件3', path: 'D:\\tools\\ExcelVBA工具箱\\附件3.xlsx' },
+        { name: '华南附件3', path: 'D:\\tools\\我的工作台\\附件3.xlsx' },
         { name: '天津海豚华南管理', url: 'https://trip.larkenterprise.com/sheets/MYVAsndUKhahIut4mRVclKTUnac' },
         { name: '携程税务系统下载', url: 'http://tax.ard.ctripcorp.com/taxStatisticsReport/list' }
       ]
@@ -1775,13 +1781,13 @@
     {
       name: '度假/金服报表整理工具',
       icon: '🏖️',
-      color: '#f97316',
-      bg: '#fff7ed',
+      color: '#ff9500',
+      bg: '#fff8f0',
       files: [
         '全订单表（替代FD1070）数据清理小工具.xlsm',
-        { name: '全订单表（替代FD1070）透视表工具', path: 'D:\\tools\\ExcelVBA工具箱\\全订单表（替代FD1070）-地方财务提供版本透视表模板.xlsx' },
-        { name: '度假主营业务收入整理工具', path: 'D:\\tools\\ExcelVBA工具箱\\主营业务收入-本期发生-本位币.xlsx' },
-        { name: '度假分析多维表格整理工具', path: 'D:\\tools\\ExcelVBA工具箱\\广州国旅度假分析多维表格整理工具.xlsx' },
+        { name: '全订单表（替代FD1070）透视表工具', path: 'D:\\tools\\我的工作台\\全订单表（替代FD1070）-地方财务提供版本透视表模板.xlsx' },
+        { name: '度假主营业务收入整理工具', path: 'D:\\tools\\我的工作台\\主营业务收入-本期发生-本位币.xlsx' },
+        { name: '度假分析多维表格整理工具', path: 'D:\\tools\\我的工作台\\广州国旅度假分析多维表格整理工具.xlsx' },
         { name: '华南金服售汇整理工具', path: 'D:\\Users\\ltian\\Desktop\\D-华南金服草稿\\1、华南金服售汇模板.xlsx' },
         { name: '华南金服结汇整理工具', path: 'D:\\Users\\ltian\\Desktop\\D-华南金服草稿\\2、华南金服结汇模板.xlsx' }
       ]
@@ -1789,18 +1795,18 @@
     {
       name: '进项税/印花税/完税证明整理工具',
       icon: '🧾',
-      color: '#ef4444',
-      bg: '#fef2f2',
+      color: '#ff3b30',
+      bg: '#fff5f4',
       files: [
         { name: 'Artnova商旅通火车票', url: 'http://nova.ops.ctripcorp.com/;jsessionid=0828315AD456E8D421B4502C85C9C248#/dashboard/25594745-9b0c-40ca-a042-b6a65abc2cf4' },
-        { name: '回写商旅通火车票发票号码工具.xlsm', path: 'D:\\tools\\ExcelVBA工具箱\\回写商旅通火车票发票号码工具.xlsm' },
+        { name: '回写商旅通火车票发票号码工具.xlsm', path: 'D:\\tools\\我的工作台\\回写商旅通火车票发票号码工具.xlsm' },
         '商旅通进项税抵扣.xlsm',
         '完税证明取数小工具.xlsm',
-        { name: '进项税分配标准凭证模型-成都广州', path: 'D:\\tools\\ExcelVBA工具箱\\A-进项税分配标准凭证模型-成都广州.xlsm' },
-        { name: '进项税分配标准凭证模型-宏睿广州', path: 'D:\\tools\\ExcelVBA工具箱\\A-进项税分配标准凭证模型-宏睿广州.xlsm' },
-        { name: '进项税分配标准凭证模型-越程', path: 'D:\\tools\\ExcelVBA工具箱\\A-进项税分配标准凭证模型-越程.xlsm' },
-        { name: '进项税分配标准凭证模型-珠海携程', path: 'D:\\tools\\ExcelVBA工具箱\\A-进项税分配标准凭证模型-珠海携程.xlsm' },
-        { name: '资产租赁合同印花税计算器', path: 'D:\\tools\\ExcelVBA工具箱\\喜翠铺资产租赁合同印花税计算器.xlsx' },
+        { name: '进项税分配标准凭证模型-成都广州', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-成都广州.xlsm' },
+        { name: '进项税分配标准凭证模型-宏睿广州', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-宏睿广州.xlsm' },
+        { name: '进项税分配标准凭证模型-越程', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-越程.xlsm' },
+        { name: '进项税分配标准凭证模型-珠海携程', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-珠海携程.xlsm' },
+        { name: '资产租赁合同印花税计算器', path: 'D:\\tools\\我的工作台\\喜翠铺资产租赁合同印花税计算器.xlsx' },
         { name: '成都广州OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=1030' },
         { name: '宏睿广州OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=1036' },
         { name: '广州越程OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=6147' },
@@ -1811,15 +1817,15 @@
     {
       name: '增值税申报数据填列工具',
       icon: '📑',
-      color: '#06b6d4',
-      bg: '#ecfeff',
+      color: '#5ac8fa',
+      bg: '#f0f9ff',
       files: [
-        { name: '增值税申报数据填列-成都广州', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-成都广州.xlsx' },
-        { name: '增值税申报数据填列-宏睿广州', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-宏睿广州.xlsx' },
-        { name: '增值税申报数据填列-越程', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-广州越程.xlsx' },
-        { name: '增值税申报数据填列-珠海携程', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-珠海携程.xlsx' },
-        { name: '增值税申报数据填列-天津海豚广州', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-天津海豚广州.xlsx' },
-        { name: '增值税申报数据填列-天津海豚南昌', path: 'D:\\tools\\ExcelVBA工具箱\\增值税申报数据填列模板-天津海豚南昌.xlsx' },
+        { name: '增值税申报数据填列-成都广州', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-成都广州.xlsx' },
+        { name: '增值税申报数据填列-宏睿广州', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-宏睿广州.xlsx' },
+        { name: '增值税申报数据填列-越程', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-广州越程.xlsx' },
+        { name: '增值税申报数据填列-珠海携程', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-珠海携程.xlsx' },
+        { name: '增值税申报数据填列-天津海豚广州', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-天津海豚广州.xlsx' },
+        { name: '增值税申报数据填列-天津海豚南昌', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-天津海豚南昌.xlsx' },
         { name: '增值税申报数据填列-广州国旅', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-广州国旅.xlsx' },
         { name: '增值税申报数据填列-三亚国旅', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-三亚国旅.xlsx' },
         { name: '增值税申报数据填列-成都郑州', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-成都郑州.xlsx' },
@@ -1834,22 +1840,22 @@
     {
       name: '珠海报表整理工具',
       icon: '🏢',
-      color: '#14b8a6',
-      bg: '#f0fdfa',
+      color: '#5ac8fa',
+      bg: '#f0f9ff',
       files: [
         { name: 'Artnova火车X产品订单汇总表', url: 'http://artnova.ops.ctripcorp.com/#/dashboard/0d3e5756-6b60-4e33-b9ce-6335c9b7996e' },
-        { name: '火车票X产品数据生成工具', path: 'D:\\tools\\ExcelVBA工具箱\\火车票X产品数据生成工具.xlsm' },
-        { name: '火车票X产品分析总表', path: 'D:\\tools\\ExcelVBA工具箱\\火车票X产品分析总表.xlsx' },
+        { name: '火车票X产品数据生成工具', path: 'D:\\tools\\我的工作台\\火车票X产品数据生成工具.xlsm' },
+        { name: '火车票X产品分析总表', path: 'D:\\tools\\我的工作台\\火车票X产品分析总表.xlsx' },
         '珠海支付新加坡明细清理小工具.xlsm',
         '珠海携程外采内销入账报表清理小工具.xlsm',
         { name: '珠海携程数据2024至今', url: 'https://trip.larkenterprise.com/sheets/Jjh3spPvIhvrYFtZE5McELmDnEh?sheet=0OsQsa' },
-        { name: '珠海携程收入成本汇总', path: 'D:\\tools\\ExcelVBA工具箱\\1-珠海携程收入成本汇总.xlsx' },
-        { name: '珠海携程销售对账单', path: 'D:\\tools\\ExcelVBA工具箱\\2-销售对账单.xlsx' },
-        { name: '珠海携程结算对账单-新加坡', path: 'D:\\tools\\ExcelVBA工具箱\\3-结算对账单-新加坡.xlsx' },
-        { name: '珠海携程结算对账单-赫程', path: 'D:\\tools\\ExcelVBA工具箱\\3-结算对账单-赫程.xlsx' },
+        { name: '珠海携程收入成本汇总', path: 'D:\\tools\\我的工作台\\1-珠海携程收入成本汇总.xlsx' },
+        { name: '珠海携程销售对账单', path: 'D:\\tools\\我的工作台\\2-销售对账单.xlsx' },
+        { name: '珠海携程结算对账单-新加坡', path: 'D:\\tools\\我的工作台\\3-结算对账单-新加坡.xlsx' },
+        { name: '珠海携程结算对账单-赫程', path: 'D:\\tools\\我的工作台\\3-结算对账单-赫程.xlsx' },
         { name: '珠海携程开具发票明细', url: 'https://trip.larkenterprise.com/sheets/KAyyshWzxhW6dgtiGRZc8i1jnnf?sheet=2gLTVj' },
         { name: '珠海携程收付款明细', url: 'https://trip.larkenterprise.com/sheets/Ez81sNSBMhFX6ytqYFRcxXXKnVg?sheet=2dwmEH' },
-        { name: '珠海携程财务数据表', path: 'D:\\tools\\ExcelVBA工具箱\\珠海财务数据.xlsx' },
+        { name: '珠海携程财务数据表', path: 'D:\\tools\\我的工作台\\珠海财务数据.xlsx' },
         { name: '珠海携程SBC计提', url: 'https://trip.larkenterprise.com/sheets/Di3qswyd4hDu7qtMrmOc1dydnk5?sheet=1oyobI' },
         { name: '珠海人员监控', url: 'https://trip.larkenterprise.com/sheets/QE6Ysyivvh9wDMtw3jGcfu3Cn5d' },
         { name: '珠海携程资料库-飞书', url: 'https://trip.larkenterprise.com/drive/folder/ZqVhfkuLalZjCidG81EcayXvnFg' }
@@ -1858,15 +1864,15 @@
     {
       name: '越程报表整理工具',
       icon: '📁',
-      color: '#f59e0b',
-      bg: '#fffbeb',
+      color: '#ff9500',
+      bg: '#fff8f0',
       files: [
-        { name: '越程EBS凭证工具', path: 'D:\\tools\\ExcelVBA工具箱\\越程凭证模板.xlsx' },
-        { name: '越程VAT计提工具', path: 'D:\\tools\\ExcelVBA工具箱\\越程增值税税金计提表.xlsx' },
-        { name: '越程附加税计提工具', path: 'D:\\tools\\ExcelVBA工具箱\\越程附加税税金计提表.xlsx' },
+        { name: '越程EBS凭证工具', path: 'D:\\tools\\我的工作台\\越程凭证模板.xlsx' },
+        { name: '越程VAT计提工具', path: 'D:\\tools\\我的工作台\\越程增值税税金计提表.xlsx' },
+        { name: '越程附加税计提工具', path: 'D:\\tools\\我的工作台\\越程附加税税金计提表.xlsx' },
         { name: '越程房产税计提工具', path: 'D:\\Users\\ltian\\Desktop\\C-锦如交接工作\\房产税+城镇土地使用税\\房产税\\越程2021至今房产税计算表.xlsx' },
         { name: '越程收租管理表', url: 'https://trip.larkenterprise.com/sheets/A0YmsPM9khrTTrtRLIEcuaC5nTe?sheet=0UpjRr' },
-        { name: '越程停车费核对', path: 'D:\\tools\\ExcelVBA工具箱\\A-越程停车费核对表.xlsx' }
+        { name: '停车费管理系统工作台', path: 'D:\\cc\\code\\parking-system\\start.bat' }
       ]
     },
     {
@@ -1875,40 +1881,40 @@
       color: '#0ea5e9',
       bg: '#f0f9ff',
       files: [
-        { name: '季度财报申报工具-成都广州', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-成都广州.xlsx' },
-        { name: '季度财报申报工具-宏睿广州', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-宏睿广州.xlsx' },
-        { name: '季度财报申报工具-广州越程', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-广州越程.xlsx' },
-        { name: '季度财报申报工具-计算机广州', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-计算机广州.xlsx' },
-        { name: '季度财报申报工具-珠海携程', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-珠海携程.xlsx' },
-        { name: '季度财报申报工具-赫程南昌', path: 'D:\\tools\\ExcelVBA工具箱\\季度财报申报模板-赫程南昌.xlsx' },
-        { name: '财报信息采集链接-成都广州', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-成都广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-成都广州.xls' },
-        { name: '财报信息采集链接-宏睿广州', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-宏睿广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州宏睿.xls' },
-        { name: '财报信息采集链接-广州越程', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-广州越程\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州越程.xls' },
-        { name: '财报信息采集链接-计算机广州', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-计算机广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州计算机.xls' },
-        { name: '财报信息采集链接-珠海携程', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-珠海携程\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-珠海携程.xls' },
-        { name: '财报信息采集链接-赫程南昌', path: 'D:\\tools\\ExcelVBA工具箱\\CWBB_QYKJZZ_YBQY_YZX-赫程南昌\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-赫程南昌.xls' },
-        { name: '华南海豚现金流量表工具', path: 'D:\\tools\\ExcelVBA工具箱\\华南海豚现金流量表.xlsx' }
+        { name: '季度财报申报工具-成都广州', path: 'D:\\tools\\我的工作台\\季度财报申报模板-成都广州.xlsx' },
+        { name: '季度财报申报工具-宏睿广州', path: 'D:\\tools\\我的工作台\\季度财报申报模板-宏睿广州.xlsx' },
+        { name: '季度财报申报工具-广州越程', path: 'D:\\tools\\我的工作台\\季度财报申报模板-广州越程.xlsx' },
+        { name: '季度财报申报工具-计算机广州', path: 'D:\\tools\\我的工作台\\季度财报申报模板-计算机广州.xlsx' },
+        { name: '季度财报申报工具-珠海携程', path: 'D:\\tools\\我的工作台\\季度财报申报模板-珠海携程.xlsx' },
+        { name: '季度财报申报工具-赫程南昌', path: 'D:\\tools\\我的工作台\\季度财报申报模板-赫程南昌.xlsx' },
+        { name: '财报信息采集链接-成都广州', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-成都广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-成都广州.xls' },
+        { name: '财报信息采集链接-宏睿广州', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-宏睿广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州宏睿.xls' },
+        { name: '财报信息采集链接-广州越程', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-广州越程\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州越程.xls' },
+        { name: '财报信息采集链接-计算机广州', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-计算机广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州计算机.xls' },
+        { name: '财报信息采集链接-珠海携程', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-珠海携程\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-珠海携程.xls' },
+        { name: '财报信息采集链接-赫程南昌', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-赫程南昌\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-赫程南昌.xls' },
+        { name: '华南海豚现金流量表工具', path: 'D:\\tools\\我的工作台\\华南海豚现金流量表.xlsx' }
       ]
     },
     {
       name: '统计局报表数据填列工具',
       icon: '📈',
-      color: '#6366f1',
-      bg: '#eef2ff',
+      color: '#5856d6',
+      bg: '#f5f4ff',
       files: [
         { name: '珠海携程统计局报表工具', url: 'https://trip.larkenterprise.com/sheets/Wdp7scRY9hqmI9ttA78cxe5vnke?sheet=1hjExW' },
         { name: '广州越程统计局报表工具', url: 'https://trip.larkenterprise.com/sheets/UxgCsw8sRhMVzwtNKvBcWRW8n0e?sheet=1IDILy' },
-        { name: '珠海携程财务状况月报工具', path: 'D:\\tools\\ExcelVBA工具箱\\F203_财务状况-月报-珠海携程.xlsx' },
-        { name: '珠海资产负债表工具', path: 'D:\\tools\\ExcelVBA工具箱\\1-珠海携程-资产负债表.xlsx' },
-        { name: '珠海利润表工具', path: 'D:\\tools\\ExcelVBA工具箱\\2-珠海携程_损益表.xlsx' },
-        { name: '广州越程财务状况月报工具', path: 'D:\\tools\\ExcelVBA工具箱\\F203_财务状况-月报-越程.xlsx' }
+        { name: '珠海携程财务状况月报工具', path: 'D:\\tools\\我的工作台\\F203_财务状况-月报-珠海携程.xlsx' },
+        { name: '珠海资产负债表工具', path: 'D:\\tools\\我的工作台\\1-珠海携程-资产负债表.xlsx' },
+        { name: '珠海利润表工具', path: 'D:\\tools\\我的工作台\\2-珠海携程_损益表.xlsx' },
+        { name: '广州越程财务状况月报工具', path: 'D:\\tools\\我的工作台\\F203_财务状况-月报-越程.xlsx' }
       ]
     },
     {
       name: 'FinToolsArk工具',
       icon: '🌐',
-      color: '#8b5cf6',
-      bg: '#f5f3ff',
+      color: '#af52de',
+      bg: '#faf5ff',
       files: [
         { name: 'Excel XML 提取发票信息', url: 'https://fintoolsark.edp.ctripcorp.com/tools/excel-xml-extractor/run' },
         { name: '资产负债表按公司拆分工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/balance-sheet-splitter/run' },
@@ -1931,8 +1937,8 @@
     {
       name: '飞书多维表格',
       icon: '📋',
-      color: '#3370ff',
-      bg: '#e8f0fe',
+      color: '#0071e3',
+      bg: '#f0f7ff',
       files: [
         { name: '华南利润表汇总', url: 'https://trip.larkenterprise.com/base/VKOKb6NRHat6opspN3jcoeFSnjb?table=blk12SFiWcpJLJPR' },
         { name: '华南金融外币兑换业务分析', url: 'https://trip.larkenterprise.com/base/WuxfbMgEXaIAfjsrT0ycCFSynMb?table=blk03FBM0XUTuT7a' },
@@ -1950,7 +1956,7 @@
     {
       name: '智能体',
       icon: '🤖',
-      color: '#a855f7',
+      color: '#af52de',
       bg: '#faf5ff',
       files: [
         { name: '广州国旅度假分析智能助手', url: 'https://trip.larkenterprise.com/base/agent/7660399665082354656' },
@@ -1963,8 +1969,8 @@
     {
       name: 'Python小工具桌面版',
       icon: '🐍',
-      color: '#10b981',
-      bg: '#ecfdf5',
+      color: '#34c759',
+      bg: '#f0faf3',
       files: [
         { name: '开曼CBCR-XML转换工具', path: 'D:\\cc\\code\\工具\\cayman cbcr converter工具.py' },
         { name: '开曼XML比对工具', path: 'D:\\cc\\code\\工具\\比较cbcr xml工具.py' },
@@ -2003,7 +2009,7 @@
   if (window.location.protocol === 'file:') {
     document.addEventListener('DOMContentLoaded', () => {
       const banner = document.createElement('div');
-      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:10000;background:#ef4444;color:#fff;padding:12px 20px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);';
+      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:10000;background:#ff3b30;color:#fff;padding:12px 20px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);';
       banner.innerHTML = '⚠️ 你正在通过本地文件直接打开工作台，请点击「启动工作台.bat」运行服务，然后通过浏览器访问 <a href="http://localhost:8765" style="color:#fff;text-decoration:underline;">http://localhost:8765</a>';
       document.body.appendChild(banner);
       document.body.style.paddingTop = '44px';
@@ -2403,7 +2409,7 @@
         } else if (holiday.type === 'workday') {
           solarCls += ' calendar-workday';
           lunarCls += ' calendar-workday';
-          festivalTag = `<span class="calendar-festival" style="background:rgba(59,130,246,0.15);color:#3b82f6;">班</span>`;
+          festivalTag = `<span class="calendar-festival" style="background:rgba(0,113,227,0.12);color:#0071e3;">班</span>`;
         } else if (holiday.type === 'rest') {
           lunarCls += ' calendar-holiday';
         }
@@ -2691,7 +2697,7 @@
         fixedUndone.sort(function(a, b) { return (a.f.day || 0) - (b.f.day || 0); });
         fixedList.innerHTML = fixedUndone.map(function(_ref) {
           var f = _ref.f, idx = _ref.idx;
-          return '<div class="todo-item" onclick="toggleFixedTodo(' + idx + ')">\n            <div class="todo-checkbox"></div>\n            <div class="todo-text">' + escapeHtml(f.text) + ' <span style="color:#b0a8bf;font-size:12px;">(' + f.day + '日)</span></div>\n          </div>';
+          return '<div class="todo-item" onclick="toggleFixedTodo(' + idx + ')">\n            <div class="todo-checkbox"></div>\n            <div class="todo-text">' + escapeHtml(f.text) + ' <span style="color:#c7c7cc;font-size:12px;">(' + f.day + '日)</span></div>\n          </div>';
         }).join('');
       }
 
@@ -2701,7 +2707,7 @@
         $('fixedDoneCount').textContent = fixedDone.length;
         fixedDoneList.innerHTML = fixedDone.map(function(_ref2) {
           var f = _ref2.f, idx = _ref2.idx;
-          return '<div class="todo-item done" onclick="toggleFixedTodo(' + idx + ')">\n            <div class="todo-checkbox">✓</div>\n            <div class="todo-text">' + escapeHtml(f.text) + ' <span style="color:#b0a8bf;font-size:12px;">(' + f.day + '日)</span></div>\n          </div>';
+          return '<div class="todo-item done" onclick="toggleFixedTodo(' + idx + ')">\n            <div class="todo-checkbox">✓</div>\n            <div class="todo-text">' + escapeHtml(f.text) + ' <span style="color:#c7c7cc;font-size:12px;">(' + f.day + '日)</span></div>\n          </div>';
         }).join('');
       } else {
         fixedDoneSection.style.display = 'none';
