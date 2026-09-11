@@ -484,70 +484,70 @@
   .site-links {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
+    gap: 40px 20px;
   }
-  .site-card {
-    aspect-ratio: 1 / 1;
-    position: relative;
-    overflow: hidden;
+  .site-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 8px 6px;
-    background: transparent;
-    border-radius: 12px;
+    gap: 8px;
     cursor: pointer;
     transition: all 0.18s ease;
-    border: none;
-    color: #fff;
-    box-shadow: 0 2px 6px rgba(15,23,42,0.08);
-    gap: 6px;
-    transform: scale(0.8);
   }
-  .site-card::before {
+  .site-icon-box {
+    width: 40%;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: transparent;
+    box-shadow: 0 3px 8px rgba(15,23,42,0.1);
+    transition: all 0.18s ease;
+  }
+  .site-icon-box::before {
     content: '';
     position: absolute;
     inset: 0;
     background: var(--site-gradient);
-    opacity: 0.7;
+    opacity: 0.85;
     border-radius: inherit;
     z-index: 0;
     transition: opacity 0.18s ease;
   }
-  .site-card:hover {
-    transform: scale(0.8) translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+  .site-item:hover .site-icon-box {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(15,23,42,0.15);
   }
-  .site-card:hover::before {
-    opacity: 0.85;
+  .site-item:hover .site-icon-box::before {
+    opacity: 0.95;
   }
-  .site-card-icon {
+  .site-icon {
     position: relative;
     z-index: 1;
-    font-size: 26px;
+    font-size: 28px;
     line-height: 1;
     filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
   }
-  .site-card-name {
-    position: relative;
-    z-index: 1;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.25;
-    color: rgba(255,255,255,0.95);
+  .site-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    text-align: center;
+    line-height: 1.3;
     word-break: break-all;
   }
   @media (max-width: 1100px) {
-    .site-links { grid-template-columns: repeat(4, 1fr); gap: 10px; }
-    .site-card-icon { font-size: 24px; }
-    .site-card-name { font-size: 15px; }
+    .site-links { grid-template-columns: repeat(4, 1fr); gap: 32px 16px; }
+    .site-icon { font-size: 24px; }
+    .site-name { font-size: 12px; }
   }
   @media (max-width: 600px) {
-    .site-links { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .site-card-icon { font-size: 22px; }
-    .site-card-name { font-size: 14px; }
+    .site-links { grid-template-columns: repeat(3, 1fr); gap: 24px 12px; }
+    .site-icon { font-size: 22px; }
+    .site-name { font-size: 11px; }
   }
 
   /* 待办事项 */
@@ -1209,53 +1209,76 @@
   .quick-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 12px;
   }
   .quick-card {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    width: calc(25% - 6px);
-    min-width: 80px;
-    min-height: 92px;
-    padding: 10px 6px;
+    gap: 12px;
+    width: calc(25% - 9px);
+    min-height: 76px;
+    padding: 14px 14px 14px 16px;
+    background: #fff;
+    border: 1px solid var(--border);
     border-radius: 12px;
     cursor: pointer;
-    transition: all 0.2s;
-    gap: 4px;
-    text-align: center;
-    border: 1px solid transparent;
+    transition: all 0.18s ease;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
   }
   .quick-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 12px rgba(15,23,42,0.08);
+    border-color: var(--primary-light);
   }
   .quick-card-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
     font-size: 24px;
     line-height: 1;
+    flex-shrink: 0;
+  }
+  .quick-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
   }
   .quick-card-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.95);
-    line-height: 1.2;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
   }
   .quick-card-desc {
-    font-size: 10px;
-    color: rgba(255,255,255,0.8);
-    line-height: 1.2;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.3;
+  }
+  .quick-card-arrow {
+    font-size: 20px;
+    color: #94a3b8;
+    font-weight: 300;
+    flex-shrink: 0;
+    margin-left: 4px;
+  }
+  @media (max-width: 900px) {
+    .quick-card { width: calc(50% - 6px); }
   }
   @media (max-width: 600px) {
     .quick-card {
-      width: calc(25% - 6px);
-      min-width: 0;
-      min-height: 76px;
-      padding: 8px 4px;
+      width: 100%;
+      min-height: 68px;
+      padding: 12px 14px;
     }
-    .quick-card-icon { font-size: 20px; }
-    .quick-card-name { font-size: 12px; }
-    .quick-card-desc { font-size: 9px; }
+    .quick-card-icon { width: 40px; height: 40px; font-size: 20px; }
+    .quick-card-name { font-size: 13px; }
+    .quick-card-desc { font-size: 11px; }
+    .quick-card-arrow { font-size: 18px; }
   }
 
   /* ===== 响应式 ===== */
@@ -1365,25 +1388,37 @@
               <div class="panel-title">⚡ 常用快捷</div>
             </div>
             <div class="quick-links">
-              <div class="quick-card" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);" onclick="window.open('https://www.qcc.com/web/user/follow/new','_blank')">
-                <div class="quick-card-name">企查查</div>
-                <div class="quick-card-icon">🔍</div>
-                <div class="quick-card-desc">企业信息查询</div>
+              <div class="quick-card" onclick="window.open('https://www.qcc.com/web/user/follow/new','_blank')">
+                <div class="quick-card-icon" style="color:#4338ca;background:rgba(67,56,202,0.22);">🔍</div>
+                <div class="quick-card-content">
+                  <div class="quick-card-name">企查查</div>
+                  <div class="quick-card-desc">企业信息查询</div>
+                </div>
+                <div class="quick-card-arrow">›</div>
               </div>
-              <div class="quick-card" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);" onclick="window.open('https://trip.larkenterprise.com/sheets/Xu5vsP0fdhfXjatHRUrcW8Dbnnf','_blank')">
-                <div class="quick-card-name">公司税号</div>
-                <div class="quick-card-icon">📄</div>
-                <div class="quick-card-desc">飞书表格</div>
+              <div class="quick-card" onclick="window.open('https://trip.larkenterprise.com/sheets/Xu5vsP0fdhfXjatHRUrcW8Dbnnf','_blank')">
+                <div class="quick-card-icon" style="color:#1d4ed8;background:rgba(29,78,216,0.2);">📄</div>
+                <div class="quick-card-content">
+                  <div class="quick-card-name">公司税号</div>
+                  <div class="quick-card-desc">飞书表格</div>
+                </div>
+                <div class="quick-card-arrow">›</div>
               </div>
-              <div class="quick-card" style="background: linear-gradient(135deg, #f59e0b, #f97316);" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\注意：华南地区分公司名录-每月检查无公司代码是否有代码.xlsx')">
-                <div class="quick-card-name">公司名录</div>
-                <div class="quick-card-icon">📊</div>
-                <div class="quick-card-desc">每月检查</div>
+              <div class="quick-card" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\注意：华南地区分公司名录-每月检查无公司代码是否有代码.xlsx')">
+                <div class="quick-card-icon" style="color:#b45309;background:rgba(180,83,9,0.2);">📊</div>
+                <div class="quick-card-content">
+                  <div class="quick-card-name">公司名录</div>
+                  <div class="quick-card-desc">每月检查</div>
+                </div>
+                <div class="quick-card-arrow">›</div>
               </div>
-              <div class="quick-card" style="background: linear-gradient(135deg, #10b981, #22c55e);" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\申报公司清单.xlsx')">
-                <div class="quick-card-name">申报清单</div>
-                <div class="quick-card-icon">📋</div>
-                <div class="quick-card-desc">华南公司</div>
+              <div class="quick-card" onclick="openSkillByPath('D:\\tools\\ExcelVBA工具箱\\申报公司清单.xlsx')">
+                <div class="quick-card-icon" style="color:#047857;background:rgba(4,120,87,0.2);">📋</div>
+                <div class="quick-card-content">
+                  <div class="quick-card-name">申报清单</div>
+                  <div class="quick-card-desc">华南公司</div>
+                </div>
+                <div class="quick-card-arrow">›</div>
               </div>
             </div>
           </div>
@@ -1418,53 +1453,77 @@
               <div class="panel-title">🌐 常用网站快捷入口</div>
             </div>
             <div class="site-links">
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);" onclick="window.open('http://iam.basebiz.ctripcorp.com/bbzoffline/home?lk_jump_to_browser=true','_blank')">
-                <div class="site-card-icon">🏠</div>
-                <div class="site-card-name">Offline首页</div>
+              <div class="site-item" onclick="window.open('http://iam.basebiz.ctripcorp.com/bbzoffline/home?lk_jump_to_browser=true','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                  <div class="site-icon">🏠</div>
+                </div>
+                <div class="site-name">Offline首页</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #3b82f6, #2563eb);" onclick="window.open('http://ebs.cn1.global.ctrip.com/OA_HTML/AppsLocalLogin.jsp','_blank')">
-                <div class="site-card-icon">🔐</div>
-                <div class="site-card-name">EBS Login</div>
+              <div class="site-item" onclick="window.open('http://ebs.cn1.global.ctrip.com/OA_HTML/AppsLocalLogin.jsp','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #3b82f6, #2563eb);">
+                  <div class="site-icon">🔐</div>
+                </div>
+                <div class="site-name">EBS Login</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #4f46e5, #3730a3);" onclick="window.open('http://accounting.ctripcorp.com/home','_blank')">
-                <div class="site-card-icon">📊</div>
-                <div class="site-card-name">EBS结账平台</div>
+              <div class="site-item" onclick="window.open('http://accounting.ctripcorp.com/home','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #4f46e5, #3730a3);">
+                  <div class="site-icon">📊</div>
+                </div>
+                <div class="site-name">EBS结账平台</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #10b981, #059669);" onclick="window.open('http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html','_blank')">
-                <div class="site-card-icon">📋</div>
-                <div class="site-card-name">OA系统</div>
+              <div class="site-item" onclick="window.open('http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #10b981, #059669);">
+                  <div class="site-icon">📋</div>
+                </div>
+                <div class="site-name">OA系统</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #f97316, #ea580c);" onclick="window.open('http://tax.ard.ctripcorp.com/taxMain/','_blank')">
-                <div class="site-card-icon">💰</div>
-                <div class="site-card-name">携程税务系统</div>
+              <div class="site-item" onclick="window.open('http://tax.ard.ctripcorp.com/taxMain/','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #f97316, #ea580c);">
+                  <div class="site-icon">💰</div>
+                </div>
+                <div class="site-name">携程税务系统</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #06b6d4, #0891b2);" onclick="window.open('https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin','_blank')">
-                <div class="site-card-icon">📈</div>
-                <div class="site-card-name">统计云互联网</div>
+              <div class="site-item" onclick="window.open('https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #06b6d4, #0891b2);">
+                  <div class="site-icon">📈</div>
+                </div>
+                <div class="site-name">统计云互联网</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #ef4444, #dc2626);" onclick="window.open('https://etax.guangdong.chinatax.gov.cn:8443/','_blank')">
-                <div class="site-card-icon">🏛️</div>
-                <div class="site-card-name">广东省电子税务局</div>
+              <div class="site-item" onclick="window.open('https://etax.guangdong.chinatax.gov.cn:8443/','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #ef4444, #dc2626);">
+                  <div class="site-icon">🏛️</div>
+                </div>
+                <div class="site-name">广东省电子税务局</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #dc2626, #991b1b);" onclick="window.open('https://etax.jiangxi.chinatax.gov.cn:8443/loginb/','_blank')">
-                <div class="site-card-icon">🏛️</div>
-                <div class="site-card-name">江西省电子税务局</div>
+              <div class="site-item" onclick="window.open('https://etax.jiangxi.chinatax.gov.cn:8443/loginb/','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #dc2626, #991b1b);">
+                  <div class="site-icon">🏛️</div>
+                </div>
+                <div class="site-name">江西省电子税务局</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #f59e0b, #d97706);" onclick="window.open('http://digitaleinvoiceissue.ard.ctripcorp.com/userCenterAlone-ui/addTaxLogin','_blank')">
-                <div class="site-card-icon">🧾</div>
-                <div class="site-card-name">百旺云发票平台</div>
+              <div class="site-item" onclick="window.open('http://digitaleinvoiceissue.ard.ctripcorp.com/userCenterAlone-ui/addTaxLogin','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #f59e0b, #d97706);">
+                  <div class="site-icon">🧾</div>
+                </div>
+                <div class="site-name">百旺云发票平台</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #3b82f6, #06b6d4);" onclick="window.open('https://trip.larkenterprise.com/share/base/form/shrcnuI8kRm4WkDyln3mb7bJ3Tg','_blank')">
-                <div class="site-card-icon">📝</div>
-                <div class="site-card-name">数据需求收集表</div>
+              <div class="site-item" onclick="window.open('https://trip.larkenterprise.com/share/base/form/shrcnuI8kRm4WkDyln3mb7bJ3Tg','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #3b82f6, #06b6d4);">
+                  <div class="site-icon">📝</div>
+                </div>
+                <div class="site-name">数据需求收集表</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #14b8a6, #0d9488);" onclick="window.open('https://trip.larkenterprise.com/base/XfsDbnrqyaMDRrsQ4F5cb2iWnEg?table=tblNYGzzUKlarzPq&view=vew3CnmX2b','_blank')">
-                <div class="site-card-icon">📊</div>
-                <div class="site-card-name">数据需求多维表格</div>
+              <div class="site-item" onclick="window.open('https://trip.larkenterprise.com/base/XfsDbnrqyaMDRrsQ4F5cb2iWnEg?table=tblNYGzzUKlarzPq&view=vew3CnmX2b','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #14b8a6, #0d9488);">
+                  <div class="site-icon">📊</div>
+                </div>
+                <div class="site-name">数据需求多维表格</div>
               </div>
-              <div class="site-card" style="--site-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);" onclick="window.open('https://ycfz.hengqin.gov.cn/#/home','_blank')">
-                <div class="site-card-icon">🏛️</div>
-                <div class="site-card-name">横琴惠企利民服务平台</div>
+              <div class="site-item" onclick="window.open('https://ycfz.hengqin.gov.cn/#/home','_blank')">
+                <div class="site-icon-box" style="--site-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);">
+                  <div class="site-icon">🏛️</div>
+                </div>
+                <div class="site-name">横琴惠企利民服务平台</div>
               </div>
             </div>
           </div>
