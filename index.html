@@ -200,14 +200,28 @@
 
   .content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
-    padding: 24px 28px 40px;
+    padding: 16px 24px 18px;
+  }
+  .modules-wrap {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  #toolView {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
   .section-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
   }
   .section-label {
     font-size: 13px; font-weight: 600; color: var(--text-secondary);
@@ -830,6 +844,9 @@
     transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
     display: flex; flex-direction: column; gap: 14px;
     box-shadow: var(--shadow);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
   }
   .card:hover {
     transform: translateY(-3px);
@@ -882,6 +899,269 @@
   }
   .card:hover .card-action {
     filter: brightness(0.96);
+  }
+
+  /* ===== 模块式内容页（EBS 工作平台等） ===== */
+  .modules-container {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .module-panel {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #fff 0%, var(--card-bg, #f8f8fa) 100%);
+    border-radius: var(--radius);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    overflow: hidden;
+    position: relative;
+  }
+  .module-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: var(--card-color, var(--primary));
+  }
+  .module-header {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    background: linear-gradient(90deg, var(--card-bg, #f5f5f7) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .module-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--card-color, var(--primary));
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .module-title::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: var(--card-color, var(--primary));
+    border-radius: 2px;
+  }
+  .module-content {
+    flex: 1;
+    min-height: 0;
+    padding: 10px 12px;
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  /* 流程式模块：步骤横向排列 */
+  .flow-step {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid rgba(0,0,0,0.06);
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .flow-step:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(0,0,0,0.1);
+  }
+  .flow-step-number {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--card-color, var(--primary));
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .flow-step-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .flow-step-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+    text-align: center;
+    word-break: break-all;
+  }
+  .flow-step-tag {
+    font-size: 10px; font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.05);
+    color: var(--text-secondary);
+  }
+  .flow-step-action {
+    margin-top: auto;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+    background: var(--card-color, var(--primary));
+    color: #fff;
+    transition: all 0.2s;
+  }
+  .flow-step:hover .flow-step-action {
+    filter: brightness(1.08);
+  }
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--card-color, var(--primary));
+    font-size: 22px;
+    font-weight: 700;
+    opacity: 0.7;
+    flex-shrink: 0;
+    width: 22px;
+  }
+
+  /* 并列式模块：卡片横向排列 */
+  .module-card {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid rgba(0,0,0,0.06);
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .module-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(0,0,0,0.1);
+  }
+  .module-card-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--card-color, var(--primary));
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .module-card-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .module-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+    word-break: break-all;
+  }
+  .module-card-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.05);
+    color: var(--text-secondary);
+    align-self: flex-start;
+  }
+  .module-card-action {
+    flex-shrink: 0;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+    background: var(--card-color, var(--primary));
+    color: #fff;
+    transition: all 0.2s;
+  }
+  .module-card:hover .module-card-action {
+    filter: brightness(1.08);
+  }
+
+  /* 模块整体布局变体 */
+  .module-panel { min-width: 0; }
+  .modules-row {
+    flex-direction: row;
+  }
+  .modules-row .module-panel {
+    height: 100%;
+  }
+  .modules-column {
+    flex-direction: column;
+  }
+  .module-content-horizontal {
+    flex-direction: row;
+    gap: 10px;
+  }
+  .module-content-vertical {
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+  }
+
+  /* 竖排模块内的流程步骤 */
+  .flow-step.flow-step-vertical {
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 12px;
+  }
+  .flow-step-vertical .flow-step-body {
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+  }
+  .flow-step-vertical .flow-step-name {
+    text-align: left;
+  }
+  .flow-step-vertical .flow-step-action {
+    margin-top: 0;
+    margin-left: auto;
+  }
+  .flow-arrow.flow-arrow-vertical {
+    width: auto;
+    padding: 2px 0;
+  }
+
+  /* 竖排模块内的并列卡片 */
+  .module-card.module-card-vertical {
+    flex: 0 0 auto;
+    width: 100%;
   }
 
   /* ===== 空状态 ===== */
@@ -1230,6 +1510,9 @@
     cursor: pointer;
     transition: all 0.18s ease;
     box-shadow: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
   }
   .quick-card:hover {
     transform: translateY(-2px);
@@ -1650,7 +1933,6 @@
 
 <div class="toast" id="toast"><span class="toast-icon">✅</span><span id="toastText"></span></div>
 
-</script>
 <script>
 (function() {
   // ==================== 云端配置（外网访问必填） ====================
@@ -1715,17 +1997,38 @@
     {
       name: 'EBS导入工具',
       icon: '📥',
-      color: '#0071e3',
-      bg: '#f0f7ff',
-      files: [
-        'EBS导入模型-899调整-年会费用（年度）.xlsm',
-        'EBS导入模型-899调整-文具自助柜费用（半年度）.xlsm',
-        'EBS导入模型-899调整-运动会费用（年度）.xlsm',
-        'EBS导入模型-899调整-折旧水电物管保洁（每月）.xlsm',
-        { name: 'EBS导入模型-珠海携程抵扣以前暂估进项', path: 'D:\\tools\\我的工作台\\EBS导入模型-珠海携程-抵扣以前暂估进项税.xlsm' },
-        { name: 'EBS导入模型-成都广州抵扣以前暂估进项', path: 'D:\\tools\\我的工作台\\EBS导入模型-成都广州-抵扣以前暂估进项税.xlsm' },
-        { name: '下载中铁租金物管OA明细', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=13376' },
-        { name: '下载中铁保洁费OA明细', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=16878' }
+      color: '#60a5fa',
+      bg: '#eff6ff',
+      layout: 'modules',
+      modules: [
+        {
+          title: 'EBS折旧物管水电保洁工作平台',
+          type: 'flow',
+          items: [
+            { name: '读取中铁诺德账单', path: 'D:\\Users\\ltian\\Desktop\\A-广州租金管理费\\extract_pdf_tables.py' },
+            { name: '打开中铁诺德账单汇总', path: 'D:\\Users\\ltian\\Desktop\\A-广州租金管理费\\中铁诺德账单汇总.xlsx' },
+            { name: '打开中铁诺德EBS导入模型', path: 'D:\\tools\\我的工作台\\EBS导入模型-899调整-折旧水电物管保洁（每月）.xlsm' },
+            { name: '下载中铁物管水电OA明细', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=13376' },
+            { name: '下载中铁保洁费OA明细', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=16878' }
+          ]
+        },
+        {
+          title: 'EBS导入模型--抵扣暂估进项',
+          type: 'grid',
+          items: [
+            { name: '珠海携程抵扣暂估进项', path: 'D:\\tools\\我的工作台\\EBS导入模型-珠海携程-抵扣以前暂估进项税.xlsm' },
+            { name: '成都广州抵扣暂估进项', path: 'D:\\tools\\我的工作台\\EBS导入模型-成都广州-抵扣以前暂估进项税.xlsm' }
+          ]
+        },
+        {
+          title: 'EBS导入模型--10000调整账套',
+          type: 'grid',
+          items: [
+            { path: 'D:\\tools\\我的工作台\\EBS导入模型-899调整-文具自助柜费用（半年度）.xlsm' },
+            { path: 'D:\\tools\\我的工作台\\EBS导入模型-899调整-运动会费用（年度）.xlsm' },
+            { path: 'D:\\tools\\我的工作台\\EBS导入模型-899调整-年会费用（年度）.xlsm' }
+          ]
+        }
       ]
     },
     {
@@ -1744,73 +2047,159 @@
       icon: '🧹',
       color: '#34c759',
       bg: '#f0faf3',
-      files: [
-        '按公司清理资产负债表小工具.xlsm',
-        '按公司清理利润表小工具.xlsm',
-        '按公司清理科目余额表小工具.xlsm',
-        { name: 'Gross全量利润表整理工具', path: 'D:\\Users\\ltian\\Desktop\\全量报表清理小工具\\3、利润表和资产负债表整理模板\\Gross利润表整理模板.xlsx' },
-        { name: 'Net全量利润表整理工具', path: 'D:\\Users\\ltian\\Desktop\\全量报表清理小工具\\3、利润表和资产负债表整理模板\\Net利润表整理模板.xlsx' },
-        { name: '全量资产负债表整理工具', path: 'D:\\Users\\ltian\\Desktop\\全量报表清理小工具\\3、利润表和资产负债表整理模板\\资产负债表整理模板.xlsx' }
+      layout: 'modules',
+      modulesLayout: 'row',
+      modules: [
+        {
+          title: '全量报表清理平台',
+          type: 'flow',
+          items: [
+            { name: '按公司清理科目余额表小工具', path: 'D:\\tools\\我的工作台\\按公司清理科目余额表小工具.xlsm' },
+            { name: '全量资产负债表整理工具', path: 'D:\\Users\\ltian\\Desktop\\全量报表清理小工具\\3、利润表和资产负债表整理模板\\资产负债表整理模板.xlsx' },
+            { name: 'Gross全量利润表整理工具', path: 'D:\\Users\\ltian\\Desktop\\全量报表清理小工具\\3、利润表和资产负债表整理模板\\Gross利润表整理模板.xlsx' },
+            { name: 'Net全量利润表整理工具', path: 'D:\\Users\\ltian\\Desktop\\全量报表清理小工具\\3、利润表和资产负债表整理模板\\Net利润表整理模板.xlsx' },
+            { name: '打开整理后报表', path: 'D:\\Users\\ltian\\Desktop\\全量报表清理小工具\\4、整理后用于小工具选择的报表' },
+            { name: '按公司清理资产负债表小工具', path: 'D:\\tools\\我的工作台\\按公司清理资产负债表小工具.xlsm' },
+            { name: '按公司清理利润表小工具', path: 'D:\\tools\\我的工作台\\按公司清理利润表小工具.xlsm' }
+          ]
+        },
+        {
+          title: '按公司拆分报表平台',
+          type: 'grid',
+          items: [
+            { name: '资产负债表按公司拆分工具', path: 'D:\\cc\\code\\工具\\资产负债表拆分工具.py' },
+            { name: 'Gross利润表按公司拆分工具', path: 'D:\\cc\\code\\工具\\利润表拆分工具-Gross.py' },
+            { name: 'Net利润表按公司拆分工具', path: 'D:\\cc\\code\\工具\\利润表拆分工具-Net.py' },
+            { name: '科目余额表按公司拆分工具', path: 'D:\\cc\\code\\工具\\科目余额表拆分工具.py' }
+          ]
+        }
       ]
     },
     {
-      name: '华南管报整理工具',
+      name: '华南管报管理工具',
       icon: '📊',
-      color: '#ff9500',
-      bg: '#fff8f0',
-      files: [
-        { name: '华南四地利润表汇总公式版', path: 'D:\\tools\\我的工作台\\华南四地利润表汇总-公式 - 最新.xlsx' },
-        { name: '华南四地利润表-Gross模式全年底稿', path: 'D:\\tools\\我的工作台\\报表：利润表-Gross模式_全年底稿.xlsx' },
-        { name: '华南四地利润表-Net模式全年底稿', path: 'D:\\tools\\我的工作台\\报表：利润表-Net模式_全年底稿.xlsx' },
-        '华南管理费用科目余额表转换工具.xlsm',
-        '华南利润表转换工具.xlsm',
-        '华南资产负债表转换工具.xlsm',
-        '华南税金汇总表转换工具.xlsm',
-        { name: '飞书表格-华南税金整理工具', path: 'D:\\tools\\我的工作台\\飞书表格-华南税金整理工具.xlsx' },
-        { name: '飞书表格-增值税整理工具', path: 'D:\\tools\\我的工作台\\飞书表格-广州公司增值税统计.xlsx' },
-        { name: '广州国旅度假月报汇总分析', path: 'C:\\smile\'s work\\B-季度税金-上海\\广州国旅度假月报汇总分析.xlsx' },
-        { name: '华南税金汇总表', path: 'C:\\smile\'s work\\B-季度税金-上海\\华南税金汇总表.xlsx' },
-        { name: '华南统计表', path: 'C:\\smile\'s work\\B-季度税金-上海\\华南统计表.xlsx' },
-        { name: '广州国旅测算', path: 'C:\\smile\'s work\\B-季度税金-上海\\广州国旅测算.xlsx' },
-        { name: '华南附件3', path: 'D:\\tools\\我的工作台\\附件3.xlsx' },
-        { name: '天津海豚华南管理', url: 'https://trip.larkenterprise.com/sheets/MYVAsndUKhahIut4mRVclKTUnac' },
-        { name: '携程税务系统下载', url: 'http://tax.ard.ctripcorp.com/taxStatisticsReport/list' }
+      color: '#fdba74',
+      bg: '#fffaf5',
+      layout: 'modules',
+      modules: [
+        {
+          title: '华南四地利润表工作台',
+          type: 'flow',
+          items: [
+            { name: '华南四地利润表汇总公式版', path: 'D:\\tools\\我的工作台\\华南四地利润表汇总-公式 - 最新.xlsx' },
+            { name: '华南四地利润表-Gross全年底稿', path: 'D:\\tools\\我的工作台\\报表：利润表-Gross模式_全年底稿.xlsx' },
+            { name: '华南四地利润表-Net全年底稿', path: 'D:\\tools\\我的工作台\\报表：利润表-Net模式_全年底稿.xlsx' },
+            { name: '华南利润表转换工具', path: 'D:\\tools\\我的工作台\\华南利润表转换工具.xlsm' }
+          ]
+        },
+        {
+          title: '华南税金工作台',
+          type: 'flow',
+          items: [
+            { name: '提取PDF完税证明工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/tax-fixed0811/run' },
+            { name: '携程税务系统下载', url: 'http://tax.ard.ctripcorp.com/taxStatisticsReport/list' },
+            { name: '华南税金汇总表', path: 'C:\\smile\'s work\\B-季度税金-上海\\华南税金汇总表.xlsx' },
+            { name: '华南税金汇总表转换工具', path: 'D:\\tools\\我的工作台\\华南税金汇总表转换工具.xlsm' }
+          ]
+        },
+        {
+          title: '飞书表格整理工具台',
+          type: 'grid',
+          items: [
+            { name: '华南资产负债表转换工具', path: 'D:\\tools\\我的工作台\\华南资产负债表转换工具.xlsm' },
+            { name: '华南管理费用科目余额表转换工具', path: 'D:\\tools\\我的工作台\\华南管理费用科目余额表转换工具.xlsm' },
+            { name: '飞书表格-增值税整理工具', path: 'D:\\tools\\我的工作台\\飞书表格-广州公司增值税统计.xlsx' },
+            { name: '飞书表格-华南税金整理工具', path: 'D:\\tools\\我的工作台\\飞书表格-华南税金整理工具.xlsx' }
+          ]
+        },
+        {
+          title: '管理报表平台',
+          type: 'grid',
+          items: [
+            { name: '华南统计表', path: 'C:\\smile\'s work\\B-季度税金-上海\\华南统计表.xlsx' },
+            { name: '广州国旅测算表', path: 'C:\\smile\'s work\\B-季度税金-上海\\广州国旅测算.xlsx' },
+            { name: '广州国旅度假月报汇总分析', path: 'C:\\smile\'s work\\B-季度税金-上海\\广州国旅度假月报汇总分析.xlsx' },
+            { name: '华南附件3', path: 'D:\\tools\\我的工作台\\附件3.xlsx' },
+            { name: '天津海豚华南管理', url: 'https://trip.larkenterprise.com/sheets/MYVAsndUKhahIut4mRVclKTUnac' }
+          ]
+        }
       ]
     },
     {
       name: '度假/金服报表整理工具',
       icon: '🏖️',
-      color: '#ff9500',
-      bg: '#fff8f0',
-      files: [
-        '全订单表（替代FD1070）数据清理小工具.xlsm',
-        { name: '全订单表（替代FD1070）透视表工具', path: 'D:\\tools\\我的工作台\\全订单表（替代FD1070）-地方财务提供版本透视表模板.xlsx' },
-        { name: '度假主营业务收入整理工具', path: 'D:\\tools\\我的工作台\\主营业务收入-本期发生-本位币.xlsx' },
-        { name: '度假分析多维表格整理工具', path: 'D:\\tools\\我的工作台\\广州国旅度假分析多维表格整理工具.xlsx' },
-        { name: '华南金服售汇整理工具', path: 'D:\\Users\\ltian\\Desktop\\D-华南金服草稿\\1、华南金服售汇模板.xlsx' },
-        { name: '华南金服结汇整理工具', path: 'D:\\Users\\ltian\\Desktop\\D-华南金服草稿\\2、华南金服结汇模板.xlsx' }
+      color: '#94a3b8',
+      bg: '#f8fafc',
+      layout: 'modules',
+      modulesLayout: 'row',
+      modules: [
+        {
+          title: '度假业务工作台',
+          type: 'flow',
+          items: [
+            { name: '全订单(替代FD1070)数据清理工具', path: 'D:\\tools\\我的工作台\\全订单表（替代FD1070）数据清理小工具.xlsm' },
+            { name: '全订单(替代FD1070)透视表工具', path: 'D:\\tools\\我的工作台\\全订单表（替代FD1070）-地方财务提供版本透视表模板.xlsx' },
+            { name: '度假主营业务收入整理工具', path: 'D:\\tools\\我的工作台\\主营业务收入-本期发生-本位币.xlsx' },
+            { name: '度假分析多维表格整理工具', path: 'D:\\tools\\我的工作台\\广州国旅度假分析多维表格整理工具.xlsx' }
+          ]
+        },
+        {
+          title: '华南金服工作台',
+          type: 'grid',
+          items: [
+            { name: '华南金服售汇整理工具', path: 'D:\\Users\\ltian\\Desktop\\D-华南金服草稿\\1、华南金服售汇模板.xlsx' },
+            { name: '华南金服结汇整理工具', path: 'D:\\Users\\ltian\\Desktop\\D-华南金服草稿\\2、华南金服结汇模板.xlsx' }
+          ]
+        }
       ]
     },
     {
-      name: '进项税/印花税/完税证明整理工具',
+      name: '进项税/印花税整理工具',
       icon: '🧾',
-      color: '#ff3b30',
-      bg: '#fff5f4',
-      files: [
-        { name: 'Artnova商旅通火车票', url: 'http://nova.ops.ctripcorp.com/;jsessionid=0828315AD456E8D421B4502C85C9C248#/dashboard/25594745-9b0c-40ca-a042-b6a65abc2cf4' },
-        { name: '回写商旅通火车票发票号码工具.xlsm', path: 'D:\\tools\\我的工作台\\回写商旅通火车票发票号码工具.xlsm' },
-        '商旅通进项税抵扣.xlsm',
-        '完税证明取数小工具.xlsm',
-        { name: '进项税分配标准凭证模型-成都广州', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-成都广州.xlsm' },
-        { name: '进项税分配标准凭证模型-宏睿广州', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-宏睿广州.xlsm' },
-        { name: '进项税分配标准凭证模型-越程', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-越程.xlsm' },
-        { name: '进项税分配标准凭证模型-珠海携程', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-珠海携程.xlsm' },
-        { name: '资产租赁合同印花税计算器', path: 'D:\\tools\\我的工作台\\喜翠铺资产租赁合同印花税计算器.xlsx' },
-        { name: '成都广州OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=1030' },
-        { name: '宏睿广州OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=1036' },
-        { name: '广州越程OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=6147' },
-        { name: '珠海携程OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=13382' },
-        { name: '暂估待抵扣进项', url: 'https://trip.larkenterprise.com/sheets/SI8ssFrQ2hGKK0txNWWcC79Dncf?sheet=0Edyca' }
+      color: '#a78bfa',
+      bg: '#faf5ff',
+      layout: 'modules',
+      modules: [
+        {
+          title: '商旅通进项税工作台',
+          type: 'flow',
+          items: [
+            { name: '提取XML发票信息', path: 'D:\\Users\\ltian\\Desktop\\商旅通发票信息提取小工具\\提取xml发票信息工具.py' },
+            { name: 'Artnova商旅通火车票', url: 'http://nova.ops.ctripcorp.com/;jsessionid=0828315AD456E8D421B4502C85C9C248#/dashboard/25594745-9b0c-40ca-a042-b6a65abc2cf4' },
+            { name: '回写商旅通火车票发票号码工具', path: 'D:\\tools\\我的工作台\\回写商旅通火车票发票号码工具.xlsm' },
+            { name: '商旅通进项税抵扣工具', path: 'D:\\tools\\我的工作台\\商旅通进项税抵扣.xlsm' }
+          ]
+        },
+        {
+          title: 'OA表单工作台',
+          type: 'flow',
+          items: [
+            { name: '成都广州OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=1030' },
+            { name: '宏睿广州OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=1036' },
+            { name: '广州越程OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=6147' },
+            { name: '珠海携程OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=13382' },
+            { name: 'OA表单明细列表清理工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/oa-cleanup/run' }
+          ]
+        },
+        {
+          title: '进项税抵扣工作台',
+          type: 'flow',
+          items: [
+            { name: 'VAT专票抵扣勾选导入模板生成器', url: 'https://fintoolsark.edp.ctripcorp.com/tools/vat-generator-tool/run' },
+            { name: '进项税分配标准凭证模型-成都广州', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-成都广州.xlsm' },
+            { name: '进项税分配标准凭证模型-宏睿广州', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-宏睿广州.xlsm' },
+            { name: '进项税分配标准凭证模型-广州越程', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-越程.xlsm' },
+            { name: '进项税分配标准凭证模型-珠海携程', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-珠海携程.xlsm' },
+            { name: '暂估待抵扣进项', url: 'https://trip.larkenterprise.com/sheets/SI8ssFrQ2hGKK0txNWWcC79Dncf?sheet=0Edyca' }
+          ]
+        },
+        {
+          title: '印花税工作台',
+          type: 'grid',
+          items: [
+            { name: '资产租赁合同印花税计算器', path: 'D:\\tools\\我的工作台\\喜翠铺资产租赁合同印花税计算器.xlsx' }
+          ]
+        }
       ]
     },
     {
@@ -1818,46 +2207,88 @@
       icon: '📑',
       color: '#5ac8fa',
       bg: '#f0f9ff',
-      files: [
-        { name: '增值税申报数据填列-成都广州', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-成都广州.xlsx' },
-        { name: '增值税申报数据填列-宏睿广州', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-宏睿广州.xlsx' },
-        { name: '增值税申报数据填列-越程', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-广州越程.xlsx' },
-        { name: '增值税申报数据填列-珠海携程', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-珠海携程.xlsx' },
-        { name: '增值税申报数据填列-天津海豚广州', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-天津海豚广州.xlsx' },
-        { name: '增值税申报数据填列-天津海豚南昌', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-天津海豚南昌.xlsx' },
-        { name: '增值税申报数据填列-广州国旅', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-广州国旅.xlsx' },
-        { name: '增值税申报数据填列-三亚国旅', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-三亚国旅.xlsx' },
-        { name: '增值税申报数据填列-成都郑州', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-成都郑州.xlsx' },
-        { name: '增值税申报数据填列-成都长沙', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-成都长沙.xlsx' },
-        { name: '增值税申报数据填列-成都海口', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-成都海口.xlsx' },
-        { name: '增值税申报数据填列-金服广州', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-金服广州.xlsx' },
-        { name: '增值税申报数据填列-金服横琴', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-金服横琴.xlsx' },
-        { name: '增值税申报数据填列-海豚季度小规模', path: 'C:\\smile\'s work\\B-审核增值税申报表\\A-海豚季度小规模申报计算表.xlsx' },
-        { name: '增值税申报数据填列-金服季度小规模', path: 'C:\\smile\'s work\\B-审核增值税申报表\\A-金服季度小规模申报计算表.xlsx' }
+      layout: 'modules',
+      modulesLayout: 'row',
+      modules: [
+        {
+          title: '增值税申报工作台',
+          type: 'grid',
+          items: [
+            { name: '增值税申报数据填列-成都广州', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-成都广州.xlsx' },
+            { name: '增值税申报数据填列-宏睿广州', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-宏睿广州.xlsx' },
+            { name: '增值税申报数据填列-广州越程', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-广州越程.xlsx' },
+            { name: '增值税申报数据填列-珠海携程', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-珠海携程.xlsx' },
+            { name: '增值税申报数据填列-天津海豚广州', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-天津海豚广州.xlsx' },
+            { name: '增值税申报数据填列-天津海豚南昌', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-天津海豚南昌.xlsx' },
+            { name: 'VAT一般纳税人计算表自动生成器', url: 'https://fintoolsark.edp.ctripcorp.com/tools/vat-calculation-table-generator/run' },
+            { name: 'VAT小规模纳税人计算表', path: 'D:\\Users\\ltian\\Desktop\\B-VAT计算表' }
+          ]
+        },
+        {
+          title: '增值税审核工作台',
+          type: 'grid',
+          items: [
+            { name: '增值税申报数据填列-广州国旅', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-广州国旅.xlsx' },
+            { name: '增值税申报数据填列-三亚国旅', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-三亚国旅.xlsx' },
+            { name: '增值税申报数据填列-成都郑州', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-成都郑州.xlsx' },
+            { name: '增值税申报数据填列-成都长沙', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-成都长沙.xlsx' },
+            { name: '增值税申报数据填列-成都海口', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-成都海口.xlsx' },
+            { name: '增值税申报数据填列-金服广州', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-金服广州.xlsx' },
+            { name: '增值税申报数据填列-金服横琴', path: 'C:\\smile\'s work\\B-审核增值税申报表\\增值税申报数据填列模板-金服横琴.xlsx' },
+            { name: '增值税申报数据填列-海豚季度小规模', path: 'C:\\smile\'s work\\B-审核增值税申报表\\A-海豚季度小规模申报计算表.xlsx' },
+            { name: '增值税申报数据填列-金服季度小规模', path: 'C:\\smile\'s work\\B-审核增值税申报表\\A-金服季度小规模申报计算表.xlsx' }
+          ]
+        }
       ]
     },
     {
       name: '珠海报表整理工具',
       icon: '🏢',
-      color: '#5ac8fa',
+      color: '#0ea5e9',
       bg: '#f0f9ff',
-      files: [
-        { name: 'Artnova火车X产品订单汇总表', url: 'http://artnova.ops.ctripcorp.com/#/dashboard/0d3e5756-6b60-4e33-b9ce-6335c9b7996e' },
-        { name: '火车票X产品数据生成工具', path: 'D:\\tools\\我的工作台\\火车票X产品数据生成工具.xlsm' },
-        { name: '火车票X产品分析总表', path: 'D:\\tools\\我的工作台\\火车票X产品分析总表.xlsx' },
-        '珠海支付新加坡明细清理小工具.xlsm',
-        '珠海携程外采内销入账报表清理小工具.xlsm',
-        { name: '珠海携程数据2024至今', url: 'https://trip.larkenterprise.com/sheets/Jjh3spPvIhvrYFtZE5McELmDnEh?sheet=0OsQsa' },
-        { name: '珠海携程收入成本汇总', path: 'D:\\tools\\我的工作台\\1-珠海携程收入成本汇总.xlsx' },
-        { name: '珠海携程销售对账单', path: 'D:\\tools\\我的工作台\\2-销售对账单.xlsx' },
-        { name: '珠海携程结算对账单-新加坡', path: 'D:\\tools\\我的工作台\\3-结算对账单-新加坡.xlsx' },
-        { name: '珠海携程结算对账单-赫程', path: 'D:\\tools\\我的工作台\\3-结算对账单-赫程.xlsx' },
-        { name: '珠海携程开具发票明细', url: 'https://trip.larkenterprise.com/sheets/KAyyshWzxhW6dgtiGRZc8i1jnnf?sheet=2gLTVj' },
-        { name: '珠海携程收付款明细', url: 'https://trip.larkenterprise.com/sheets/Ez81sNSBMhFX6ytqYFRcxXXKnVg?sheet=2dwmEH' },
-        { name: '珠海携程财务数据表', path: 'D:\\tools\\我的工作台\\珠海财务数据.xlsx' },
-        { name: '珠海携程SBC计提', url: 'https://trip.larkenterprise.com/sheets/Di3qswyd4hDu7qtMrmOc1dydnk5?sheet=1oyobI' },
-        { name: '珠海人员监控', url: 'https://trip.larkenterprise.com/sheets/QE6Ysyivvh9wDMtw3jGcfu3Cn5d' },
-        { name: '珠海携程资料库-飞书', url: 'https://trip.larkenterprise.com/drive/folder/ZqVhfkuLalZjCidG81EcayXvnFg' }
+      layout: 'modules',
+      modulesLayout: 'row',
+      modules: [
+        {
+          title: '火车票业务工作台',
+          type: 'flow',
+          items: [
+            { name: 'Artnova火车X产品订单汇总表', url: 'http://artnova.ops.ctripcorp.com/#/dashboard/0d3e5756-6b60-4e33-b9ce-6335c9b7996e' },
+            { name: '火车票X产品数据生成工具', path: 'D:\\tools\\我的工作台\\火车票X产品数据生成工具.xlsm' },
+            { name: '火车票X产品分析总表', path: 'D:\\tools\\我的工作台\\火车票X产品分析总表.xlsx' }
+          ]
+        },
+        {
+          title: '酒店业务工作台',
+          type: 'flow',
+          items: [
+            { name: '珠海支付新加坡明细清理工具', path: 'D:\\tools\\我的工作台\\珠海支付新加坡明细清理小工具.xlsm' },
+            { name: '珠海外采内销入账报表工具', path: 'D:\\tools\\我的工作台\\珠海携程外采内销入账报表清理小工具.xlsm' }
+          ]
+        },
+        {
+          title: '珠海携程管报工作台',
+          type: 'grid',
+          items: [
+            { name: '珠海携程数据2024至今', url: 'https://trip.larkenterprise.com/sheets/Jjh3spPvIhvrYFtZE5McELmDnEh?sheet=0OsQsa' },
+            { name: '珠海携程收入成本汇总', path: 'D:\\tools\\我的工作台\\1-珠海携程收入成本汇总.xlsx' },
+            { name: '珠海携程销售对账单', path: 'D:\\tools\\我的工作台\\2-销售对账单.xlsx' },
+            { name: '珠海携程结算对账单-新加坡', path: 'D:\\tools\\我的工作台\\3-结算对账单-新加坡.xlsx' },
+            { name: '珠海携程结算对账单-赫程', path: 'D:\\tools\\我的工作台\\3-结算对账单-赫程.xlsx' },
+            { name: '珠海携程开具发票明细', url: 'https://trip.larkenterprise.com/sheets/KAyyshWzxhW6dgtiGRZc8i1jnnf?sheet=2gLTVj' },
+            { name: '珠海携程收付款明细', url: 'https://trip.larkenterprise.com/sheets/Ez81sNSBMhFX6ytqYFRcxXXKnVg?sheet=2dwmEH' },
+            { name: '珠海携程财务数据表', path: 'D:\\tools\\我的工作台\\珠海财务数据.xlsx' },
+            { name: '珠海携程SBC计提', url: 'https://trip.larkenterprise.com/sheets/Di3qswyd4hDu7qtMrmOc1dydnk5?sheet=1oyobI' },
+            { name: '珠海人员监控', url: 'https://trip.larkenterprise.com/sheets/QE6Ysyivvh9wDMtw3jGcfu3Cn5d' }
+          ]
+        },
+        {
+          title: '珠海携程资料库',
+          type: 'grid',
+          items: [
+            { name: '珠海携程资料库-飞书', url: 'https://trip.larkenterprise.com/drive/folder/ZqVhfkuLalZjCidG81EcayXvnFg' }
+          ]
+        }
       ]
     },
     {
@@ -1876,77 +2307,135 @@
       icon: '📋',
       color: '#0ea5e9',
       bg: '#f0f9ff',
-      files: [
-        { name: '季度财报申报工具-成都广州', path: 'D:\\tools\\我的工作台\\季度财报申报模板-成都广州.xlsx' },
-        { name: '季度财报申报工具-宏睿广州', path: 'D:\\tools\\我的工作台\\季度财报申报模板-宏睿广州.xlsx' },
-        { name: '季度财报申报工具-广州越程', path: 'D:\\tools\\我的工作台\\季度财报申报模板-广州越程.xlsx' },
-        { name: '季度财报申报工具-计算机广州', path: 'D:\\tools\\我的工作台\\季度财报申报模板-计算机广州.xlsx' },
-        { name: '季度财报申报工具-珠海携程', path: 'D:\\tools\\我的工作台\\季度财报申报模板-珠海携程.xlsx' },
-        { name: '季度财报申报工具-赫程南昌', path: 'D:\\tools\\我的工作台\\季度财报申报模板-赫程南昌.xlsx' },
-        { name: '财报信息采集链接-成都广州', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-成都广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-成都广州.xls' },
-        { name: '财报信息采集链接-宏睿广州', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-宏睿广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州宏睿.xls' },
-        { name: '财报信息采集链接-广州越程', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-广州越程\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州越程.xls' },
-        { name: '财报信息采集链接-计算机广州', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-计算机广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州计算机.xls' },
-        { name: '财报信息采集链接-珠海携程', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-珠海携程\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-珠海携程.xls' },
-        { name: '财报信息采集链接-赫程南昌', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-赫程南昌\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-赫程南昌.xls' },
-        { name: '华南海豚现金流量表工具', path: 'D:\\tools\\我的工作台\\华南海豚现金流量表.xlsx' }
+      layout: 'modules',
+      modules: [
+        {
+          title: '现金流量表工作台',
+          type: 'grid',
+          items: [
+            { name: '现金流量表自动填写工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/cash-flow-automation/run' },
+            { name: '华南海豚现金流量表工具', path: 'D:\\tools\\我的工作台\\华南海豚现金流量表.xlsx' }
+          ]
+        },
+        {
+          title: '季度财报申报工具',
+          type: 'grid',
+          items: [
+            { name: '季度财报申报工具-成都广州', path: 'D:\\tools\\我的工作台\\季度财报申报模板-成都广州.xlsx' },
+            { name: '季度财报申报工具-宏睿广州', path: 'D:\\tools\\我的工作台\\季度财报申报模板-宏睿广州.xlsx' },
+            { name: '季度财报申报工具-广州越程', path: 'D:\\tools\\我的工作台\\季度财报申报模板-广州越程.xlsx' },
+            { name: '季度财报申报工具-计算机广州', path: 'D:\\tools\\我的工作台\\季度财报申报模板-计算机广州.xlsx' },
+            { name: '季度财报申报工具-珠海携程', path: 'D:\\tools\\我的工作台\\季度财报申报模板-珠海携程.xlsx' },
+            { name: '季度财报申报工具-赫程南昌', path: 'D:\\tools\\我的工作台\\季度财报申报模板-赫程南昌.xlsx' }
+          ]
+        },
+        {
+          title: '财报信息采集链接',
+          type: 'grid',
+          items: [
+            { name: '财报信息采集链接-成都广州', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-成都广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-成都广州.xls' },
+            { name: '财报信息采集链接-宏睿广州', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-宏睿广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州宏睿.xls' },
+            { name: '财报信息采集链接-广州越程', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-广州越程\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州越程.xls' },
+            { name: '财报信息采集链接-计算机广州', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-计算机广州\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-广州计算机.xls' },
+            { name: '财报信息采集链接-珠海携程', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-珠海携程\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-珠海携程.xls' },
+            { name: '财报信息采集链接-赫程南昌', path: 'D:\\tools\\我的工作台\\CWBB_QYKJZZ_YBQY_YZX-赫程南昌\\财务报表报送与信息采集（适用已执行新金融准则、新收入准则和新租赁准则的一般企业）-赫程南昌.xls' }
+          ]
+        }
       ]
     },
     {
       name: '统计局报表数据填列工具',
       icon: '📈',
-      color: '#5856d6',
-      bg: '#f5f4ff',
-      files: [
-        { name: '珠海携程统计局报表工具', url: 'https://trip.larkenterprise.com/sheets/Wdp7scRY9hqmI9ttA78cxe5vnke?sheet=1hjExW' },
-        { name: '广州越程统计局报表工具', url: 'https://trip.larkenterprise.com/sheets/UxgCsw8sRhMVzwtNKvBcWRW8n0e?sheet=1IDILy' },
-        { name: '珠海携程财务状况月报工具', path: 'D:\\tools\\我的工作台\\F203_财务状况-月报-珠海携程.xlsx' },
-        { name: '珠海资产负债表工具', path: 'D:\\tools\\我的工作台\\1-珠海携程-资产负债表.xlsx' },
-        { name: '珠海利润表工具', path: 'D:\\tools\\我的工作台\\2-珠海携程_损益表.xlsx' },
-        { name: '广州越程财务状况月报工具', path: 'D:\\tools\\我的工作台\\F203_财务状况-月报-越程.xlsx' }
+      color: '#34d399',
+      bg: '#ecfdf5',
+      layout: 'modules',
+      modulesLayout: 'row',
+      modules: [
+        {
+          title: '珠海携程工作台',
+          type: 'grid',
+          items: [
+            { name: '珠海携程生产经营统计表', url: 'https://trip.larkenterprise.com/sheets/Wdp7scRY9hqmI9ttA78cxe5vnke?sheet=1hjExW' },
+            { name: '珠海携程财务状况月报工具', path: 'D:\\tools\\我的工作台\\F203_财务状况-月报-珠海携程.xlsx' },
+            { name: '珠海携程资产负债表工具', path: 'D:\\tools\\我的工作台\\1-珠海携程-资产负债表.xlsx' },
+            { name: '珠海携程利润表工具', path: 'D:\\tools\\我的工作台\\2-珠海携程_损益表.xlsx' }
+          ]
+        },
+        {
+          title: '广州越程工作台',
+          type: 'grid',
+          items: [
+            { name: '广州越程生产经营统计表', url: 'https://trip.larkenterprise.com/sheets/UxgCsw8sRhMVzwtNKvBcWRW8n0e?sheet=1IDILy' },
+            { name: '广州越程财务状况月报工具', path: 'D:\\tools\\我的工作台\\F203_财务状况-月报-越程.xlsx' }
+          ]
+        }
       ]
     },
     {
       name: 'FinToolsArk工具',
       icon: '🌐',
-      color: '#af52de',
-      bg: '#faf5ff',
-      files: [
-        { name: 'Excel XML 提取发票信息', url: 'https://fintoolsark.edp.ctripcorp.com/tools/excel-xml-extractor/run' },
-        { name: '资产负债表按公司拆分工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/balance-sheet-splitter/run' },
-        { name: '利润表按公司拆分工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/profit-splitter/run' },
-        { name: '科目余额表按公司拆分工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/subject-balance-sheet-splitter/run' },
-        { name: 'OA表单明细列表清理工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/oa-cleanup/run' },
-        { name: 'VAT专票抵扣勾选导入模板生成器', url: 'https://fintoolsark.edp.ctripcorp.com/tools/vat-generator-tool/run' },
-        { name: 'VAT一般纳税人计算表自动生成器', url: 'https://fintoolsark.edp.ctripcorp.com/tools/vat-calculation-table-generator/run' },
-        { name: '现金流量表自动填写工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/cash-flow-automation/run' },
-        { name: 'Excel 表格合并工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/merge-excel/run' },
-        { name: 'PDF完税证明提取数据工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/tax-fixed0811/run' },
-        { name: 'Excel批量处理小工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/excel-batch-processing-tool/run', desc: '删除添加行列、删除添加复制sheet、修改单元格、重命名文件' },
-        { name: 'Excel批量取数小工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/excel-retrieve-data/run' },
-        { name: '批量筛选条件求和汇总小工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/excel-batch-filtering-summarizing/run' },
-        { name: '开曼CBCR标准XML生成工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/cayman-cbcr-converter/run' },
-        { name: '开曼CBCR-XML数据更新同步工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/cbcs-xml-update/run' },
-        { name: '开曼XML比对工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/compare-cbcr-xml/run' }
+      color: '#64748b',
+      bg: '#f8fafc',
+      layout: 'modules',
+      modules: [
+        {
+          title: 'Excel处理工具',
+          type: 'grid',
+          items: [
+            { name: 'Excel表格合并工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/merge-excel/run' },
+            { name: 'Excel批量处理小工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/excel-batch-processing-tool/run', desc: '删除添加行列、删除添加复制sheet、修改单元格、重命名文件' },
+            { name: 'Excel批量取数小工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/excel-retrieve-data/run' },
+            { name: '批量筛选条件求和汇总小工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/excel-batch-filtering-summarizing/run' }
+          ]
+        },
+        {
+          title: '开曼XML工具',
+          type: 'grid',
+          items: [
+            { name: '开曼CBCR标准XML生成工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/cayman-cbcr-converter/run' },
+            { name: '开曼CBCR-XML数据更新同步工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/cbcs-xml-update/run' },
+            { name: '开曼XML比对工具', url: 'https://fintoolsark.edp.ctripcorp.com/tools/compare-cbcr-xml/run' }
+          ]
+        }
       ]
     },
     {
       name: '飞书多维表格',
       icon: '📋',
-      color: '#0071e3',
-      bg: '#f0f7ff',
-      files: [
-        { name: '华南利润表汇总', url: 'https://trip.larkenterprise.com/base/VKOKb6NRHat6opspN3jcoeFSnjb?table=blk12SFiWcpJLJPR' },
-        { name: '华南金融外币兑换业务分析', url: 'https://trip.larkenterprise.com/base/WuxfbMgEXaIAfjsrT0ycCFSynMb?table=blk03FBM0XUTuT7a' },
-        { name: '广州国旅度假汇总分析', url: 'https://trip.larkenterprise.com/base/EwevbazKGalAyIsCLD1c3Zxynfc?table=blkhGE0SRiCAVEgh' },
-        { name: '华南净营收及纳税情况分析', url: 'https://trip.larkenterprise.com/base/MV4Nbq3tvapGI2s8IescEo8Ynmh?table=blkOeHSDpZbYUyRz' },
-        { name: '华南税金汇总表（入库口径）', url: 'https://trip.larkenterprise.com/base/JPGxbv77Fa8ufxsdungcs3qpnIh?table=blkkCdl67ChuKNHO' },
-        { name: '广州/番禺/广州国旅净营收及纳税情况汇总', url: 'https://trip.larkenterprise.com/base/SzTjbT5raaIteSsw4j5cMmGrnkd?table=blkPDJVSY5nZen3G' },
-        { name: '珠海携程净营收及入库税金分析', url: 'https://trip.larkenterprise.com/base/BpQPbAHvNaHGtfs0xAzcdG0rnkX?table=blkUPLrg7oMQrdaw' },
-        { name: '珠海携程补贴政策相关信息', url: 'https://trip.larkenterprise.com/base/A5UTbvJKraYn13sPJb8c0PDSn3g?table=blkqVT8YQPZdOqKQ' },
-        { name: '广州国旅收入多维度预测模型', url: 'https://trip.larkenterprise.com/base/DeZjbMDTma7fxfsB4eGcdUvrnCh?table=blkjwZN3X6pjodUs' },
-        { name: '华南资产负债表汇总', url: 'https://trip.larkenterprise.com/base/Z9OCbEd5xaTFcRsUToEcQYE9nwb?table=blkRRU4fa1zFJ3eF' },
-        { name: '珠海携程个税申报数据明细表', url: 'https://trip.larkenterprise.com/wiki/PUqzw4oJFiAhtzkhqK9c8laWnLd?table=tblFlJljvWww7W66&view=vewyaLVbLT' }
+      color: '#a78bfa',
+      bg: '#faf5ff',
+      layout: 'modules',
+      modulesLayout: 'row',
+      modules: [
+        {
+          title: '华南报表',
+          type: 'grid',
+          items: [
+            { name: '华南净营收及纳税情况分析', url: 'https://trip.larkenterprise.com/base/MV4Nbq3tvapGI2s8IescEo8Ynmh?table=blkOeHSDpZbYUyRz' },
+            { name: '华南利润表汇总', url: 'https://trip.larkenterprise.com/base/VKOKb6NRHat6opspN3jcoeFSnjb?table=blk12SFiWcpJLJPR' },
+            { name: '华南税金汇总表（入库口径）', url: 'https://trip.larkenterprise.com/base/JPGxbv77Fa8ufxsdungcs3qpnIh?table=blkkCdl67ChuKNHO' },
+            { name: '华南资产负债表汇总', url: 'https://trip.larkenterprise.com/base/Z9OCbEd5xaTFcRsUToEcQYE9nwb?table=blkRRU4fa1zFJ3eF' },
+            { name: '华南金融外币兑换业务分析', url: 'https://trip.larkenterprise.com/base/WuxfbMgEXaIAfjsrT0ycCFSynMb?table=blk03FBM0XUTuT7a' }
+          ]
+        },
+        {
+          title: '珠海报表',
+          type: 'grid',
+          items: [
+            { name: '珠海携程净营收及入库税金分析', url: 'https://trip.larkenterprise.com/base/BpQPbAHvNaHGtfs0xAzcdG0rnkX?table=blkUPLrg7oMQrdaw' },
+            { name: '珠海携程补贴政策相关信息', url: 'https://trip.larkenterprise.com/base/A5UTbvJKraYn13sPJb8c0PDSn3g?table=blkqVT8YQPZdOqKQ' },
+            { name: '珠海携程个税申报数据明细表', url: 'https://trip.larkenterprise.com/wiki/PUqzw4oJFiAhtzkhqK9c8laWnLd?table=tblFlJljvWww7W66&view=vewyaLVbLT' }
+          ]
+        },
+        {
+          title: '广州报表',
+          type: 'grid',
+          items: [
+            { name: '广州/番禺/广州国旅净营收及纳税情况汇总', url: 'https://trip.larkenterprise.com/base/SzTjbT5raaIteSsw4j5cMmGrnkd?table=blkPDJVSY5nZen3G' },
+            { name: '广州国旅度假汇总分析', url: 'https://trip.larkenterprise.com/base/EwevbazKGalAyIsCLD1c3Zxynfc?table=blkhGE0SRiCAVEgh' },
+            { name: '广州国旅收入多维度预测模型', url: 'https://trip.larkenterprise.com/base/DeZjbMDTma7fxfsB4eGcdUvrnCh?table=blkjwZN3X6pjodUs' }
+          ]
+        }
       ]
     },
     {
@@ -1965,26 +2454,40 @@
     {
       name: 'Python小工具桌面版',
       icon: '🐍',
-      color: '#34c759',
-      bg: '#f0faf3',
-      files: [
-        { name: '开曼CBCR-XML转换工具', path: 'D:\\cc\\code\\工具\\cayman cbcr converter工具.py' },
-        { name: '开曼XML比对工具', path: 'D:\\cc\\code\\工具\\比较cbcr xml工具.py' },
-        { name: '开曼CBCR-XML数据更新同步工具', path: 'D:\\cc\\code\\工具\\cbcs xml 更新工具.py' },
-        { name: 'XML-Excel转换小工具', path: 'D:\\cc\\code\\工具\\xml_to_excel\\xml_to_excel_gui.py' },
-        { name: 'Excel批量处理文件小工具', path: 'D:\\cc\\code\\工具\\Excel批量处理文件小工具.py' },
-        { name: 'Excel批量转换格式/添加VBA/图片工具', path: 'D:\\cc\\code\\工具\\Excel转换导入宏插入图片指定宏\\Excel转换导入宏插入图片指定宏.py' },
-        { name: 'Excel批量取数小工具', path: 'D:\\cc\\code\\工具\\Excel批量取数小工具.py' },
-        { name: 'Excel批量多条件筛选汇总小工具', path: 'D:\\cc\\code\\工具\\批量多条件筛选汇总工具.py' },
-        { name: '合并Excel工具', path: 'D:\\cc\\code\\工具\\合并excel工具.py' },
-        { name: '现金流量表自动填写工具', path: 'D:\\cc\\code\\工具\\现金流量表工具\\main.py' },
-        { name: 'OA表单明细列表清理工具', path: 'D:\\cc\\code\\工具\\OA表单清理工具.py' },
-        { name: 'VAT专票抵扣勾选导入模板生成小工具', path: 'D:\\cc\\code\\工具\\VAT专票抵扣勾选工具\\vat_generator.py' },
-        { name: '科目余额表按公司拆分工具', path: 'D:\\cc\\code\\工具\\科目余额表拆分工具.py' },
-        { name: '资产负债表按公司拆分工具', path: 'D:\\cc\\code\\工具\\资产负债表拆分工具.py' },
-        { name: 'Gross利润表按公司拆分工具', path: 'D:\\cc\\code\\工具\\利润表拆分工具-Gross.py' },
-        { name: 'Net利润表按公司拆分工具', path: 'D:\\cc\\code\\工具\\利润表拆分工具-Net.py' },
-        { name: '利润表按公司拆分工具', path: 'D:\\cc\\code\\工具\\利润表拆分工具.py' }
+      color: '#10b981',
+      bg: '#ecfdf5',
+      layout: 'modules',
+      modules: [
+        {
+          title: 'Excel处理工具',
+          type: 'grid',
+          items: [
+            { name: 'Excel表格合并工具', path: 'D:\\cc\\code\\工具\\合并excel工具.py' },
+            { name: 'Excel批量处理小工具', path: 'D:\\cc\\code\\工具\\Excel批量处理文件小工具.py' },
+            { name: 'Excel批量取数小工具', path: 'D:\\cc\\code\\工具\\Excel批量取数小工具.py' },
+            { name: '批量筛选条件求和汇总小工具', path: 'D:\\cc\\code\\工具\\批量多条件筛选汇总工具.py' },
+            { name: 'Excel批量转换格式/添加VBA/图片工具', path: 'D:\\cc\\code\\工具\\Excel转换导入宏插入图片指定宏\\Excel转换导入宏插入图片指定宏.py' },
+            { name: 'XML-Excel转换小工具', path: 'D:\\cc\\code\\工具\\xml_to_excel\\xml_to_excel_gui.py' }
+          ]
+        },
+        {
+          title: '开曼XML工具',
+          type: 'grid',
+          items: [
+            { name: '开曼CBCR标准XML生成工具', path: 'D:\\cc\\code\\工具\\cayman cbcr converter工具.py' },
+            { name: '开曼CBCR-XML数据更新同步工具', path: 'D:\\cc\\code\\工具\\cbcs xml 更新工具.py' },
+            { name: '开曼XML比对工具', path: 'D:\\cc\\code\\工具\\比较cbcr xml工具.py' }
+          ]
+        },
+        {
+          title: '财务小工具',
+          type: 'grid',
+          items: [
+            { name: '现金流量表自动填写工具', path: 'D:\\cc\\code\\工具\\现金流量表工具\\main.py' },
+            { name: 'OA表单明细列表清理工具', path: 'D:\\cc\\code\\工具\\OA表单清理工具.py' },
+            { name: 'VAT专票抵扣勾选导入模板生成器', path: 'D:\\cc\\code\\工具\\VAT专票抵扣勾选工具\\vat_generator.py' }
+          ]
+        }
       ]
     }
   ];
@@ -2000,6 +2503,7 @@
   const LS_CHECKLIST = 'workbench_checklist';
 
   const API_BASE = 'http://localhost:8765';
+  const openingFiles = new Set();
 
   // 协议检测：如果通过 file:// 直接打开，给出醒目提示
   if (window.location.protocol === 'file:') {
@@ -2081,7 +2585,7 @@
       html += `<div class="${cls}" data-idx="${i}">
         <span class="nav-icon">${cat.icon}</span>
         <span class="nav-text">${escapeHtml(cat.name)}</span>
-        <span class="nav-badge">${cat.files.length}</span>
+        <span class="nav-badge">${getCategoryItems(cat).length}</span>
       </div>`;
     });
 
@@ -2152,7 +2656,7 @@
     const isDashboard = currentIndex >= 1000 && currentIndex < 1000 + dashboardItems.length;
     const dashIdx = isDashboard ? currentIndex - 1000 : -1;
     $('homeView').style.display = isHome ? 'flex' : 'none';
-    $('toolView').style.display = (isHome || isCheck || isDashboard) ? 'none' : 'block';
+    $('toolView').style.display = (isHome || isCheck || isDashboard) ? 'none' : '';
     $('checklistView').style.display = isCheck ? 'flex' : 'none';
     $('dashboardView').style.display = isDashboard ? 'block' : 'none';
     $('searchBox').style.display = (isHome || isCheck || isDashboard) ? 'none' : 'block';
@@ -2966,34 +3470,212 @@
   /* ========== 工具视图 ========== */
   function normalizeFile(f) {
     if (typeof f === 'string') return { name: f, url: null, path: null };
-    return { path: null, ...f };
+    const obj = { path: null, url: null, ...f };
+    if (!obj.name && obj.path) {
+      obj.name = obj.path.replace(/\\/g, '/').split('/').pop();
+    }
+    return obj;
+  }
+
+  function getCategoryItems(c) {
+    if (c.modules) {
+      const items = [];
+      c.modules.forEach(m => {
+        m.items.forEach(f => {
+          items.push({ ...normalizeFile(f), module: m, cat: c });
+        });
+      });
+      return items;
+    }
+    return c.files.map(f => ({ ...normalizeFile(f), cat: c }));
   }
 
   function getFilteredFiles() {
     const cat = categories[currentIndex];
-    if (!searchText.trim()) return cat.files.map(f => ({ ...normalizeFile(f), cat }));
+    if (!searchText.trim()) return getCategoryItems(cat);
     const kw = searchText.toLowerCase();
     const results = [];
     categories.forEach(c => {
-      c.files.forEach(f => {
-        const nf = normalizeFile(f);
-        if (nf.name.toLowerCase().includes(kw)) {
-          results.push({ ...nf, cat: c });
+      getCategoryItems(c).forEach(item => {
+        if (item.name.toLowerCase().includes(kw)) {
+          results.push(item);
         }
       });
     });
     return results;
   }
 
+  function getItemMeta(item) {
+    const isWeb = !!item.url;
+    const isPath = !!item.path;
+    var ext = '';
+    if (item.path) {
+      var lastDot = item.path.lastIndexOf('.');
+      if (lastDot >= 0) ext = item.path.slice(lastDot + 1).toLowerCase();
+    } else if (item.name) {
+      var lastDot2 = item.name.lastIndexOf('.');
+      if (lastDot2 >= 0) ext = item.name.slice(lastDot2 + 1).toLowerCase();
+    }
+
+    var tagText, actionText;
+    if (isWeb) {
+      tagText = '网页工具';
+      actionText = '打开网页';
+    } else if (ext === 'py') {
+      tagText = 'Python 脚本';
+      actionText = '运行脚本';
+    } else if (ext === 'txt') {
+      tagText = '文本文件';
+      actionText = '打开文件';
+    } else if (['xlsx', 'xls', 'xlsm'].indexOf(ext) >= 0) {
+      tagText = 'Excel 工作簿';
+      actionText = '运行工具';
+    } else {
+      tagText = '本地文件';
+      actionText = '打开文件';
+    }
+
+    var clickAttr;
+    if (isWeb) {
+      clickAttr = `onclick="window.open('${escapeJs(item.url)}', '_blank')"`;
+    } else if (isPath) {
+      clickAttr = `onclick="openSkillByPath('${escapeJs(item.path)}')"`;
+    } else {
+      clickAttr = `onclick="openSkill('${escapeJs(item.name)}')"`;
+    }
+    return { tagText, actionText, clickAttr, ext, isWeb, isPath };
+  }
+
+  function renderCard(item, c) {
+    const meta = getItemMeta(item);
+    return `<div class="card" style="--card-color:${c.color};--card-bg:${c.bg}" ${meta.clickAttr}>
+      <div class="card-header">
+        <div class="card-icon">${c.icon}</div>
+        <div class="card-body">
+          <div class="card-name">${escapeHtml(item.name)}</div>
+          ${item.desc ? `<div class="card-desc">${escapeHtml(item.desc)}</div>` : ''}
+          <span class="card-tag">${meta.tagText}</span>
+        </div>
+      </div>
+      <div class="card-action">
+        <span>▶</span> <span>${meta.actionText}</span>
+      </div>
+    </div>`;
+  }
+
+  function renderModuleCard(item, c) {
+    const meta = getItemMeta(item);
+    return `<div class="module-card" ${meta.clickAttr}>
+      <div class="module-card-icon">${c.icon}</div>
+      <div class="module-card-body">
+        <div class="module-card-name">${escapeHtml(item.name)}</div>
+        <span class="module-card-tag">${meta.tagText}</span>
+      </div>
+      <div class="module-card-action">${meta.actionText}</div>
+    </div>`;
+  }
+
+  function renderFlowStepHorizontal(item, c, index, total) {
+    const meta = getItemMeta(item);
+    const arrow = index < total - 1 ? `<div class="flow-arrow">→</div>` : '';
+    return `<div class="flow-step" ${meta.clickAttr}>
+      <div class="flow-step-number">${index + 1}</div>
+      <div class="flow-step-body">
+        <div class="flow-step-name">${escapeHtml(item.name)}</div>
+        <span class="flow-step-tag">${meta.tagText}</span>
+      </div>
+      <div class="flow-step-action">${meta.actionText}</div>
+    </div>${arrow}`;
+  }
+
+  function renderFlowStepVertical(item, c, index, total) {
+    const meta = getItemMeta(item);
+    const arrow = index < total - 1 ? `<div class="flow-arrow flow-arrow-vertical">↓</div>` : '';
+    return `<div class="flow-step flow-step-vertical" ${meta.clickAttr}>
+      <div class="flow-step-number">${index + 1}</div>
+      <div class="flow-step-body">
+        <div class="flow-step-name">${escapeHtml(item.name)}</div>
+        <span class="flow-step-tag">${meta.tagText}</span>
+      </div>
+      <div class="flow-step-action">${meta.actionText}</div>
+    </div>${arrow}`;
+  }
+
+  function renderModuleCardVertical(item, c) {
+    const meta = getItemMeta(item);
+    return `<div class="module-card module-card-vertical" ${meta.clickAttr}>
+      <div class="module-card-icon">${c.icon}</div>
+      <div class="module-card-body">
+        <div class="module-card-name">${escapeHtml(item.name)}</div>
+        <span class="module-card-tag">${meta.tagText}</span>
+      </div>
+      <div class="module-card-action">${meta.actionText}</div>
+    </div>`;
+  }
+
+  function renderModules(cat) {
+    $('catIcon').textContent = searchText ? '🔎' : cat.icon;
+    $('catName').textContent = searchText ? `搜索：${searchText}` : cat.name;
+    const totalItems = cat.modules.reduce((sum, m) => sum + m.items.length, 0);
+    $('catCount').textContent = totalItems + ' 个技能';
+    $('sectionLabel').textContent = searchText ? '搜索结果' : cat.name + ' — 工作平台';
+
+    const grid = $('grid');
+    grid.className = 'modules-wrap';
+    if (searchText.trim()) {
+      const kw = searchText.toLowerCase();
+      const items = getCategoryItems(cat).filter(item => item.name.toLowerCase().includes(kw));
+      if (items.length === 0) {
+        grid.innerHTML = `<div class="empty" style="grid-column:1/-1;">
+          <div class="empty-icon">🔍</div>
+          <div class="empty-text">未找到匹配的技能</div>
+        </div>`;
+        return;
+      }
+      grid.innerHTML = items.map(item => renderCard(item, cat)).join('');
+      return;
+    }
+
+    const isRow = cat.modulesLayout === 'row';
+    const containerClass = 'modules-container ' + (isRow ? 'modules-row' : 'modules-column');
+    const contentClass = 'module-content module-content-' + (isRow ? 'vertical' : 'horizontal');
+
+    grid.innerHTML = '<div class="' + containerClass + '">' + cat.modules.map(m => {
+      const content = m.items.map((f, idx) => {
+        const item = normalizeFile(f);
+        if (m.type === 'flow') {
+          return isRow
+            ? renderFlowStepVertical(item, cat, idx, m.items.length)
+            : renderFlowStepHorizontal(item, cat, idx, m.items.length);
+        }
+        return isRow
+          ? renderModuleCardVertical(item, cat)
+          : renderModuleCard(item, cat);
+      }).join('');
+      return `<div class="module-panel" style="--card-color:${cat.color};--card-bg:${cat.bg}">
+        <div class="module-header">
+          <div class="module-title">${escapeHtml(m.title)}</div>
+        </div>
+        <div class="${contentClass}">${content}</div>
+      </div>`;
+    }).join('') + '</div>';
+  }
+
   function renderGrid() {
-    const items = getFilteredFiles();
     const cat = categories[currentIndex];
+    if (!searchText.trim() && cat.modules) {
+      renderModules(cat);
+      return;
+    }
+
+    const items = getFilteredFiles();
     $('catIcon').textContent = searchText ? '🔎' : cat.icon;
     $('catName').textContent = searchText ? `搜索：${searchText}` : cat.name;
     $('catCount').textContent = `${items.length} 个技能`;
     $('sectionLabel').textContent = searchText ? '搜索结果' : cat.name + ' — 技能陈列';
 
     const grid = $('grid');
+    grid.className = 'grid';
     if (items.length === 0) {
       grid.innerHTML = `<div class="empty" style="grid-column:1/-1;">
         <div class="empty-icon">🔍</div>
@@ -3002,95 +3684,73 @@
       return;
     }
 
-    grid.innerHTML = items.map(item => {
-      const c = item.cat;
-      const isWeb = !!item.url;
-      const isPath = !!item.path;
-      var ext = '';
-      if (item.path) {
-        var lastDot = item.path.lastIndexOf('.');
-        if (lastDot >= 0) ext = item.path.slice(lastDot + 1).toLowerCase();
-      } else if (item.name) {
-        var lastDot2 = item.name.lastIndexOf('.');
-        if (lastDot2 >= 0) ext = item.name.slice(lastDot2 + 1).toLowerCase();
-      }
-
-      var tagText, actionText;
-      if (isWeb) {
-        tagText = '网页工具';
-        actionText = '打开网页';
-      } else if (ext === 'py') {
-        tagText = 'Python 脚本';
-        actionText = '运行脚本';
-      } else if (ext === 'txt') {
-        tagText = '文本文件';
-        actionText = '打开文件';
-      } else if (['xlsx', 'xls', 'xlsm'].indexOf(ext) >= 0) {
-        tagText = 'Excel 工作簿';
-        actionText = '运行工具';
-      } else {
-        tagText = '本地文件';
-        actionText = '打开文件';
-      }
-
-      let clickAttr;
-      if (isWeb) {
-        clickAttr = `onclick="window.open('${escapeJs(item.url)}', '_blank')"`;
-      } else if (isPath) {
-        clickAttr = `onclick="openSkillByPath('${escapeJs(item.path)}')"`;
-      } else {
-        clickAttr = `onclick="openSkill('${escapeJs(item.name)}')"`;
-      }
-      return `<div class="card" style="--card-color:${c.color};--card-bg:${c.bg}" ${clickAttr}>
-        <div class="card-header">
-          <div class="card-icon">${c.icon}</div>
-          <div class="card-body">
-            <div class="card-name">${escapeHtml(item.name)}</div>
-            ${item.desc ? `<div class="card-desc">${escapeHtml(item.desc)}</div>` : ''}
-            <span class="card-tag">${tagText}</span>
-          </div>
-        </div>
-        <div class="card-action">
-          <span>▶</span> <span>${actionText}</span>
-        </div>
-      </div>`;
-    }).join('');
+    grid.innerHTML = items.map(item => renderCard(item, item.cat)).join('');
   }
 
   window.openSkill = async function(filename) {
+    if (openingFiles.has(filename)) {
+      showToast('正在启动中，请稍候...', '⏳');
+      return;
+    }
+    openingFiles.add(filename);
+    showToast('正在启动：' + filename, '🚀');
+
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       const res = await fetch(API_BASE + '/api/open', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ file: filename })
+        body: JSON.stringify({ file: filename }),
+        signal: controller.signal
       });
-      if (res.ok) {
-        showToast('正在启动：' + filename, '🚀');
-      } else {
+      clearTimeout(timeoutId);
+      if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         showToast('启动失败：' + (data.error || '未知错误'), '❌');
       }
     } catch (e) {
-      showToast('无法连接到 localhost:8765，请确认已运行「启动工作台.bat」', '⚠️');
+      if (e.name === 'AbortError') {
+        showToast('启动请求超时，请检查本地服务状态', '⏳');
+      } else {
+        showToast('无法连接到 localhost:8765，请确认已运行「启动工作台.bat」', '⚠️');
+      }
+    } finally {
+      openingFiles.delete(filename);
     }
   };
 
   window.openSkillByPath = async function(filepath) {
+    if (openingFiles.has(filepath)) {
+      showToast('正在启动中，请稍候...', '⏳');
+      return;
+    }
+    openingFiles.add(filepath);
+    const fname = filepath.replace(/\\/g, '/').split('/').pop();
+    showToast('正在启动：' + fname, '🚀');
+
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       const res = await fetch(API_BASE + '/api/open', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ path: filepath })
+        body: JSON.stringify({ path: filepath }),
+        signal: controller.signal
       });
-      if (res.ok) {
-        const fname = filepath.replace(/\\/g, '/').split('/').pop();
-        showToast('正在启动：' + fname, '🚀');
-      } else {
+      clearTimeout(timeoutId);
+      if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         showToast('启动失败：' + (data.error || '未知错误'), '❌');
       }
     } catch (e) {
-      showToast('无法连接到 localhost:8765，请确认已运行「启动工作台.bat」', '⚠️');
+      if (e.name === 'AbortError') {
+        showToast('启动请求超时，请检查本地服务状态', '⏳');
+      } else {
+        showToast('无法连接到 localhost:8765，请确认已运行「启动工作台.bat」', '⚠️');
+      }
+    } finally {
+      openingFiles.delete(filepath);
     }
   };
 
