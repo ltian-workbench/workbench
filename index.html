@@ -961,6 +961,38 @@
     overflow: hidden;
   }
 
+  /* 展示型模块：左侧卡片 + 右侧截图 */
+  .module-content-showcase {
+    flex-direction: row;
+    gap: 14px;
+  }
+  .showcase-card {
+    flex: 0 0 280px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+  .showcase-image {
+    flex: 1;
+    min-width: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #f5f5f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .showcase-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   /* 流程式模块：步骤横向排列 */
   .flow-step {
     flex: 1;
@@ -2296,10 +2328,31 @@
       icon: '📁',
       color: '#ff9500',
       bg: '#fff8f0',
-      files: [
-        { name: '租赁管理系统平台', path: 'D:\\cc\\code\\rental-management-system\\run-start.bat' },
-        { name: '停车费管理系统工作台', path: 'D:\\cc\\code\\parking-system\\start.bat' },
-        { name: '越程收租管理表', url: 'https://trip.larkenterprise.com/sheets/A0YmsPM9khrTTrtRLIEcuaC5nTe?sheet=0UpjRr' }
+      layout: 'modules',
+      modules: [
+        {
+          title: '停车费管理系统平台',
+          type: 'showcase',
+          image: '/停车费管理系统.jpg',
+          items: [
+            { name: '停车费管理系统平台', path: 'D:\\cc\\code\\parking-system\\start.bat' }
+          ]
+        },
+        {
+          title: '租赁管理系统平台',
+          type: 'showcase',
+          image: '/租赁管理系统.jpg',
+          items: [
+            { name: '租赁管理系统平台', path: 'D:\\cc\\code\\rental-management-system\\run-start.bat' }
+          ]
+        },
+        {
+          title: '越程收租管理表',
+          type: 'grid',
+          items: [
+            { name: '越程收租管理表', url: 'https://trip.larkenterprise.com/sheets/A0YmsPM9khrTTrtRLIEcuaC5nTe?sheet=0UpjRr' }
+          ]
+        }
       ]
     },
     {
@@ -3613,6 +3666,23 @@
     </div>`;
   }
 
+  function renderShowcase(module, c) {
+    const item = normalizeFile(module.items[0]);
+    const meta = getItemMeta(item);
+    const img = module.image ? escapeHtml(module.image) : '';
+    return `<div class="module-content module-content-showcase">
+      <div class="module-card showcase-card" ${meta.clickAttr}>
+        <div class="module-card-icon">${c.icon}</div>
+        <div class="module-card-body">
+          <div class="module-card-name">${escapeHtml(item.name)}</div>
+          <span class="module-card-tag">${meta.tagText}</span>
+        </div>
+        <div class="module-card-action">${meta.actionText}</div>
+      </div>
+      ${img ? `<div class="showcase-image"><img src="${img}" alt="${escapeHtml(item.name)}"></div>` : ''}
+    </div>`;
+  }
+
   function renderModules(cat) {
     $('catIcon').textContent = searchText ? '🔎' : cat.icon;
     $('catName').textContent = searchText ? `搜索：${searchText}` : cat.name;
@@ -3641,22 +3711,28 @@
     const contentClass = 'module-content module-content-' + (isRow ? 'vertical' : 'horizontal');
 
     grid.innerHTML = '<div class="' + containerClass + '">' + cat.modules.map(m => {
-      const content = m.items.map((f, idx) => {
-        const item = normalizeFile(f);
-        if (m.type === 'flow') {
+      let content;
+      if (m.type === 'showcase') {
+        content = renderShowcase(m, cat);
+      } else {
+        const itemsHtml = m.items.map((f, idx) => {
+          const item = normalizeFile(f);
+          if (m.type === 'flow') {
+            return isRow
+              ? renderFlowStepVertical(item, cat, idx, m.items.length)
+              : renderFlowStepHorizontal(item, cat, idx, m.items.length);
+          }
           return isRow
-            ? renderFlowStepVertical(item, cat, idx, m.items.length)
-            : renderFlowStepHorizontal(item, cat, idx, m.items.length);
-        }
-        return isRow
-          ? renderModuleCardVertical(item, cat)
-          : renderModuleCard(item, cat);
-      }).join('');
+            ? renderModuleCardVertical(item, cat)
+            : renderModuleCard(item, cat);
+        }).join('');
+        content = `<div class="${contentClass}">${itemsHtml}</div>`;
+      }
       return `<div class="module-panel" style="--card-color:${cat.color};--card-bg:${cat.bg}">
         <div class="module-header">
           <div class="module-title">${escapeHtml(m.title)}</div>
         </div>
-        <div class="${contentClass}">${content}</div>
+        ${content}
       </div>`;
     }).join('') + '</div>';
   }
