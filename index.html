@@ -198,6 +198,11 @@
   }
   .btn-success:hover { background: #2da84a; }
 
+  /* 日历备注弹窗 */
+  #calendarNoteModal .modal-body {
+    padding: 20px 24px;
+  }
+
   .content {
     flex: 1;
     display: flex;
@@ -425,7 +430,7 @@
   .calendar-table td {
     font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
     text-align: center;
-    padding: 6px 2px 16px;
+    padding: 6px 3px 26px;
     border-radius: 10px;
     font-size: 16px;
     font-weight: 400;
@@ -433,7 +438,7 @@
     cursor: pointer;
     transition: all 0.15s;
     position: relative;
-    height: 58px;
+    height: 86px;
     vertical-align: top;
   }
   .calendar-solar {
@@ -443,12 +448,11 @@
   .calendar-lunar {
     font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
     display: block;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 400;
     color: #b0b0b5;
-    line-height: 1.2;
-    margin-top: 2px;
-    transform: scale(0.9);
+    line-height: 1.15;
+    margin-top: 1px;
   }
   .calendar-table td.today .calendar-lunar {
     color: rgba(255,255,255,0.9);
@@ -470,13 +474,12 @@
     position: absolute;
     top: 2px;
     right: 2px;
-    font-size: 9px;
-    padding: 1px 3px;
-    border-radius: 4px;
+    font-size: 10px;
+    padding: 1px 4px;
+    border-radius: 5px;
     background: rgba(255,59,48,0.1);
     color: var(--danger);
-    line-height: 1;
-    transform: scale(0.85);
+    line-height: 1.1;
   }
   .calendar-table td.today .calendar-festival {
     background: rgba(255,255,255,0.25);
@@ -502,12 +505,55 @@
     background: var(--primary-light);
     border-radius: 50%;
     position: absolute;
-    bottom: 3px;
+    bottom: 4px;
     left: 50%;
     transform: translateX(-50%);
   }
   .calendar-table td.today .calendar-dot {
     background: rgba(255,255,255,0.7);
+  }
+  .calendar-note {
+    position: absolute;
+    bottom: 12px;
+    left: 3px;
+    right: 3px;
+    font-size: 12px;
+    line-height: 1.3;
+    color: var(--text);
+    background: rgba(0,113,227,0.08);
+    border-radius: 5px;
+    padding: 3px 5px;
+    max-height: 34px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+  }
+  .calendar-table td.today .calendar-note {
+    color: #fff;
+    background: rgba(255,255,255,0.22);
+  }
+  .calendar-note-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .calendar-note-form label {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .calendar-note-form input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+  }
+  .calendar-note-form input[type="text"]:focus {
+    border-color: var(--primary-light);
   }
 
   /* 常用网站快捷入口 */
@@ -1828,19 +1874,19 @@
     }
     .module-card.module-card-vertical,
     .flow-step.flow-step-vertical {
-      flex: 1 1 calc(50% - 5px);
-      min-width: calc(50% - 5px);
-      max-width: calc(50% - 5px);
+      flex: 1 1 100%;
+      min-width: 100%;
+      max-width: 100%;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 6px;
-      gap: 6px;
+      padding: 12px 8px;
+      gap: 8px;
       min-height: 90px;
     }
     .module-card-vertical .module-card-icon,
     .flow-step-vertical .flow-step-number {
-      width: 32px; height: 32px; font-size: 16px;
+      width: 36px; height: 36px; font-size: 18px;
     }
     .module-card-vertical .module-card-body,
     .flow-step-vertical .flow-step-body {
@@ -1848,17 +1894,17 @@
       align-items: center;
       justify-content: flex-start;
       width: 100%;
-      gap: 3px;
+      gap: 4px;
     }
     .module-card-vertical .module-card-name,
     .flow-step-vertical .flow-step-name {
       text-align: center;
-      font-size: 12px;
-      line-height: 1.35;
+      font-size: 13px;
+      line-height: 1.4;
       word-break: normal;
       overflow-wrap: break-word;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       width: 100%;
@@ -1867,13 +1913,14 @@
     .flow-step-vertical .flow-step-tag {
       align-self: center;
       font-size: 10px;
-      padding: 1px 5px;
+      padding: 2px 6px;
     }
     .module-card-vertical .module-card-action,
     .flow-step-vertical .flow-step-action {
-      margin: auto 0 0 0;
-      padding: 3px 8px;
-      font-size: 10px;
+      align-self: center;
+      margin-top: auto;
+      padding: 5px 10px;
+      font-size: 11px;
       border-radius: 12px;
     }
     .flow-arrow.flow-arrow-vertical {
@@ -2276,6 +2323,26 @@
 </div>
 
 <div class="toast" id="toast"><span class="toast-icon">✅</span><span id="toastText"></span></div>
+
+<div class="modal-overlay" id="calendarNoteModal">
+  <div class="modal" style="max-width: 420px;">
+    <div class="modal-header">
+      <div class="modal-title" id="calendarNoteTitle">📝 添加备注</div>
+      <button class="modal-close" onclick="closeCalendarNoteModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="calendar-note-form">
+        <label for="calendarNoteInput">备注内容（最多8个字）</label>
+        <input type="text" id="calendarNoteInput" maxlength="8" placeholder="例如：报税、发薪、会议" autocomplete="off">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" id="calendarNoteDeleteBtn" onclick="deleteCalendarNote()" style="margin-right:auto; color: var(--danger); border-color: rgba(255,59,48,0.2);">删除</button>
+      <button class="btn" onclick="closeCalendarNoteModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveCalendarNote()">保存</button>
+    </div>
+  </div>
+</div>
 
 <script>
 (function() {
@@ -2912,6 +2979,23 @@
   const LS_FIXED = 'workbench_fixedTodos';
   const LS_MONTHLY = 'workbench_monthlyTodos';
   const LS_CHECKLIST = 'workbench_checklist';
+  const LS_CALENDAR_NOTES = 'workbench_calendarNotes';
+
+  let selectedCalendarDate = null;
+
+  function getCalendarNotes() {
+    try {
+      return JSON.parse(localStorage.getItem(LS_CALENDAR_NOTES) || '{}');
+    } catch (e) {
+      return {};
+    }
+  }
+  function setCalendarNotes(notes) {
+    localStorage.setItem(LS_CALENDAR_NOTES, JSON.stringify(notes));
+  }
+  function getCalendarNoteKey(date) {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  }
 
   const API_BASE = 'http://localhost:8765';
   const openingFiles = new Set();
@@ -3263,6 +3347,7 @@
     const y = calendarDate.getFullYear();
     const m = calendarDate.getMonth();
     const today = new Date();
+    const notes = getCalendarNotes();
 
     $('calendarYear').textContent = `${y}年`;
     $('calendarMonth').textContent = `${m + 1}月`;
@@ -3341,10 +3426,12 @@
       }
 
       const dot = hasTodo ? '<div class="calendar-dot"></div>' : '';
+      const noteText = notes[dateStr] || '';
+      const noteTag = noteText ? `<span class="calendar-note" title="${escapeHtml(noteText)}">${escapeHtml(noteText)}</span>` : '';
       html += `<td class="${cellCls}" onclick="selectCalendarDay(${d})">
         <span class="${solarCls}">${d}</span>
         <span class="${lunarCls}">${escapeHtml(lunar.text)}</span>
-        ${festivalTag}${dot}
+        ${festivalTag}${noteTag}${dot}
       </td>`;
       cellCount++;
 
@@ -3372,9 +3459,57 @@
     renderCalendar();
   };
   window.selectCalendarDay = function(day) {
-    // 可以扩展：点击日期筛选当天的待办
-    showToast(`已选择 ${calendarDate.getFullYear()}年${calendarDate.getMonth()+1}月${day}日`, '📅');
+    selectedCalendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth(), day);
+    const key = getCalendarNoteKey(selectedCalendarDate);
+    const notes = getCalendarNotes();
+    const existing = notes[key] || '';
+    $('calendarNoteTitle').textContent = `📝 ${selectedCalendarDate.getFullYear()}年${selectedCalendarDate.getMonth()+1}月${selectedCalendarDate.getDate()}日 备注`;
+    $('calendarNoteInput').value = existing;
+    $('calendarNoteDeleteBtn').style.visibility = existing ? 'visible' : 'hidden';
+    $('calendarNoteModal').classList.add('show');
+    setTimeout(() => $('calendarNoteInput').focus(), 100);
   };
+
+  window.closeCalendarNoteModal = function() {
+    $('calendarNoteModal').classList.remove('show');
+    selectedCalendarDate = null;
+  };
+
+  window.saveCalendarNote = function() {
+    if (!selectedCalendarDate) return;
+    const value = $('calendarNoteInput').value.trim();
+    const key = getCalendarNoteKey(selectedCalendarDate);
+    const notes = getCalendarNotes();
+    if (value) {
+      notes[key] = value;
+    } else {
+      delete notes[key];
+    }
+    setCalendarNotes(notes);
+    renderCalendar();
+    closeCalendarNoteModal();
+    showToast(value ? '备注已保存' : '备注已清空', '📝');
+  };
+
+  window.deleteCalendarNote = function() {
+    if (!selectedCalendarDate) return;
+    const key = getCalendarNoteKey(selectedCalendarDate);
+    const notes = getCalendarNotes();
+    delete notes[key];
+    setCalendarNotes(notes);
+    renderCalendar();
+    closeCalendarNoteModal();
+    showToast('备注已删除', '🗑️');
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeCalendarNoteModal();
+    }
+    if ((e.key === 'Enter') && $('calendarNoteModal').classList.contains('show')) {
+      saveCalendarNote();
+    }
+  });
 
   /* ========== Checklist 申报税务/工商 ========== */
   var checklistData = {
