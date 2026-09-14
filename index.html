@@ -1767,6 +1767,119 @@
     .quick-card-name { font-size: 13px; }
     .quick-card-desc { font-size: 11px; }
     .quick-card-arrow { font-size: 18px; }
+
+    /* 模块内横向排列的卡片，手机端改为上下布局 */
+    .module-content-horizontal {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .module-content-horizontal .module-card {
+      flex: 1 1 calc(50% - 5px);
+      min-width: calc(50% - 5px);
+      max-width: calc(50% - 5px);
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: space-between;
+      padding: 10px 8px;
+      gap: 6px;
+      min-height: 90px;
+    }
+    .module-content-horizontal .module-card-icon {
+      align-self: center;
+    }
+    .module-content-horizontal .module-card-body {
+      align-items: center;
+      justify-content: flex-start;
+      gap: 4px;
+    }
+    .module-content-horizontal .module-card-name {
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.4;
+      word-break: normal;
+      overflow-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .module-content-horizontal .module-card-tag {
+      align-self: center;
+      font-size: 10px;
+      padding: 1px 5px;
+    }
+    .module-content-horizontal .module-card-action {
+      align-self: center;
+      margin-top: auto;
+      padding: 4px 10px;
+      font-size: 11px;
+    }
+
+    /* 竖排模块内的卡片保持 100% 宽度，同样上下布局 */
+    .module-card.module-card-vertical {
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      padding: 10px 12px;
+    }
+    .module-card-vertical .module-card-body {
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .module-card-vertical .module-card-name {
+      text-align: left;
+      font-size: 13px;
+      line-height: 1.4;
+      word-break: normal;
+      overflow-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .module-card-vertical .module-card-tag {
+      align-self: flex-start;
+    }
+    .module-card-vertical .module-card-action {
+      margin-left: auto;
+      margin-top: 0;
+    }
+
+    /* 展示型模块手机端：卡片占上、图片占下 */
+    .module-content-showcase {
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+    }
+    .showcase-card {
+      flex: 0 0 auto !important;
+      width: 100%;
+      height: auto !important;
+      flex-direction: row;
+      padding: 10px 12px;
+    }
+    .showcase-card .module-card-body {
+      align-items: flex-start;
+    }
+    .showcase-card .module-card-name {
+      text-align: left;
+      font-size: 13px;
+      line-height: 1.4;
+      word-break: normal;
+      overflow-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .showcase-image {
+      flex: 1 1 auto;
+      min-height: 180px;
+      max-height: 260px;
+    }
+    .showcase-image img {
+      object-fit: contain;
+    }
   }
 
   /* ===== 响应式 ===== */
