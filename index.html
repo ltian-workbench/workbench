@@ -1927,6 +1927,39 @@
       display: none;
     }
 
+    /* 流程式模块在手机上字号统一为和 grid 卡片一致 */
+    .module-content-horizontal .flow-step {
+      flex: 1 1 100%;
+      min-width: 100%;
+      max-width: 100%;
+      padding: 12px 8px;
+      gap: 8px;
+    }
+    .module-content-horizontal .flow-step-name,
+    .module-content-horizontal .flow-step-tag,
+    .module-content-horizontal .flow-step-action {
+      font-size: 13px;
+    }
+    .module-content-horizontal .flow-step-number {
+      width: 36px; height: 36px; font-size: 18px;
+    }
+
+    /* 映射型模块在手机上字号统一为和 grid 卡片一致 */
+    .module-content-mapping {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .module-content-mapping .mapping-card {
+      padding: 12px;
+    }
+    .module-content-mapping .mapping-title,
+    .module-content-mapping .mapping-list li {
+      font-size: 13px;
+    }
+    .module-content-mapping .mapping-arrow {
+      font-size: 18px;
+    }
+
     /* 展示型模块 */
     .module-content-showcase {
       flex-direction: column;
