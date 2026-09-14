@@ -1996,6 +1996,20 @@
       object-fit: contain;
     }
 
+    /* 仪表盘模块在手机上改为2列，字号和 grid 卡片一致 */
+    .module-content-dashboard {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .dashboard-card {
+      min-height: 54px;
+      padding: 8px 6px;
+    }
+    .dashboard-card-name {
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
     .sidebar {
       position: fixed;
       left: 0; top: 0; bottom: 0;
