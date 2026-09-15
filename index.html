@@ -3029,6 +3029,7 @@
   const LS_CALENDAR_NOTES = 'workbench_calendarNotes';
 
   let selectedCalendarDate = null;
+  let calendarNotesSyncing = false;
 
   function getCalendarNotes() {
     try {
@@ -3038,10 +3039,36 @@
     }
   }
   function setCalendarNotes(notes) {
+    notes.updatedAt = Date.now();
     localStorage.setItem(LS_CALENDAR_NOTES, JSON.stringify(notes));
+    syncCalendarNotes(notes);
   }
   function getCalendarNoteKey(date) {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  }
+
+  function syncCalendarNotes(notes) {
+    if (!SB_ENABLED || calendarNotesSyncing) return;
+    calendarNotesSyncing = true;
+    sbSave('calendarNotes', notes)
+      .catch(function() {})
+      .finally(function() { calendarNotesSyncing = false; });
+  }
+
+  function loadCalendarNotes() {
+    var localTime = 0;
+    try {
+      var cached = JSON.parse(localStorage.getItem(LS_CALENDAR_NOTES) || '{}');
+      localTime = cached.updatedAt || 0;
+    } catch (e) {}
+
+    if (!SB_ENABLED) return;
+    sbLoad('calendarNotes').then(function(data) {
+      if (data && data.updatedAt && data.updatedAt >= localTime) {
+        localStorage.setItem(LS_CALENDAR_NOTES, JSON.stringify(data));
+        renderCalendar();
+      }
+    }).catch(function() {});
   }
 
   const API_BASE = 'http://localhost:8765';
@@ -3208,6 +3235,7 @@
       $('catName').textContent = '主页';
       $('catCount').textContent = '';
       $('headerDate').style.display = 'flex';
+      loadCalendarNotes();
       renderCalendar();
       renderTodos();
     } else if (isCheck) {
