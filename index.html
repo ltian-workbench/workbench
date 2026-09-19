@@ -2024,6 +2024,54 @@
       object-fit: contain;
     }
 
+    /* 智能工作台在手机上模块内保持左右布局（技能卡片 + 截图） */
+    .modules-grid2x2 .module-content-showcase {
+      flex-direction: row;
+      gap: 10px;
+      overflow: hidden;
+      align-items: stretch;
+    }
+    .modules-grid2x2 .showcase-card {
+      flex: 0 0 38% !important;
+      width: auto !important;
+      height: auto !important;
+      flex-direction: column !important;
+      justify-content: center;
+      padding: 10px 8px !important;
+      min-width: 110px;
+      max-width: none;
+      gap: 8px;
+    }
+    .modules-grid2x2 .showcase-card .module-card-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+    }
+    .modules-grid2x2 .showcase-card .module-card-body {
+      align-items: center;
+    }
+    .modules-grid2x2 .showcase-card .module-card-name {
+      text-align: center;
+      font-size: 12px;
+      -webkit-line-clamp: 3;
+    }
+    .modules-grid2x2 .showcase-card .module-card-tag {
+      align-self: center;
+      font-size: 10px;
+      padding: 2px 6px;
+    }
+    .modules-grid2x2 .showcase-card .module-card-action {
+      margin-top: auto;
+      font-size: 11px;
+      padding: 5px 10px;
+    }
+    .modules-grid2x2 .showcase-image {
+      flex: 1 1 auto !important;
+      min-height: 0;
+      max-height: none;
+      border-radius: var(--radius);
+    }
+
     /* 仪表盘模块在手机上改为2列，字号和 grid 卡片一致 */
     .module-content-dashboard {
       grid-template-columns: repeat(2, 1fr);
