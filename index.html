@@ -791,6 +791,30 @@
     display: flex;
   }
 
+  /* 备忘录 */
+  .memo-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .memo-item .todo-text {
+    padding-left: 4px;
+  }
+  .memo-number {
+    font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+    background: var(--primary-light);
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
 
   /* 固定事项设置弹窗 */
   .modal-overlay {
@@ -2330,6 +2354,29 @@
               </div>
             </div>
           </div>
+
+          <!-- 备忘录 -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">📝 备忘录</div>
+            </div>
+            <div class="memo-wrap">
+              <div class="todo-list" id="memoActiveList"></div>
+              <div class="done-section" id="memoDoneSection" style="display:none;">
+                <div class="done-header" onclick="toggleMemoDoneSection()">
+                  <span id="memoDoneIcon">▶</span>
+                  <span>已完成 (<span id="memoDoneCount">0</span>)</span>
+                </div>
+                <div class="done-body" id="memoDoneBody">
+                  <div class="todo-list" id="memoDoneList"></div>
+                </div>
+              </div>
+              <div class="todo-input-row">
+                <input type="text" class="todo-input" id="newMemoInput" placeholder="输入备忘事项，按回车添加..." onkeydown="if(event.key==='Enter')addMemo()">
+                <button class="btn btn-primary" onclick="addMemo()">➕ 添加</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- 右列：待办事项 -->
@@ -2671,7 +2718,8 @@
             { name: '华南资产负债表转换工具', path: 'D:\\tools\\我的工作台\\华南资产负债表转换工具.xlsm' },
             { name: '华南管理费用科目余额表转换工具', path: 'D:\\tools\\我的工作台\\华南管理费用科目余额表转换工具.xlsm' },
             { name: '飞书表格-增值税整理工具', path: 'D:\\tools\\我的工作台\\飞书表格-广州公司增值税统计.xlsx' },
-            { name: '飞书表格-华南税金整理工具', path: 'D:\\tools\\我的工作台\\飞书表格-华南税金整理工具.xlsx' }
+            { name: '飞书表格-华南税金整理工具', path: 'D:\\tools\\我的工作台\\飞书表格-华南税金整理工具.xlsx' },
+            { name: '飞书表格-华南期末人数整理工具', url: 'https://trip.larkenterprise.com/sheets/Y6lmstk0BhF5WPteMN8c9k0enOh' }
           ]
         },
         {
@@ -2736,6 +2784,7 @@
           title: 'OA表单工作台',
           type: 'flow',
           items: [
+            { name: 'OA发票录入界面下载', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html' },
             { name: '成都广州OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=1030' },
             { name: '宏睿广州OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=1036' },
             { name: '广州越程OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=6147' },
@@ -3183,6 +3232,7 @@
   const LS_MONTHLY = 'workbench_monthlyTodos';
   const LS_CHECKLIST = 'workbench_checklist';
   const LS_CALENDAR_NOTES = 'workbench_calendarNotes';
+  const LS_MEMOS = 'workbench_memos';
 
   let selectedCalendarDate = null;
   let calendarNotesSyncing = false;
@@ -3394,6 +3444,7 @@
       loadCalendarNotes();
       renderCalendar();
       renderTodos();
+      renderMemos();
     } else if (isCheck) {
       $('catIcon').textContent = '✅';
       $('catName').textContent = 'Check申报税务/工商';
@@ -4166,6 +4217,112 @@
     } else {
       showToast('没有已完成事项', 'ℹ️');
     }
+  };
+
+  /* ========== 备忘录 ========== */
+  function getMemoData() {
+    try {
+      return JSON.parse(localStorage.getItem(LS_MEMOS) || '{"items":[]}');
+    } catch (e) {
+      return { items: [] };
+    }
+  }
+
+  function saveMemoData(items) {
+    const data = { items: items || [], updatedAt: Date.now() };
+    localStorage.setItem(LS_MEMOS, JSON.stringify(data));
+  }
+
+  function renderMemos() {
+    const data = getMemoData();
+    const items = data.items || [];
+    const activeList = $('memoActiveList');
+    const doneSection = $('memoDoneSection');
+    const doneBody = $('memoDoneBody');
+    const doneList = $('memoDoneList');
+
+    const active = items.filter(function(i) { return !i.done; });
+    const done = items.filter(function(i) { return i.done; });
+
+    if (active.length === 0) {
+      activeList.innerHTML = '<div class="todo-empty">暂无备忘事项</div>';
+    } else {
+      activeList.innerHTML = active.map(function(item, idx) {
+        return '<div class="todo-item memo-item">\n' +
+          '  <span class="memo-number">' + (idx + 1) + '</span>\n' +
+          '  <div class="todo-checkbox" onclick="toggleMemo(\'' + item.id + '\')"></div>\n' +
+          '  <div class="todo-text" onclick="toggleMemo(\'' + item.id + '\')">' + escapeHtml(item.text) + '</div>\n' +
+          '</div>';
+      }).join('');
+    }
+
+    if (done.length > 0) {
+      doneSection.style.display = 'block';
+      $('memoDoneCount').textContent = done.length;
+      doneList.innerHTML = done.map(function(item) {
+        return '<div class="todo-item memo-item done">\n' +
+          '  <div class="todo-checkbox" onclick="toggleMemo(\'' + item.id + '\')">✓</div>\n' +
+          '  <div class="todo-text" onclick="toggleMemo(\'' + item.id + '\')">' + escapeHtml(item.text) + '</div>\n' +
+          '  <span class="todo-delete" onclick="deleteMemo(\'' + item.id + '\', event)">✕</span>\n' +
+          '</div>';
+      }).join('');
+    } else {
+      doneSection.style.display = 'none';
+      doneBody.classList.remove('open');
+      $('memoDoneIcon').textContent = '▶';
+    }
+  }
+
+  window.toggleMemoDoneSection = function() {
+    const body = $('memoDoneBody');
+    const icon = $('memoDoneIcon');
+    const isOpen = body.classList.contains('open');
+    if (isOpen) {
+      body.classList.remove('open');
+      icon.textContent = '▶';
+    } else {
+      body.classList.add('open');
+      icon.textContent = '▼';
+    }
+  };
+
+  window.toggleMemo = function(id) {
+    const data = getMemoData();
+    const items = data.items || [];
+    const item = items.find(function(i) { return i.id === id; });
+    if (!item) return;
+    item.done = !item.done;
+    if (item.done) item.doneAt = Date.now();
+    saveMemoData(items);
+    renderMemos();
+  };
+
+  window.deleteMemo = function(id, event) {
+    if (event) event.stopPropagation();
+    const data = getMemoData();
+    const items = (data.items || []).filter(function(i) { return i.id !== id; });
+    saveMemoData(items);
+    renderMemos();
+    showToast('已删除', '🗑️');
+  };
+
+  window.addMemo = function() {
+    const input = $('newMemoInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const data = getMemoData();
+    const items = data.items || [];
+    items.push({
+      id: 'memo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+      text: text,
+      done: false,
+      created: Date.now()
+    });
+    saveMemoData(items);
+    input.value = '';
+    renderMemos();
+    showToast('已添加备忘事项', '✅');
   };
 
   /* ========== 固定事项设置弹窗 ========== */
