@@ -791,6 +791,58 @@
     display: flex;
   }
 
+  .todo-day-group {
+    margin-bottom: 8px;
+  }
+  .todo-day-group:last-child {
+    margin-bottom: 0;
+  }
+  .todo-day-header {
+    font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: rgba(0,0,0,0.03);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .todo-day-header:hover {
+    background: rgba(0,0,0,0.06);
+  }
+  .todo-day-icon {
+    font-size: 10px;
+    color: #8e8e93;
+    transition: transform 0.2s;
+  }
+  .todo-day-group.collapsed .todo-day-icon {
+    transform: rotate(-90deg);
+  }
+  .todo-day-title {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3a3a3c;
+  }
+  .todo-day-count {
+    font-size: 11px;
+    color: #8e8e93;
+    background: rgba(0,0,0,0.05);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .todo-day-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0 0 8px;
+  }
+  .todo-day-group.collapsed .todo-day-body {
+    display: none;
+  }
+
   /* 备忘录 */
   .memo-wrap {
     display: flex;
@@ -1318,6 +1370,44 @@
   .modules-grid2x2 .showcase-image img {
     object-fit: contain;
   }
+  /* 左侧单栏、右侧上下堆叠：第一模块占满左栏，其余模块在右栏均分高度 */
+  .modules-left-stack {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "left right-top"
+      "left right-bottom";
+    gap: 14px;
+    height: 100%;
+  }
+  .modules-left-stack .module-panel {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .modules-left-stack .module-panel:nth-child(1) { grid-area: left; }
+  .modules-left-stack .module-panel:nth-child(2) { grid-area: right-top; }
+  .modules-left-stack .module-panel:nth-child(3) { grid-area: right-bottom; }
+  /* 珠海报表整理工具：左右均分；左半边再上下均分（上排火车票+酒店，下排网页平台）；右半边再左右均分（管报+资料库，均占满右半边高度） */
+  .modules-zhuhai {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "train hotel mgmt lib"
+      "web   web   mgmt lib";
+    gap: 14px;
+    height: 100%;
+  }
+  .modules-zhuhai .module-panel {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .modules-zhuhai .module-panel:nth-child(1) { grid-area: train; }
+  .modules-zhuhai .module-panel:nth-child(2) { grid-area: hotel; }
+  .modules-zhuhai .module-panel:nth-child(3) { grid-area: mgmt; }
+  .modules-zhuhai .module-panel:nth-child(4) { grid-area: web; }
+  .modules-zhuhai .module-panel:nth-child(5) { grid-area: lib; }
   .module-content-horizontal {
     flex-direction: row;
     gap: 10px;
@@ -1964,6 +2054,20 @@
       flex: 1 1 100%;
       min-width: 100%;
       max-width: 100%;
+    }
+    /* 左侧单栏布局在手机上改为单列堆叠 */
+    .modules-left-stack {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      grid-auto-rows: auto;
+      grid-template-areas: none;
+    }
+    /* 珠海报表整理工具在手机上改为单列堆叠 */
+    .modules-zhuhai {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      grid-auto-rows: auto;
+      grid-template-areas: none;
     }
     .module-card-vertical .module-card-icon,
     .flow-step-vertical .flow-step-number {
@@ -2658,8 +2762,7 @@
           title: '工具区',
           type: 'grid',
           items: [
-            { name: 'TA Review检查工具v4.0-review', path: 'D:\\tools\\我的工作台\\TA Review检查工具v4.0-review.xlsm' },
-            { name: 'TA Review检查工具v4.0-TA', path: 'D:\\tools\\我的工作台\\TA Review检查工具v4.0-TA.xlsm' },
+            { name: 'TA Review web平台', path: 'D:\\cc\\code\\TAReview_Package_v1\\TAReview_Package_v1.exe' },
             { name: 'VBA批量小工具', path: 'D:\\tools\\我的工作台\\VBA批量小工具.xlsm' }
           ]
         },
@@ -2692,7 +2795,7 @@
       color: '#34c759',
       bg: '#f0faf3',
       layout: 'modules',
-      modulesLayout: 'row',
+      modulesLayout: 'leftStack',
       modules: [
         {
           title: '全量报表清理平台',
@@ -2715,6 +2818,13 @@
             { name: 'Gross利润表按公司拆分工具', path: 'D:\\cc\\code\\工具\\利润表拆分工具-Gross.py' },
             { name: 'Net利润表按公司拆分工具', path: 'D:\\cc\\code\\工具\\利润表拆分工具-Net.py' },
             { name: '科目余额表按公司拆分工具', path: 'D:\\cc\\code\\工具\\科目余额表拆分工具.py' }
+          ]
+        },
+        {
+          title: '财务报表清理拆分平台web',
+          type: 'grid',
+          items: [
+            { name: '财务报表清理拆分平台web', path: 'D:\\Users\\ltian\\Documents\\自动任务\\报表处理工具\\启动工具.bat' }
           ]
         }
       ]
@@ -2867,10 +2977,11 @@
             { name: '增值税申报数据填列-珠海携程', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-珠海携程.xlsx' },
             { name: '增值税申报数据填列-天津海豚广州', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-天津海豚广州.xlsx' },
             { name: '增值税申报数据填列-天津海豚南昌', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-天津海豚南昌.xlsx' },
+            { name: '增值税申报数据填列-其他季度小规模', path: 'D:\\tools\\我的工作台\\增值税申报数据填列模板-其他季度小规模.xlsx' },
             { name: 'VAT申报数据填列模板自动取数器', path: 'D:\\cc\\code\\工具\\增值税申报数据自动填写工具\\run.bat' },
-            { name: '全量导出VAT开票数据工具-务必已登录电子税务局', path: 'D:\\Users\\ltian\\Desktop\\工具底稿汇总' },
             { name: '全量填写发票申报统计数据工具', path: 'D:\\cc\\code\\invoice_autofill_tool\\dist\\发票申报填写工具.exe' },
-            { name: '全量VAT申报底稿生成工具', path: 'D:\\Users\\ltian\\Desktop\\工具底稿汇总\\VAT申报底稿工具\\新版本发布\\税务申报助手.pyw' }
+            { name: '全量VAT申报底稿生成工具', path: 'D:\\Users\\ltian\\Desktop\\工具底稿汇总\\VAT申报底稿工具\\新版本发布\\税务申报助手.pyw' },
+            { name: '全量填写VAT Summary和账税核对表', path: 'D:\\cc\\code\\启动_VAT自动填写工具.bat' }
           ]
         },
         {
@@ -2896,7 +3007,7 @@
       color: '#0ea5e9',
       bg: '#f0f9ff',
       layout: 'modules',
-      modulesLayout: 'row',
+      modulesLayout: 'zhuhai',
       modules: [
         {
           title: '火车票业务工作台',
@@ -2929,6 +3040,13 @@
             { name: '珠海携程财务数据表', path: 'D:\\tools\\我的工作台\\珠海财务数据.xlsx' },
             { name: '珠海携程SBC计提', url: 'https://trip.larkenterprise.com/sheets/Di3qswyd4hDu7qtMrmOc1dydnk5?sheet=1oyobI' },
             { name: '珠海人员监控', url: 'https://trip.larkenterprise.com/sheets/QE6Ysyivvh9wDMtw3jGcfu3Cn5d' }
+          ]
+        },
+        {
+          title: '珠海携程数据处理网页平台',
+          type: 'grid',
+          items: [
+            { name: '珠海携程数据处理平台', path: 'D:\\Users\\ltian\\Documents\\自动任务\\珠海数据处理中心\\启动中心.bat' }
           ]
         },
         {
@@ -4070,9 +4188,22 @@
         fixedList.innerHTML = '<div class="todo-empty">本月固定事项已全部完成 🎉</div>';
       } else {
         fixedUndone.sort(function(a, b) { return (a.f.day || 0) - (b.f.day || 0); });
-        fixedList.innerHTML = fixedUndone.map(function(_ref) {
+        // 按日期分组渲染为可折叠树
+        var dayGroups = {};
+        fixedUndone.forEach(function(_ref) {
           var f = _ref.f, idx = _ref.idx;
-          return '<div class="todo-item" onclick="toggleFixedTodo(' + idx + ')">\n            <div class="todo-checkbox"></div>\n            <div class="todo-text">' + escapeHtml(f.text) + ' <span style="color:#c7c7cc;font-size:12px;">(' + f.day + '日)</span></div>\n          </div>';
+          var day = f.day || 0;
+          if (!dayGroups[day]) dayGroups[day] = [];
+          dayGroups[day].push({ f: f, idx: idx });
+        });
+        var sortedDays = Object.keys(dayGroups).sort(function(a, b) { return parseInt(a) - parseInt(b); });
+        fixedList.innerHTML = sortedDays.map(function(day) {
+          var items = dayGroups[day];
+          var dayLabel = day === '0' ? '未指定日期' : day + '日';
+          return '<div class="todo-day-group">\n            <div class="todo-day-header" onclick="toggleTodoDayGroup(this, event)">\n              <span class="todo-day-icon">▼</span>\n              <span class="todo-day-title">' + dayLabel + '</span>\n              <span class="todo-day-count">' + items.length + '项</span>\n            </div>\n            <div class="todo-day-body">' + items.map(function(item) {
+              var f = item.f, idx = item.idx;
+              return '<div class="todo-item" onclick="toggleFixedTodo(' + idx + ')">\n                  <div class="todo-checkbox"></div>\n                  <div class="todo-text">' + escapeHtml(f.text) + '</div>\n                </div>';
+            }).join('') + '</div>\n          </div>';
         }).join('');
       }
 
@@ -4170,6 +4301,14 @@
       body.classList.add('open');
       icon.textContent = '▼';
     }
+  };
+
+  window.toggleTodoDayGroup = function(header, event) {
+    if (event) event.stopPropagation();
+    var group = header.parentElement;
+    var icon = header.querySelector('.todo-day-icon');
+    var isCollapsed = group.classList.toggle('collapsed');
+    icon.textContent = isCollapsed ? '▶' : '▼';
   };
 
   window.toggleFixedTodo = function(idx) {
@@ -4657,12 +4796,16 @@
       return;
     }
 
-    const isRow = cat.modulesLayout === 'row';
+    const isRow = cat.modulesLayout === 'row' || cat.modulesLayout === 'leftStack' || cat.modulesLayout === 'zhuhai';
     const isGrid2x2 = cat.modulesLayout === 'grid2x2';
     const isTop2Row = cat.modulesLayout === 'top2row';
+    const isLeftStack = cat.modulesLayout === 'leftStack';
+    const isZhuhai = cat.modulesLayout === 'zhuhai';
     let containerClass = 'modules-container modules-column';
     if (isRow) containerClass = 'modules-container modules-row';
     if (isGrid2x2) containerClass = 'modules-container modules-grid2x2';
+    if (isLeftStack) containerClass = 'modules-container modules-left-stack';
+    if (isZhuhai) containerClass = 'modules-container modules-zhuhai';
     const contentClass = 'module-content module-content-' + (isRow ? 'vertical' : 'horizontal');
 
     function renderOneModule(m) {
