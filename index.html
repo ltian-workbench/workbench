@@ -1229,6 +1229,11 @@
   .flow-step:hover .flow-step-action {
     filter: brightness(1.08);
   }
+  .flow-step-highlight {
+    background: #f5f3ff;
+    border-color: rgba(167, 139, 250, 0.22);
+    box-shadow: 0 2px 8px rgba(167, 139, 250, 0.08);
+  }
   .flow-arrow {
     display: flex;
     align-items: center;
@@ -1314,6 +1319,11 @@
   }
   .module-card:hover .module-card-action {
     filter: brightness(1.08);
+  }
+  .module-card-highlight {
+    background: #f5f3ff;
+    border-color: rgba(167, 139, 250, 0.22);
+    box-shadow: 0 2px 8px rgba(167, 139, 250, 0.08);
   }
 
   /* 模块整体布局变体 */
@@ -2725,9 +2735,8 @@
           title: 'EBS折旧物管水电保洁工作平台',
           type: 'flow',
           items: [
-            { name: '读取中铁诺德账单', path: 'D:\\Users\\ltian\\Desktop\\A-广州租金管理费\\extract_pdf_tables.py' },
-            { name: '打开中铁诺德账单汇总', path: 'D:\\Users\\ltian\\Desktop\\A-广州租金管理费\\中铁诺德账单汇总.xlsx' },
-            { name: '打开中铁诺德EBS导入模型', path: 'D:\\tools\\我的工作台\\EBS导入模型-899调整-折旧水电物管保洁（每月）.xlsm' },
+            { name: '打开中铁诺德账单文件夹', path: 'D:\\Users\\ltian\\Desktop\\A-广州租金管理费\\中铁诺德账单文件夹' },
+            { name: '中铁诺德费用工作台', path: 'D:\\Users\\ltian\\Documents\\广州办公室费用工作台\\启动工作台.bat' },
             { name: '下载中铁物管水电OA明细', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=13376' },
             { name: '下载中铁保洁费OA明细', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=16878' }
           ]
@@ -2752,7 +2761,7 @@
       ]
     },
     {
-      name: 'TA Review检查工具',
+      name: 'TA Review/CBCR',
       icon: '🔍',
       color: '#64748b',
       bg: '#f1f5f9',
@@ -2762,7 +2771,8 @@
           title: '工具区',
           type: 'grid',
           items: [
-            { name: 'TA Review web平台', path: 'D:\\cc\\code\\TAReview_Package_v1\\TAReview_Package_v1.exe' },
+            { name: 'TA Review web平台', url: 'https://yed7uwzbta2ve-8080.sandbox-portal-proxy.release.ctripcorp.com' },
+            { name: 'CBCR web平台', url: 'https://yed7uwzbtirlm-8080.sandbox-portal-proxy.release.ctripcorp.com' },
             { name: 'VBA批量小工具', path: 'D:\\tools\\我的工作台\\VBA批量小工具.xlsm' }
           ]
         },
@@ -2893,8 +2903,7 @@
           type: 'flow',
           items: [
             { name: '全订单(替代FD1070)数据清理工具', path: 'D:\\tools\\我的工作台\\全订单表（替代FD1070）数据清理小工具.xlsm' },
-            { name: '全订单(替代FD1070)透视表工具', path: 'D:\\tools\\我的工作台\\全订单表（替代FD1070）-地方财务提供版本透视表模板.xlsx' },
-            { name: '度假主营业务收入整理工具', path: 'D:\\tools\\我的工作台\\主营业务收入-本期发生-本位币.xlsx' },
+            { name: '全订单(替代FD1070)透视表工具', path: 'D:\\tools\\我的工作台\\全订单表（替代FD1070）-地方财务提供版本透视表模板.xlsm' },
             { name: '度假分析多维表格整理工具', path: 'D:\\tools\\我的工作台\\广州国旅度假分析多维表格整理工具.xlsx' }
           ]
         },
@@ -2922,14 +2931,14 @@
             { name: '提取XML发票信息', path: 'D:\\Users\\ltian\\Desktop\\商旅通发票信息提取小工具\\提取xml发票信息工具.py' },
             { name: 'Artnova商旅通火车票', url: 'http://nova.ops.ctripcorp.com/;jsessionid=0828315AD456E8D421B4502C85C9C248#/dashboard/25594745-9b0c-40ca-a042-b6a65abc2cf4' },
             { name: '回写商旅通火车票发票号码工具', path: 'D:\\tools\\我的工作台\\回写商旅通火车票发票号码工具.xlsm' },
-            { name: '进项税抵扣工作台', path: 'D:\\tools\\我的工作台\\进项税抵扣工作台.xlsm' }
+            { name: '进项税抵扣web工作台', path: 'D:\\Users\\ltian\\Documents\\自动任务\\进项税抵扣平台\\启动平台.bat', highlight: true }
           ]
         },
         {
           title: 'OA表单工作台',
           type: 'flow',
           items: [
-            { name: 'OA发票录入界面下载', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html' },
+            { name: 'OA发票录入界面下载', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html', highlight: true },
             { name: '成都广州OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=1030' },
             { name: '宏睿广州OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=1036' },
             { name: '广州越程OA明细列表', url: 'http://newoa.ard.ctripcorp.com/oa/uui/com/sms/newctripoa/newOaForm.html#filterId=6147' },
@@ -2942,19 +2951,19 @@
           type: 'flow',
           items: [
             { name: 'VAT专票抵扣勾选导入模板生成器', url: 'https://fintoolsark.edp.ctripcorp.com/tools/vat-generator-tool/run' },
-            { name: '166053-进项专票库', url: 'http://iam.basebiz.ctripcorp.com/bbzoffline/home?lk_jump_to_browser=true' },
+            { name: '166053-进项专票库', url: 'http://iam.basebiz.ctripcorp.com/bbzoffline/home?lk_jump_to_browser=true', highlight: true },
             { name: '进项税分配标准凭证模型-成都广州', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-成都广州.xlsm' },
             { name: '进项税分配标准凭证模型-宏睿广州', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-宏睿广州.xlsm' },
             { name: '进项税分配标准凭证模型-广州越程', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-越程.xlsm' },
             { name: '进项税分配标准凭证模型-珠海携程', path: 'D:\\tools\\我的工作台\\A-进项税分配标准凭证模型-珠海携程.xlsm' },
-            { name: '暂估待抵扣进项', url: 'https://trip.larkenterprise.com/sheets/SI8ssFrQ2hGKK0txNWWcC79Dncf?sheet=0Edyca' }
+            { name: '暂估待抵扣进项', url: 'https://trip.larkenterprise.com/sheets/SI8ssFrQ2hGKK0txNWWcC79Dncf?sheet=0Edyca', highlight: true }
           ]
         },
         {
           title: '印花税工作台',
           type: 'grid',
           items: [
-            { name: '印花税计算器', path: 'D:\\tools\\我的工作台\\印花税计算器.xlsx' }
+            { name: '印花税计算器', path: 'D:\\tools\\我的工作台\\印花税计算器.xlsx', highlight: true }
           ]
         }
       ]
@@ -4686,7 +4695,8 @@
 
   function renderModuleCard(item, c) {
     const meta = getItemMeta(item);
-    return `<div class="module-card" ${meta.clickAttr}>
+    const hlClass = item.highlight ? ' module-card-highlight' : '';
+    return `<div class="module-card${hlClass}" ${meta.clickAttr}>
       <div class="module-card-icon">${c.icon}</div>
       <div class="module-card-body">
         <div class="module-card-name">${escapeHtml(item.name)}</div>
@@ -4699,7 +4709,8 @@
   function renderFlowStepHorizontal(item, c, index, total) {
     const meta = getItemMeta(item);
     const arrow = index < total - 1 ? `<div class="flow-arrow">→</div>` : '';
-    return `<div class="flow-step" ${meta.clickAttr}>
+    const hlClass = item.highlight ? ' flow-step-highlight' : '';
+    return `<div class="flow-step${hlClass}" ${meta.clickAttr}>
       <div class="flow-step-number">${index + 1}</div>
       <div class="flow-step-body">
         <div class="flow-step-name">${escapeHtml(item.name)}</div>
@@ -4712,7 +4723,8 @@
   function renderFlowStepVertical(item, c, index, total) {
     const meta = getItemMeta(item);
     const arrow = index < total - 1 ? `<div class="flow-arrow flow-arrow-vertical">↓</div>` : '';
-    return `<div class="flow-step flow-step-vertical" ${meta.clickAttr}>
+    const hlClass = item.highlight ? ' flow-step-highlight' : '';
+    return `<div class="flow-step flow-step-vertical${hlClass}" ${meta.clickAttr}>
       <div class="flow-step-number">${index + 1}</div>
       <div class="flow-step-body">
         <div class="flow-step-name">${escapeHtml(item.name)}</div>
@@ -4724,7 +4736,8 @@
 
   function renderModuleCardVertical(item, c) {
     const meta = getItemMeta(item);
-    return `<div class="module-card module-card-vertical" ${meta.clickAttr}>
+    const hlClass = item.highlight ? ' module-card-highlight' : '';
+    return `<div class="module-card module-card-vertical${hlClass}" ${meta.clickAttr}>
       <div class="module-card-icon">${c.icon}</div>
       <div class="module-card-body">
         <div class="module-card-name">${escapeHtml(item.name)}</div>
